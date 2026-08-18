@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { getLangFromUrl, useTranslations, getRelativeLocaleUrl } from '../i18n/utils';
-import profileImage from '../assets/profile.jpg';
+import logoImage from '../assets/logo.png';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -28,8 +28,8 @@ const navLinks = [
     >
       <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-xs transition-all bg-surface-2 overflow-hidden border border-border group-hover:border-accent" id="nav-logo-box">
         <Image 
-          src={profileImage} 
-          alt="Giorgio" 
+          src={logoImage} 
+          alt="GDC Logo" 
           width={64}
           height={64}
           class="w-full h-full object-cover"
