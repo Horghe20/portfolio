@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { getLangFromUrl, useTranslations, getRelativeLocaleUrl } from '../i18n/utils';
 import NodeFlowchart from './NodeFlowchart.astro';
 import { PERSONAL_INFO } from '../data/content';
+import profileImage from '../assets/profile.jpg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -45,6 +47,19 @@ const audienceChips = [
     </span>
     <span class="text-border">•</span>
     <span>{t('hero.badgeSubtitle')}</span>
+  </div>
+
+  <!-- Profile Image -->
+  <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-surface shadow-xl relative z-10 mx-auto flex items-center justify-center bg-surface-2 overflow-hidden mb-6">
+    <Image 
+      src={profileImage} 
+      alt="Giorgio Di Cristofalo" 
+      width={256}
+      height={256}
+      class="w-full h-full object-cover"
+      loading="eager"
+      format="webp"
+    />
   </div>
 
   <!-- Main Headline -->
