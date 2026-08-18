@@ -53,6 +53,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
     <meta property="og:site_name" content="Giorgio Di Cristofalo — Portfolio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site || 'https://giorgiodicristofalo.com').href} />
     <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
     <meta property="og:locale:alternate" content={lang === 'it' ? 'en_US' : 'it_IT'} />
 
@@ -61,6 +62,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
     <meta name="twitter:url" content={currentUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og-image.png', Astro.site || 'https://giorgiodicristofalo.com').href} />
 
     <!-- Theme & Color Settings -->
     <meta name="theme-color" content="#F7F6F3" />
