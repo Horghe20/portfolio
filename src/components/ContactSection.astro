@@ -178,10 +178,11 @@ const t = useTranslations(lang);
 
           <!-- Topic Selector -->
           <div class="space-y-1.5">
-            <label class="text-xs font-mono text-text-dim">
+            <label for="topic" class="text-xs font-mono text-text-dim">
               {t('contact.form.topic')}
             </label>
             <select
+              id="topic"
               name="topic"
               class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text focus:border-accent focus:outline-none transition-colors font-mono cursor-pointer"
             >
