@@ -28,7 +28,7 @@ export const translations = {
       headlineSuffix: 'Costruisco quello che serve.',
       subtitle: 'Software Engineer specializzato in automazione dei processi, delivery enterprise e intelligenza artificiale applicata. Dai sistemi critici alla ricerca NLP.',
       ctaCollaborate: 'Lavoriamo insieme',
-      ctaLaboratory: 'Esplora il Laboratorio (6 Progetti)',
+      ctaLaboratory: 'Esplora il Laboratorio',
       location: 'Palermo, Sicilia / Remote',
       credentials: '110L Ingegneria Informatica',
       audience: {
@@ -57,19 +57,19 @@ export const translations = {
     projects: {
       tag: 'Portfolio & Ricerca Applicata',
       title: 'Laboratorio di Ingegneria',
-      subtitle: '6 progetti reali: da solver matematici per il posizionamento spaziale a sistemi mission-critical e difesa di modelli NLP.',
+      subtitle: 'Progetti reali: da solver matematici per il posizionamento spaziale a sistemi mission-critical e difesa di modelli NLP.',
       readSpecs: 'Leggi specifiche & architettura',
       filter: {
-        all: 'Tutti i Progetti (6)',
-        ai: 'AI & Solver (2)',
-        fullstack: 'Full-Stack & Automazione (2)',
-        embedded: 'Sistemi & Ricerca (2)',
+        all: 'Tutti i Progetti',
+        ai: 'AI & Solver',
+        fullstack: 'Full-Stack & Automazione',
+        embedded: 'Sistemi & Ricerca',
       },
       categories: {
-        all: 'Tutti i Progetti (6)',
-        ai: 'AI & Solver (2)',
-        fullstack: 'Full-Stack & Automazione (2)',
-        embedded: 'Sistemi & Ricerca (2)',
+        all: 'Tutti i Progetti',
+        ai: 'AI & Solver',
+        fullstack: 'Full-Stack & Automazione',
+        embedded: 'Sistemi & Ricerca',
       },
       viewArchitecture: 'Dettagli & Architettura',
       repoLabel: 'Codice / Repo',
@@ -242,7 +242,7 @@ export const translations = {
     projects: {
       tag: 'Portfolio & Applied Research',
       title: 'Engineering Laboratory',
-      subtitle: '6 production & research projects: from spatial constraint solvers to mission-critical systems and adversarial NLP defense.',
+      subtitle: 'Production & research projects: from spatial constraint solvers to mission-critical systems and adversarial NLP defense.',
       readSpecs: 'Read specifications & architecture',
       filter: {
         all: 'All Projects (6)',
