@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { getLangFromUrl, useTranslations, getRelativeLocaleUrl } from '../i18n/utils';
+import profileImage from '../assets/profile.jpg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -24,8 +26,15 @@ const navLinks = [
       class="flex items-center space-x-3 group cursor-pointer"
       id="brand-logo-link"
     >
-      <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-xs transition-all bg-surface-2 text-text border border-border group-hover:border-accent" id="nav-logo-box">
-        G
+      <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow-xs transition-all bg-surface-2 overflow-hidden border border-border group-hover:border-accent" id="nav-logo-box">
+        <Image 
+          src={profileImage} 
+          alt="Giorgio" 
+          width={64}
+          height={64}
+          class="w-full h-full object-cover"
+          format="webp"
+        />
       </div>
       <div class="flex flex-col">
         <span class="font-bold tracking-tight text-base sm:text-lg text-text group-hover:text-accent transition-colors">
