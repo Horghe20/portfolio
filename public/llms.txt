@@ -1,0 +1,28 @@
+# Giorgio Di Cristofalo — Software Engineer
+> Personal Portfolio & Technical Index for AI Agents and Search Engines
+
+## Overview
+- Name: Giorgio Di Cristofalo
+- Role: Software Engineer (Automation, Delivery, Applied AI)
+- Location: Palermo, Sicily, Italy (Available for Remote Work)
+- Degree: Master of Science in Computer Engineering, Università degli Studi di Palermo (110/110 Summa Cum Laude)
+- Current Roles:
+  - Software Engineer at IDSAirnav (ENAV Group) — Mission-Critical Air Traffic Management
+  - Treasurer & Core Organizer at Faidda Tech Lab (https://faiddatechlab.com/)
+- Contact: giorgiodicristofalo77@gmail.com
+- GitHub: https://github.com/Horghe20
+- LinkedIn: https://www.linkedin.com/in/giorgiodicristofalo/
+
+## Core Technical Competencies
+1. Automation & Delivery: CI/CD pipelines (GitHub Actions, GitLab CI), automated testing, zero-downtime releases, Docker containerization.
+2. Full-Stack Web Architecture: Python (Flask, Django, FastAPI), PostgreSQL, PostGIS, Redis, Celery, Angular (Signals), React, TypeScript, Tailwind CSS.
+3. Applied AI & Mathematical Optimization: Google OR-Tools (CP-SAT Constraint Satisfaction, 2D packing), Event-driven agentic architectures (Celery + Redis Pub/Sub + SSE + Gemini), Adversarial NLP Defense (BERT4Def Thesis), kNN Vector Recommendations (<30ms).
+4. Embedded Systems: C/C++, SPI protocol, ENC28J60 raw Ethernet packets, Arduino bare metal.
+
+## Selected Projects
+- Harbor Manager: AI marina berth spatial optimization using Google OR-Tools CP-SAT + PostGIS + Celery + Angular 21.
+- Central Parking: Cruise passenger parking booking & QR gate check-in system with WhatsApp Cloud API (in live production).
+- ESN Buddy Program: Automated international student matching algorithm with GDPR batch compliance (in live production).
+- NutriFit: Agentic nutrition SaaS case study with asynchronous Gemini plan generation streamed via SSE and <30ms kNN macro swaps.
+- MatchBandiGara: Public procurement tender qualification and enterprise scoring engine.
+- Network Tester Interface: Handheld standalone TFT touch diagnostic device on Arduino (Bare Metal C++).

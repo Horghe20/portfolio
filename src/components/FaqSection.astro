@@ -1,0 +1,200 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { FAQ_ITEMS, LLMS_TXT_CONTENT } from '../data/content';
+import type { FaqItem } from '../types';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="faq-aeo" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-border pb-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-text-dim flex items-center space-x-1.5 mb-2">
+        <Icon name="tabler:robot" class="w-3.5 h-3.5 text-accent" />
+        <span>{t('faq.tag')}</span>
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
+        {t('faq.title')}
+      </h2>
+    </div>
+
+    <!-- Action Button for llms.txt -->
+    <div class="mt-4 md:mt-0 flex items-center space-x-2">
+      <button
+        id="open-llms-modal"
+        class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-sm bg-surface text-text border border-border hover:border-accent hover:bg-surface-2 text-xs font-mono transition-colors cursor-pointer shadow-xs"
+      >
+        <Icon name="tabler:file-text" class="w-3.5 h-3.5 text-accent" />
+        <span>{t('faq.viewLlms')}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Accordion List -->
+  <div class="space-y-3 mb-10 max-w-4xl mx-auto" id="faq-accordion">
+    {FAQ_ITEMS.map((item: FaqItem, index: number) => (
+      <div
+        class={`faq-item rounded-lg border transition-all overflow-hidden ${
+          index === 0
+            ? 'bg-surface border-accent shadow-xs is-open'
+            : 'bg-surface border-border hover:border-text-dim/30'
+        }`}
+      >
+        <button
+          class="faq-btn w-full p-5 text-left flex items-center justify-between cursor-pointer space-x-4"
+        >
+          <span class="font-bold text-base sm:text-lg text-text">
+            {typeof item.question === 'object' ? item.question[lang] : item.question}
+          </span>
+          <Icon
+            name="tabler:chevron-down"
+            class={`faq-icon w-4 h-4 text-accent shrink-0 transition-transform duration-200 ${
+              index === 0 ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+
+        <div class={`faq-content px-5 pb-5 text-xs sm:text-sm text-text-dim leading-relaxed border-t border-border pt-4 font-sans ${index === 0 ? 'block' : 'hidden'}`}>
+          {typeof item.answer === 'object' ? item.answer[lang] : item.answer}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- llms.txt Modal -->
+  <div 
+    id="llms-modal"
+    class="hidden fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+  >
+    <div 
+      class="w-full max-w-2xl max-h-[85vh] bg-surface border border-border rounded-lg shadow-2xl overflow-hidden flex flex-col"
+      id="llms-modal-content"
+    >
+      <div class="p-3.5 sm:p-4 border-b border-border flex items-center justify-between bg-surface-2">
+        <div class="flex items-center space-x-2">
+          <Icon name="tabler:file-text" class="w-4 h-4 text-accent" />
+          <span class="font-mono text-xs text-text font-semibold">/llms.txt (Standard AI Crawler Index)</span>
+        </div>
+        <button
+          id="close-llms-modal"
+          class="text-xs font-mono text-text-dim hover:text-text px-2 py-1 rounded bg-surface border border-border cursor-pointer"
+        >
+          {t('common.close')}
+        </button>
+      </div>
+
+      <div class="p-3.5 sm:p-4 overflow-y-auto flex-1 bg-surface font-mono text-xs text-text whitespace-pre-wrap leading-relaxed select-all" id="llms-text">
+        {LLMS_TXT_CONTENT}
+      </div>
+
+      <div class="p-3 border-t border-border bg-surface-2 flex items-center justify-between">
+        <span class="text-[11px] font-mono text-text-dim truncate mr-2">
+          {lang === 'it' ? 'Markdown pulito per LLM & crawler' : 'Clean Markdown for LLMs & crawlers'}
+        </span>
+        <button
+          id="copy-llms-btn"
+          class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm bg-accent text-accent-contrast font-mono font-bold text-xs hover:opacity-90 transition-opacity cursor-pointer shrink-0 shadow-xs"
+        >
+          <Icon name="tabler:copy" class="w-3.5 h-3.5" id="llms-copy-icon" />
+          <Icon name="tabler:check" class="w-3.5 h-3.5 hidden" id="llms-copied-icon" />
+          <span id="llms-copy-text">{lang === 'it' ? 'Copia file' : 'Copy file'}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  const setupFaq = () => {
+    // Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-btn');
+      const content = item.querySelector('.faq-content');
+      const icon = item.querySelector('.faq-icon');
+
+      if (btn && content && icon) {
+        btn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+
+          if (isOpen) {
+            item.classList.remove('is-open', 'border-accent', 'shadow-xs');
+            item.classList.add('border-border', 'hover:border-text-dim/30');
+            icon.classList.remove('rotate-180');
+            content.classList.add('hidden');
+          } else {
+            // Close others
+            faqItems.forEach(otherItem => {
+              otherItem.classList.remove('is-open', 'border-accent', 'shadow-xs');
+              otherItem.classList.add('border-border', 'hover:border-text-dim/30');
+              otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
+              otherItem.querySelector('.faq-content')?.classList.add('hidden');
+            });
+
+            // Open this
+            item.classList.add('is-open', 'border-accent', 'shadow-xs');
+            item.classList.remove('border-border', 'hover:border-text-dim/30');
+            icon.classList.add('rotate-180');
+            content.classList.remove('hidden');
+          }
+        });
+      }
+    });
+
+    // Modal Logic
+    const openBtn = document.getElementById('open-llms-modal');
+    const closeBtn = document.getElementById('close-llms-modal');
+    const modal = document.getElementById('llms-modal');
+    const modalContent = document.getElementById('llms-modal-content');
+
+    if (openBtn && closeBtn && modal && modalContent) {
+      openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      modal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      modalContent.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    // Copy LLMS Logic
+    const copyBtn = document.getElementById('copy-llms-btn');
+    const copyText = document.getElementById('llms-text');
+    const copyIcon = document.getElementById('llms-copy-icon');
+    const copiedIcon = document.getElementById('llms-copied-icon');
+    const copyTextSpan = document.getElementById('llms-copy-text');
+
+    if (copyBtn && copyText && copyIcon && copiedIcon && copyTextSpan) {
+      const originalText = copyTextSpan.innerText;
+      
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(copyText.innerText);
+        copyIcon.classList.add('hidden');
+        copiedIcon.classList.remove('hidden');
+        copyTextSpan.innerText = originalText === 'Copy file' ? 'Copied!' : 'Copiato!';
+        
+        setTimeout(() => {
+          copyIcon.classList.remove('hidden');
+          copiedIcon.classList.add('hidden');
+          copyTextSpan.innerText = originalText;
+        }, 2000);
+      });
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', setupFaq);
+  document.addEventListener('astro:page-load', setupFaq);
+</script>

@@ -1,0 +1,238 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, useTranslations, getRelativeLocaleUrl } from '../i18n/utils';
+import { PROJECTS } from '../data/content';
+import type { Project } from '../types';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categories = [
+  { id: 'all', labelKey: 'projects.filter.all' },
+  { id: 'ai', labelKey: 'projects.filter.ai' },
+  { id: 'fullstack', labelKey: 'projects.filter.fullstack' },
+  { id: 'embedded', labelKey: 'projects.filter.embedded' },
+];
+
+const renderAbstractGraphic = (diagramType: string) => {
+  switch (diagramType) {
+    case 'packing':
+      return `
+        <div class="w-full h-32 bg-surface-2 border-b border-border p-3 flex items-center justify-center relative overflow-hidden group-hover:border-accent transition-colors">
+          <svg viewBox="0 0 200 80" class="w-full h-full text-text-dim">
+            <line x1="10" y1="20" x2="190" y2="20" stroke="#E2E0DA" stroke-width="2" />
+            <line x1="10" y1="60" x2="190" y2="60" stroke="#E2E0DA" stroke-width="2" />
+            <rect x="25" y="26" width="30" height="28" rx="4" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <rect x="62" y="26" width="45" height="28" rx="4" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <rect x="114" y="26" width="22" height="28" rx="4" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <rect x="143" y="26" width="38" height="28" rx="4" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <text x="100" y="15" text-anchor="middle" class="text-[8px] font-mono fill-[#71727A]">CP-SAT 2D Bin Packing</text>
+          </svg>
+          <span class="absolute bottom-2 right-2 text-[9px] font-mono text-accent bg-surface/90 px-1.5 py-0.5 rounded border border-border shadow-xs">
+            OR-Tools
+          </span>
+        </div>
+      `;
+    case 'agent_stream':
+      return `
+        <div class="w-full h-32 bg-surface-2 border-b border-border p-3 flex items-center justify-center relative overflow-hidden group-hover:border-accent transition-colors">
+          <svg viewBox="0 0 200 80" class="w-full h-full text-text-dim">
+            <circle cx="35" cy="40" r="14" fill="#FFFFFF" stroke="#E2E0DA" stroke-width="1.5" />
+            <text x="35" y="43" text-anchor="middle" class="text-[7px] font-mono fill-[#2A2B2E]">Celery</text>
+            <line x1="50" y1="40" x2="85" y2="40" stroke="#5B7FA0" stroke-width="1.5" stroke-dasharray="3 3" />
+            <circle cx="100" cy="40" r="14" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <text x="100" y="43" text-anchor="middle" class="text-[7px] font-mono fill-[#5B7FA0] font-semibold">Redis</text>
+            <line x1="115" y1="40" x2="150" y2="40" stroke="#5B7FA0" stroke-width="1.5" stroke-dasharray="3 3" />
+            <circle cx="165" cy="40" r="14" fill="#FFFFFF" stroke="#E2E0DA" stroke-width="1.5" />
+            <text x="165" y="43" text-anchor="middle" class="text-[7px] font-mono fill-[#2A2B2E]">SSE</text>
+            <text x="100" y="15" text-anchor="middle" class="text-[8px] font-mono fill-[#71727A]">Realtime Agent Stream</text>
+          </svg>
+          <span class="absolute bottom-2 right-2 text-[9px] font-mono text-accent bg-surface/90 px-1.5 py-0.5 rounded border border-border shadow-xs">
+            Celery + Gemini
+          </span>
+        </div>
+      `;
+    case 'qr_pipeline':
+      return `
+        <div class="w-full h-32 bg-surface-2 border-b border-border p-3 flex items-center justify-center relative overflow-hidden group-hover:border-accent transition-colors">
+          <svg viewBox="0 0 200 80" class="w-full h-full text-text-dim">
+            <rect x="30" y="20" width="40" height="40" rx="4" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <rect x="36" y="26" width="10" height="10" fill="#5B7FA0" />
+            <rect x="54" y="26" width="10" height="10" fill="#5B7FA0" />
+            <rect x="36" y="44" width="10" height="10" fill="#5B7FA0" />
+            <line x1="75" y1="40" x2="115" y2="40" stroke="#5B7FA0" stroke-width="1.5" />
+            <circle cx="145" cy="40" r="16" fill="#FFFFFF" stroke="#E2E0DA" stroke-width="1.5" />
+            <text x="145" y="43" text-anchor="middle" class="text-[8px] font-mono fill-[#2A2B2E] font-medium">&lt;0.5s Gate</text>
+            <text x="100" y="14" text-anchor="middle" class="text-[8px] font-mono fill-[#71727A]">Cruise Booking ➔ Fast Gate</text>
+          </svg>
+          <span class="absolute bottom-2 right-2 text-[9px] font-mono text-accent bg-surface/90 px-1.5 py-0.5 rounded border border-border shadow-xs">
+            WhatsApp + QR
+          </span>
+        </div>
+      `;
+    case 'spi_icmp':
+      return `
+        <div class="w-full h-32 bg-surface-2 border-b border-border p-3 flex items-center justify-center relative overflow-hidden group-hover:border-accent transition-colors">
+          <svg viewBox="0 0 200 80" class="w-full h-full text-text-dim">
+            <rect x="25" y="22" width="45" height="36" rx="2" fill="#FFFFFF" stroke="#E2E0DA" stroke-width="1.5" />
+            <text x="47" y="42" text-anchor="middle" class="text-[7px] font-mono fill-[#2A2B2E]">ATmega</text>
+            <line x1="70" y1="34" x2="110" y2="34" stroke="#5B7FA0" stroke-width="1.5" />
+            <line x1="70" y1="46" x2="110" y2="46" stroke="#5B7FA0" stroke-width="1.5" />
+            <text x="90" y="28" text-anchor="middle" class="text-[6px] font-mono fill-[#5B7FA0]">SPI Bus</text>
+            <rect x="110" y="22" width="55" height="36" rx="2" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <text x="137" y="42" text-anchor="middle" class="text-[7px] font-mono fill-[#5B7FA0] font-semibold">ENC28J60</text>
+          </svg>
+          <span class="absolute bottom-2 right-2 text-[9px] font-mono text-accent bg-surface/90 px-1.5 py-0.5 rounded border border-border shadow-xs">
+            Bare Metal C++
+          </span>
+        </div>
+      `;
+    default:
+      return `
+        <div class="w-full h-32 bg-surface-2 border-b border-border p-3 flex items-center justify-center relative overflow-hidden group-hover:border-accent transition-colors">
+          <svg viewBox="0 0 200 80" class="w-full h-full text-text-dim">
+            <rect x="30" y="25" width="40" height="30" rx="3" fill="#FFFFFF" stroke="#E2E0DA" stroke-width="1.5" />
+            <line x1="70" y1="40" x2="120" y2="40" stroke="#5B7FA0" stroke-width="1.5" stroke-dasharray="2 2" />
+            <circle cx="145" cy="40" r="15" fill="#FFFFFF" stroke="#5B7FA0" stroke-width="1.5" />
+            <text x="145" y="43" text-anchor="middle" class="text-[7px] font-mono fill-[#2A2B2E]">Score</text>
+            <text x="100" y="15" text-anchor="middle" class="text-[8px] font-mono fill-[#71727A]">Automated Evaluation</text>
+          </svg>
+          <span class="absolute bottom-2 right-2 text-[9px] font-mono text-accent bg-surface/90 px-1.5 py-0.5 rounded border border-border shadow-xs">
+            Scoring Engine
+          </span>
+        </div>
+      `;
+  }
+};
+---
+
+<section id="laboratory" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  
+  <!-- Section Title & Description -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-border pb-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-text-dim flex items-center space-x-1.5 mb-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span>
+        <span>{t('projects.tag')}</span>
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
+        {t('projects.title')}
+      </h2>
+    </div>
+
+    <p class="text-sm text-text-dim max-w-md mt-2 md:mt-0">
+      {t('projects.subtitle')}
+    </p>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="flex flex-wrap items-center gap-2 mb-10" id="project-filters">
+    {categories.map((cat) => (
+      <button
+        data-filter={cat.id}
+        class={`filter-btn px-3.5 py-1.5 rounded-sm text-xs font-mono transition-all cursor-pointer border ${
+          cat.id === 'all'
+            ? 'bg-accent text-accent-contrast border-accent font-semibold shadow-xs'
+            : 'bg-surface text-text-dim border-border hover:text-text hover:bg-surface-2'
+        }`}
+      >
+        {t(cat.labelKey)}
+      </button>
+    ))}
+  </div>
+
+  <!-- Projects 6-Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+    {PROJECTS.map((proj: Project, idx: number) => (
+      <div
+        data-category={proj.category}
+        class="project-card rounded-lg bg-surface border border-border overflow-hidden flex flex-col justify-between card-hover group shadow-xs transition-opacity duration-300"
+      >
+        <!-- Abstract Graphic Banner -->
+        <Fragment set:html={renderAbstractGraphic(proj.abstractDiagramType)} />
+
+        <!-- Card Body -->
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Status & Year -->
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-mono text-accent font-semibold">
+                #{String(idx + 1).padStart(2, '0')}
+              </span>
+              <span class="px-2 py-0.5 bg-accent-soft text-accent text-[10px] rounded border border-border font-mono">
+                {typeof proj.statusLabel === 'object' ? proj.statusLabel[lang] : proj.statusLabel}
+              </span>
+            </div>
+
+            <!-- Title & Tagline -->
+            <h4 class="font-bold text-xl text-text mb-2 group-hover:text-accent transition-colors">
+              {proj.title}
+            </h4>
+            <p class="text-xs text-text-dim leading-relaxed mb-4">
+              {typeof proj.tagline === 'object' ? proj.tagline[lang] : proj.tagline}
+            </p>
+          </div>
+
+          <!-- Stack Chips Preview -->
+          <div>
+            <div class="flex flex-wrap gap-1.5 mb-5 pt-3 border-t border-border">
+              {proj.stack.slice(0, 4).map((tech: string) => (
+                <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
+                  {tech}
+                </span>
+              ))}
+              {proj.stack.length > 4 && (
+                <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded opacity-80">
+                  +{proj.stack.length - 4}
+                </span>
+              )}
+            </div>
+
+            <!-- Open Modal Button (Replaced with Link) -->
+            <a
+              href={getRelativeLocaleUrl(lang, `/projects/${proj.id}`)}
+              class="w-full py-2.5 px-4 rounded-sm bg-surface-2 border border-border hover:border-accent hover:bg-surface text-xs font-mono text-text hover:text-accent flex items-center justify-center space-x-2 transition-all cursor-pointer group/btn"
+            >
+              <span>{t('projects.readSpecs')}</span>
+              <Icon name="tabler:chevron-right" class="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform text-accent" />
+            </a>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const setupFilters = () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        
+        // Update active button styles
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
+          b.classList.add('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+        });
+        btn.classList.add('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
+        btn.classList.remove('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+
+        // Filter cards
+        projectCards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', setupFilters);
+  document.addEventListener('astro:page-load', setupFilters);
+</script>

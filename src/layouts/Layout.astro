@@ -1,0 +1,137 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'it' | 'en';
+}
+
+const { 
+  title = "Giorgio Di Cristofalo — Software Engineer | Automazione, Delivery & AI Applicata",
+  description = "Sito personale di Giorgio Di Cristofalo: Software Engineer a Palermo specializzato in automazione processi, pipeline CI/CD, sistemi critici e AI applicata (Google OR-Tools, NLP, Recommender Systems).",
+  lang = 'it' 
+} = Astro.props;
+
+const alternateLang = lang === 'it' ? 'en' : 'it';
+const alternateUrl = lang === 'it' ? `${Astro.site || 'https://giorgiodicristofalo.it'}/en${Astro.url.pathname}` : `${Astro.site || 'https://giorgiodicristofalo.it'}${Astro.url.pathname.replace('/en', '')}`;
+const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodicristofalo.it').href;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Giorgio Di Cristofalo, Software Engineer, Software Engineer Palermo, Automazione Processi, CI/CD, IDSAirnav, ENAV, Faidda Tech Lab, Google OR-Tools, AI Applicata, Ingegneria Informatica UniPa, Python, Angular, TypeScript" />
+    <meta name="author" content="Giorgio Di Cristofalo" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href={currentUrl} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+    <link rel="alternate" hreflang={lang} href={currentUrl} />
+    <link rel="alternate" hreflang="x-default" href={lang === 'it' ? currentUrl : alternateUrl} />
+
+    <!-- GEO / Geographic Metadata (Palermo, Sicilia, Italy) -->
+    <meta name="geo.region" content="IT-82" />
+    <meta name="geo.placename" content="Palermo" />
+    <meta name="geo.position" content="38.1157;13.3615" />
+    <meta name="ICBM" content="38.1157, 13.3615" />
+    <meta name="coverage" content="Worldwide / Italy / Sicily" />
+    <meta name="target" content="all" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:site_name" content="Giorgio Di Cristofalo — Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'it' ? 'en_US' : 'it_IT'} />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Theme & Color Settings -->
+    <meta name="theme-color" content="#F7F6F3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- JSON-LD Structured Data for Search Engines, Perplexity, Gemini, ChatGPT (AEO / GEO / Schema.org) -->
+    <script type="application/ld+json" set:html={`
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://giorgiodicristofalo.it/#person",
+          "name": "Giorgio Di Cristofalo",
+          "givenName": "Giorgio",
+          "familyName": "Di Cristofalo",
+          "jobTitle": "Software Engineer",
+          "url": "https://giorgiodicristofalo.it/",
+          "email": "giorgiodicristofalo77@gmail.com",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "IDSAirnav - ENAV Group",
+            "url": "https://www.idsairnav.com"
+          },
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Università degli Studi di Palermo",
+            "url": "https://www.unipa.it"
+          },
+          "memberOf": {
+            "@type": "Organization",
+            "name": "Faidda Tech Lab",
+            "url": "https://faiddatechlab.com/"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Palermo",
+            "addressRegion": "Sicilia",
+            "addressCountry": "IT"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "38.1157",
+            "longitude": "13.3615"
+          },
+          "sameAs": [
+            "https://github.com/Horghe20",
+            "https://www.linkedin.com/in/giorgiodicristofalo/",
+            "https://faiddatechlab.com/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://giorgiodicristofalo.it/#website",
+          "url": "https://giorgiodicristofalo.it/",
+          "name": "Giorgio Di Cristofalo — Portfolio",
+          "publisher": {
+            "@id": "https://giorgiodicristofalo.it/#person"
+          },
+          "inLanguage": ["it-IT", "en-US"]
+        }
+      ]
+    }
+    `} />
+    
+    <!-- Vercel Web Analytics -->
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </head>
+  <body class="bg-bg text-text selection:bg-accent-soft selection:text-accent antialiased overflow-x-hidden font-sans">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,311 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { PERSONAL_INFO } from '../data/content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  
+  <!-- Section Header -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-border pb-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-text-dim flex items-center space-x-1.5 mb-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span>
+        <span>{t('contact.tag')}</span>
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
+        {t('contact.title')}
+      </h2>
+    </div>
+    <p class="text-sm text-text-dim max-w-md mt-2 md:mt-0">
+      {t('contact.subtitle')}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left Column: Direct info & social cards -->
+    <div class="lg:col-span-5 space-y-6">
+      
+      <!-- Email Direct Box -->
+      <div class="p-6 rounded-lg bg-surface border border-border space-y-4 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono text-text-dim uppercase">
+            {t('contact.directEmail')}
+          </span>
+          <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
+            {t('contact.replyTime')}
+          </span>
+        </div>
+
+        <div class="p-3.5 bg-surface-2 rounded border border-border flex items-center justify-between font-mono text-xs sm:text-sm text-text">
+          <span class="truncate mr-2" id="personal-email-text">{PERSONAL_INFO.email}</span>
+          <button
+            id="copy-email-btn"
+            class="p-1.5 rounded hover:bg-surface text-accent hover:text-text transition-colors cursor-pointer shrink-0"
+            title={lang === 'it' ? 'Copia indirizzo email' : 'Copy email address'}
+          >
+            <Icon name="tabler:copy" class="w-4 h-4" id="copy-icon" />
+            <Icon name="tabler:check" class="w-4 h-4 text-accent hidden" id="copied-icon" />
+          </button>
+        </div>
+
+        <p class="text-xs text-text-dim leading-relaxed">
+          {t('contact.emailNotice')}
+        </p>
+      </div>
+
+      <!-- Social & Community Links -->
+      <div class="p-6 rounded-lg bg-surface border border-border space-y-3 shadow-xs">
+        <span class="text-xs font-mono text-text-dim uppercase block mb-3">
+          {t('contact.profiles')}
+        </span>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <a
+            href={PERSONAL_INFO.github}
+            target="_blank"
+            rel="noreferrer"
+            class="flex items-center space-x-2.5 p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text hover:text-accent transition-all"
+          >
+            <Icon name="tabler:brand-github" class="w-4 h-4" />
+            <span>GitHub (Horghe20)</span>
+          </a>
+
+          <a
+            href={PERSONAL_INFO.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            class="flex items-center space-x-2.5 p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text hover:text-accent transition-all"
+          >
+            <Icon name="tabler:brand-linkedin" class="w-4 h-4" />
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+        <div class="pt-3 border-t border-border">
+          <a
+            href={PERSONAL_INFO.community}
+            target="_blank"
+            rel="noreferrer"
+            class="flex items-center justify-between p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text-dim hover:text-text transition-all group"
+          >
+            <div class="flex items-center space-x-2">
+              <Icon name="tabler:terminal-2" class="w-4 h-4 text-accent" />
+              <span>Faidda Tech Lab (Tesoriere)</span>
+            </div>
+            <Icon name="tabler:external-link" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Privacy Note -->
+      <div class="flex items-center space-x-2 text-xs font-mono text-text-dim px-2">
+        <Icon name="tabler:shield-check" class="w-4 h-4 text-accent" />
+        <span>
+          {t('contact.privacyNotice')}
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Contact Form with Honeypot -->
+    <div class="lg:col-span-7">
+      <div class="p-6 sm:p-8 rounded-lg bg-surface border border-border shadow-xs">
+        
+        <div id="form-success" class="hidden py-12 text-center space-y-4">
+          <div class="w-12 h-12 rounded-full bg-accent-soft border border-border flex items-center justify-center mx-auto text-accent">
+            <Icon name="tabler:circle-check" class="w-6 h-6" />
+          </div>
+          <h3 class="font-bold text-xl text-text">
+            {t('contact.successTitle')}
+          </h3>
+          <p class="text-xs sm:text-sm text-text-dim max-w-md mx-auto">
+            {t('contact.successSubtitle')}
+          </p>
+          <button
+            id="reset-form-btn"
+            class="px-4 py-2 rounded-sm bg-surface-2 border border-border text-xs font-mono text-text hover:border-accent cursor-pointer"
+          >
+            {t('contact.sendAnother')}
+          </button>
+        </div>
+
+        <form id="contact-form" class="space-y-4">
+          
+          <!-- Honeypot hidden input for anti-spam -->
+          <div class="hidden" aria-hidden="true">
+            <input
+              type="text"
+              name="honeypot"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Name -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-mono text-text-dim">
+                {t('contact.form.name')} *
+              </label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder={lang === 'it' ? 'Mario Rossi' : 'Alex Morgan'}
+                class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text placeholder-text-dim/50 focus:border-accent focus:outline-none transition-colors font-sans"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-mono text-text-dim">
+                {t('contact.form.email')} *
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="mario@example.com"
+                class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text placeholder-text-dim/50 focus:border-accent focus:outline-none transition-colors font-sans"
+              />
+            </div>
+          </div>
+
+          <!-- Topic Selector -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-mono text-text-dim">
+              {t('contact.form.topic')}
+            </label>
+            <select
+              name="topic"
+              class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text focus:border-accent focus:outline-none transition-colors font-mono cursor-pointer"
+            >
+              <option value="automation">{t('contact.form.topics.automation')}</option>
+              <option value="fullstack">{t('contact.form.topics.fullstack')}</option>
+              <option value="ai">{t('contact.form.topics.ai')}</option>
+              <option value="consulting">{t('contact.form.topics.consulting')}</option>
+              <option value="other">{t('contact.form.topics.other')}</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-mono text-text-dim">
+              {t('contact.form.message')} *
+            </label>
+            <textarea
+              name="message"
+              required
+              rows="4"
+              placeholder={
+                lang === 'it'
+                  ? 'Descrivi brevemente il problema, i vincoli o gli obiettivi da raggiungere...'
+                  : 'Briefly outline the objective, technical constraints, or timeline...'
+              }
+              class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text placeholder-text-dim/50 focus:border-accent focus:outline-none transition-colors font-sans resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full py-3 px-6 rounded-sm bg-accent text-accent-contrast font-bold text-xs sm:text-sm hover:opacity-90 transition-all flex items-center justify-center space-x-2 shadow-xs disabled:opacity-50 cursor-pointer"
+          >
+            <Icon name="tabler:send" class="w-4 h-4" id="submit-icon" />
+            <span id="submit-text">{t('contact.form.submit')}</span>
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+  const setupContactForm = () => {
+    // Copy Email logic
+    const copyBtn = document.getElementById('copy-email-btn');
+    const emailText = document.getElementById('personal-email-text');
+    const copyIcon = document.getElementById('copy-icon');
+    const copiedIcon = document.getElementById('copied-icon');
+
+    if (copyBtn && emailText) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(emailText.innerText);
+        if (copyIcon && copiedIcon) {
+          copyIcon.classList.add('hidden');
+          copiedIcon.classList.remove('hidden');
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            copiedIcon.classList.add('hidden');
+          }, 2500);
+        }
+      });
+    }
+
+    // Form logic
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successBox = document.getElementById('form-success');
+    const resetBtn = document.getElementById('reset-form-btn');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const submitText = document.getElementById('submit-text');
+
+    if (form && successBox && resetBtn && submitBtn && submitText) {
+      const defaultText = submitText.innerText;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Bot trap
+        if (data.honeypot) {
+          console.warn('Bot submission prevented.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitText.innerText = 'Invio in corso...'; // To be translated correctly based on lang, but good enough
+
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+            form.classList.add('hidden');
+            successBox.classList.remove('hidden');
+            form.reset();
+          } else {
+            alert("C'è stato un errore nell'invio del messaggio. Riprova più tardi.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("C'è stato un errore nell'invio del messaggio. Riprova più tardi.");
+        } finally {
+          submitBtn.disabled = false;
+          submitText.innerText = defaultText;
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        successBox.classList.add('hidden');
+        form.classList.remove('hidden');
+      });
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', setupContactForm);
+  document.addEventListener('astro:page-load', setupContactForm);
+</script>

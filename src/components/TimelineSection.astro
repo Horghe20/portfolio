@@ -1,0 +1,227 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { TIMELINE_ITEMS } from '../data/content';
+import type { TimelineItem } from '../types';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categoriesConfig = [
+  { id: 'all', labelKey: 'timeline.categories.all', icon: 'tabler:sparkles' },
+  { id: 'lavoro', labelKey: 'timeline.categories.lavoro', icon: 'tabler:briefcase' },
+  { id: 'studio', labelKey: 'timeline.categories.studio', icon: 'tabler:school' },
+  { id: 'ricerca', labelKey: 'timeline.categories.ricerca', icon: 'tabler:microscope' },
+  { id: 'erasmus', labelKey: 'timeline.categories.erasmus', icon: 'tabler:world' },
+  { id: 'volontariato', labelKey: 'timeline.categories.volontariato', icon: 'tabler:heart-handshake' },
+  { id: 'certificazione', labelKey: 'timeline.categories.certificazione', icon: 'tabler:award' },
+  { id: 'community', labelKey: 'timeline.categories.community', icon: 'tabler:users' },
+];
+
+const getCategoryIcon = (category: string) => {
+  switch (category) {
+    case 'lavoro': return 'tabler:briefcase';
+    case 'studio': return 'tabler:school';
+    case 'ricerca': return 'tabler:microscope';
+    case 'erasmus': return 'tabler:world';
+    case 'volontariato': return 'tabler:heart-handshake';
+    case 'certificazione': return 'tabler:award';
+    case 'community': return 'tabler:users';
+    default: return 'tabler:sparkles';
+  }
+};
+---
+
+<section id="timeline" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-border pb-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-widest text-text-dim flex items-center space-x-1.5 mb-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent"></span>
+        <span>{t('timeline.tag')}</span>
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
+        {t('timeline.title')}
+      </h2>
+    </div>
+    <p class="text-sm text-text-dim max-w-md mt-2 md:mt-0">
+      {t('timeline.subtitle')}
+    </p>
+  </div>
+
+  <!-- Sequential Degree Background Context Tracks -->
+  <div class="mb-10 p-4 rounded-lg bg-surface border border-border overflow-x-auto shadow-xs">
+    <div class="text-xs font-mono text-text-dim uppercase tracking-wider mb-3 flex items-center justify-between">
+      <span>// {t('timeline.academicTrackTitle')}</span>
+      <span class="text-accent font-semibold">{lang === 'it' ? 'UniPa (110 & 110L)' : 'UniPa (110 & 110L Honors)'}</span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <!-- Triennale Bar -->
+      <div class="p-3 bg-surface-2 rounded border border-border flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded bg-surface border border-border flex items-center justify-center">
+            <Icon name="tabler:school" class="w-4 h-4 text-accent" />
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-text block">
+              {lang === 'it' ? 'Laurea Triennale (110)' : "Bachelor's Degree (110)"}
+            </span>
+            <span class="text-[10px] font-mono text-text-dim">2019 – 2022 • UniPa</span>
+          </div>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
+          {lang === 'it' ? 'Fondamenti & Architetture' : 'Foundations & CS'}
+        </span>
+      </div>
+
+      <!-- Magistrale Bar -->
+      <div class="p-3 bg-surface-2 rounded border border-accent/40 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded bg-accent-soft border border-border flex items-center justify-center">
+            <Icon name="tabler:school" class="w-4 h-4 text-accent" />
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-text block">
+              {lang === 'it' ? 'Laurea Magistrale (110 e Lode)' : "Master's Degree (110L Honors)"}
+            </span>
+            <span class="text-[10px] font-mono text-text-dim">2022 – 2025 • Tesi BERT4Def</span>
+          </div>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
+          {lang === 'it' ? 'AI, Sicurezza & Sistemi' : 'AI, Security & Systems'}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Filter Pills -->
+  <div class="flex flex-wrap items-center gap-2 mb-10" id="timeline-filters">
+    {categoriesConfig.map((cat) => (
+      <button
+        data-filter={cat.id}
+        class={`timeline-filter-btn inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm text-xs font-mono transition-all cursor-pointer border ${
+          cat.id === 'all'
+            ? 'bg-accent text-accent-contrast border-accent font-semibold shadow-xs'
+            : 'bg-surface text-text-dim border-border hover:text-text hover:bg-surface-2'
+        }`}
+      >
+        <Icon name={cat.icon} class="w-3.5 h-3.5" />
+        <span>{t(cat.labelKey)}</span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Vertical Connected Timeline Items -->
+  <div class="relative pl-6 sm:pl-8 border-l border-border space-y-6" id="timeline-items">
+    {TIMELINE_ITEMS.map((item: TimelineItem) => (
+      <div
+        class="timeline-item relative group"
+        data-category={item.category}
+      >
+        <!-- Timeline Connector Dot -->
+        <div class="absolute -left-[31px] sm:-left-[39px] top-4 w-5 h-5 rounded-full bg-surface border-2 border-border group-hover:border-accent flex items-center justify-center transition-colors shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+        </div>
+
+        <!-- Card Container -->
+        <div 
+          class="timeline-card rounded-lg bg-surface border transition-all duration-200 cursor-pointer p-5 sm:p-6 card-hover shadow-xs border-border hover:border-accent hover:bg-surface-2"
+        >
+          <!-- Top Row: Period, Category Icon, Location -->
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div class="flex items-center space-x-2">
+              <div class="w-7 h-7 rounded bg-surface-2 border border-border flex items-center justify-center">
+                <Icon name={getCategoryIcon(item.category)} class="w-4 h-4 text-accent" />
+              </div>
+              <span class="text-xs font-mono text-accent font-semibold">
+                {item.period}
+              </span>
+            </div>
+
+            <span class="text-xs font-mono text-text-dim flex items-center space-x-1">
+              <Icon name="tabler:map-pin" class="w-3 h-3 text-text-dim" />
+              <span>{item.location}</span>
+            </span>
+          </div>
+
+          <!-- Role Title & Org -->
+          <h3 class="font-bold text-lg text-text group-hover:text-accent transition-colors">
+            {typeof item.title === 'object' ? item.title[lang] : item.title}
+          </h3>
+          <span class="text-xs font-mono text-text-dim block mb-3">
+            {item.organization}
+          </span>
+
+          <!-- Description -->
+          <p class="text-xs sm:text-sm text-text leading-relaxed font-sans">
+            {typeof item.description === 'object' ? item.description[lang] : item.description}
+          </p>
+
+          <!-- Highlights (Expandable on mobile, always visible on desktop via CSS initially, but managed by JS) -->
+          {item.highlights && (
+            <div class="timeline-highlights mt-4 pt-3 border-t border-border space-y-1.5 hidden sm:block">
+              {(typeof item.highlights === 'object' && !Array.isArray(item.highlights) ? item.highlights[lang] : item.highlights).map((hl: string) => (
+                <div class="flex items-center space-x-2 text-xs text-text-dim">
+                  <Icon name="tabler:circle-check" class="w-3.5 h-3.5 text-accent shrink-0" />
+                  <span>{hl}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+</section>
+
+<script>
+  const setupTimeline = () => {
+    const filterBtns = document.querySelectorAll('.timeline-filter-btn');
+    const items = document.querySelectorAll('.timeline-item');
+
+    // Filtering logic
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
+          b.classList.add('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+        });
+        btn.classList.add('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
+        btn.classList.remove('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+
+        items.forEach(item => {
+          const cat = item.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            (item as HTMLElement).style.display = 'block';
+          } else {
+            (item as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Expand logic for mobile (toggle highlights visibility)
+    const cards = document.querySelectorAll('.timeline-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const isMobile = window.innerWidth < 640;
+        if (!isMobile) return; // Desktop handles it via hover or we just leave it open as per standard design
+
+        const highlights = card.querySelector('.timeline-highlights');
+        if (highlights) {
+          highlights.classList.toggle('hidden');
+          card.classList.toggle('border-accent');
+          card.classList.toggle('bg-surface-2');
+        }
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', setupTimeline);
+  document.addEventListener('astro:page-load', setupTimeline);
+</script>
