@@ -26,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const adminEmail = 'giorgiodicristofalo77@gmail.com';
-    const senderEmail = 'Portfolio Contact <no-reply@giorgiodicristofalo.com>'; // Richiede dominio verificato su resend.com/domains
+    const senderEmail = 'Giorgio Di Cristofalo <no-reply@giorgiodicristofalo.com>'; // Richiede dominio verificato su resend.com/domains
 
     // 3. Prima invia la mail di cortesia al cliente
     //    Se fallisce (email rifiutata dal provider), blocchiamo tutto e avvisiamo l'utente
