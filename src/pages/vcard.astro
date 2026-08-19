@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import { PERSONAL_INFO } from '../data/content';
+import logoImage from '../assets/logo.png';
+import cardBg from '../assets/card-background.jpg';
+---
+
+<Layout 
+  title={`${PERSONAL_INFO.name} - Digital Card`} 
+  robots="noindex, nofollow"
+>
+  <!-- Sfondo stile Apple Wallet (grigio chiaro) -->
+  <main class="min-h-[100dvh] bg-[#f2f2f7] flex flex-col items-center justify-center p-4 sm:p-8 font-sans" style="background-color: #f2f2f7;">
+    
+    <!-- Pulsante "Fatto" -->
+    <div class="absolute top-6 right-6">
+      <a href="/" class="font-semibold text-lg hover:opacity-80 transition-opacity" style="color: #007aff;">Fatto</a>
+    </div>
+
+    <!-- Container Carta di Credito -->
+    <!-- Utilizziamo stili inline per le dimensioni e i bordi smussati per evitare problemi con la configurazione Tailwind -->
+    <div 
+      class="relative overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-7 border border-black/10 isolate" 
+      style="width: 100%; max-width: 380px; aspect-ratio: 1.586/1; border-radius: 24px; color: #ffffff; mask-image: radial-gradient(white, black); -webkit-mask-image: -webkit-radial-gradient(white, black);"
+    >
+      
+      <!-- Immagine di sfondo caricata (ottimizzata automaticamente in WebP) -->
+      <Image 
+        src={cardBg} 
+        alt="Card Background" 
+        class="absolute inset-0 w-full h-full object-cover z-0"
+        width={800}
+      />
+      <!-- Overlay scuro per garantire un alto contrasto con il testo bianco -->
+      <div class="absolute inset-0 bg-black/60 z-0"></div>
+      
+      <!-- Onde di luce (riflesso) -->
+      <div class="absolute inset-0 z-0 skew-x-12 translate-x-10 pointer-events-none opacity-40" style="background: linear-gradient(to top right, transparent, rgba(255,255,255,0.1), transparent);"></div>
+
+      <!-- Header Carta -->
+      <div class="relative z-10 flex justify-between items-start">
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-none drop-shadow-lg" style="color: #ffffff;">
+          Giorgio<br/>Di Cristofalo
+        </h1>
+        <p class="text-[10px] sm:text-xs font-bold uppercase tracking-widest opacity-90 mt-1.5 drop-shadow-md text-right max-w-[100px]" style="color: #ffffff; line-height: 1.2;">Software<br/>Engineer</p>
+      </div>
+
+      <!-- Footer Carta -->
+      <div class="relative z-10 flex flex-col">
+        <div class="flex justify-between items-end">
+          <div class="flex flex-col gap-1.5">
+            <a href="tel:+393317234406" class="text-1xl tracking-[0.1em] drop-shadow-lg transition-colors hover:text-white/80" style="color: #ffffff; text-decoration: none;">
+              +39 331 723 4406
+            </a>
+            <a href={`mailto:${PERSONAL_INFO.email}`} class="text-[13px] sm:text-sm font-semibold tracking-wider opacity-90 drop-shadow-md hover:opacity-100 transition-opacity" style="color: #ffffff; text-decoration: none;">
+              giorgiodicristofalo77@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Azioni Rapide sotto la carta -->
+    <div class="mt-10 flex flex-col items-center gap-6">
+      
+      <!-- Sito Web (Da solo in alto al centro) -->
+      <a href="/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+        <div class="w-16 h-16 rounded-full shadow-md flex items-center justify-center overflow-hidden border transition-colors duration-300" style="background-color: #ffffff; border-color: #e2e0da;">
+          <Image 
+            src={logoImage} 
+            alt="Website" 
+            class="w-full h-full object-cover"
+            width={64}
+            height={64}
+          />
+        </div>
+        <span class="text-xs font-medium" style="color: #8e8e93;">Sito</span>
+      </a>
+
+      <!-- LinkedIn, GitHub, Salva (Poco più sotto) -->
+      <div class="flex gap-6 mt-2">
+        <!-- LinkedIn -->
+        <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+          <div class="w-14 h-14 rounded-full shadow-sm flex items-center justify-center transition-colors duration-300" style="background-color: #ffffff; color: #2c2c2e;">
+            <Icon name="tabler:brand-linkedin" class="w-7 h-7" />
+          </div>
+          <span class="text-xs font-medium" style="color: #8e8e93;">LinkedIn</span>
+        </a>
+
+        <!-- GitHub -->
+        <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
+          <div class="w-14 h-14 rounded-full shadow-sm flex items-center justify-center transition-colors duration-300" style="background-color: #ffffff; color: #2c2c2e;">
+            <Icon name="tabler:brand-github" class="w-7 h-7" />
+          </div>
+          <span class="text-xs font-medium" style="color: #8e8e93;">GitHub</span>
+        </a>
+        
+        <!-- Salva in Rubrica -->
+        <a href="/giorgio.vcf" class="flex flex-col items-center gap-2 group">
+          <div class="w-14 h-14 rounded-full shadow-sm flex items-center justify-center transition-colors duration-300" style="background-color: #ffffff; color: #2c2c2e;">
+            <Icon name="tabler:address-book" class="w-7 h-7" />
+          </div>
+          <span class="text-xs font-medium" style="color: #8e8e93;">Salva</span>
+        </a>
+      </div>
+      
+    </div>
+  </main>
+</Layout>

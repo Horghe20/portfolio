@@ -273,59 +273,30 @@ export const PROJECTS: Project[] = [
 
 export const SERVICES: ServiceArea[] = [
   {
-    id: 'automation-delivery',
-    title: {
-      it: 'Automazione & Delivery',
-      en: 'Automation & Delivery'
-    },
-    description: {
-      it: 'Pipeline CI/CD resilienti, testing automatizzato, containerizzazione e sistemi che si aggiornano da soli senza downtime.',
-      en: 'Resilient CI/CD pipelines, automated testing suites, containerization, and self-updating systems with zero downtime.'
-    },
-    proof: {
-      it: 'Esperienza quotidiana su sistemi mission-critical per la navigazione aerea (IDSAirnav / Gruppo ENAV).',
-      en: 'Daily production experience with mission-critical air navigation systems (IDSAirnav / ENAV Group).'
-    },
-    linkedProjectId: 'central-parking',
-    keyPoints: {
-      it: [
-        'Pipeline di Continuous Integration & Deployment (GitHub Actions, GitLab CI, Docker)',
-        'Riduzione drastica dei tempi di rilascio e azzeramento regressioni in produzione',
-        'Monitoraggio attivo, metriche e rollback automatico in caso di anomalie'
-      ],
-      en: [
-        'Continuous Integration & Deployment pipelines (GitHub Actions, GitLab CI, Docker)',
-        'Dramatic lead-time reduction and elimination of production regressions',
-        'Live telemetry, health metrics, and automated rollback upon anomaly'
-      ]
-    },
-    icon: 'Terminal'
-  },
-  {
     id: 'fullstack-dev',
     title: {
-      it: 'Sviluppo Full-Stack',
-      en: 'Full-Stack Development'
+      it: 'Hai un\'idea ma non sai da dove partire?',
+      en: 'Have an idea but don\'t know where to start?'
     },
     description: {
-      it: 'Applicazioni web complete, veloci e manutenibili: dal design dell\'architettura database fino all\'interfaccia utente reattiva.',
-      en: 'Complete, performant, and maintainable web applications: from database schema design to responsive UI.'
+      it: 'Costruisco l\'intera applicazione: database, logica di business, pagine web e pagamenti integrati. Tu vedi il prodotto finito, io mi occupo di tutto il resto.',
+      en: 'I build the entire application: database, business logic, web interface, and integrated payments. You see the finished product — I take care of everything else.'
     },
     proof: {
-      it: 'Central Parking (in produzione con migliaia di voucher/mese) e Harbor Manager.',
-      en: 'Central Parking (live in production processing thousands of vouchers/mo) and Harbor Manager.'
+      it: 'Central Parking è live in produzione con migliaia di voucher gestiti ogni mese.',
+      en: 'Central Parking is live in production, processing thousands of vouchers every month.'
     },
     linkedProjectId: 'central-parking',
     keyPoints: {
       it: [
-        'Backend robusti in Python (Flask, Django, FastAPI) e Node.js con PostgreSQL / PostGIS',
-        'Frontend moderni e reattivi in Angular e React con state management dichiarativo',
-        'Integrazioni API esterne (gateway di pagamento Stripe, WhatsApp Meta, PDF ReportLab)'
+        'Dai requisiti al prodotto live in poche settimane, non mesi',
+        'Pagamenti, notifiche WhatsApp, PDF e molto altro: tutto già integrato',
+        'Nessun tecnicismo: ti aggiorno ad ogni step con linguaggio chiaro'
       ],
       en: [
-        'Robust Python backends (Flask, Django, FastAPI) and Node.js with PostgreSQL / PostGIS',
-        'Modern, reactive frontends in Angular and React with declarative state management',
-        'Third-party API integrations (Stripe checkout, WhatsApp Cloud API, ReportLab vector PDFs)'
+        'From requirements to a live product in weeks, not months',
+        'Payments, WhatsApp notifications, PDFs and more: all integrated',
+        'No jargon: I keep you updated at every step in plain language'
       ]
     },
     icon: 'Layers'
@@ -333,31 +304,60 @@ export const SERVICES: ServiceArea[] = [
   {
     id: 'applied-ai',
     title: {
-      it: 'AI Applicata & Ricerca',
-      en: 'Applied AI & Research'
+      it: 'E se il tuo sistema capisse cosa vuole il cliente prima ancora che te lo dica?',
+      en: 'What if your system knew what the customer wanted before they asked?'
     },
     description: {
-      it: 'Non l\'AI per moda, ma per risolvere problemi precisi: ottimizzazione vincolata, algoritmi di matching, NLP, kNN e difesa di modelli.',
-      en: 'Not AI hype, but precision problem-solving: constrained mathematical optimization, matching algorithms, NLP, and model defense.'
+      it: 'Costruisco sistemi che imparano dai tuoi dati e agiscono: raccomandano, ottimizzano, personalizzano. Non AI generica — intelligenza su misura per il tuo problema specifico.',
+      en: 'I build systems that learn from your data and act on it: recommending, optimising, personalising. Not generic AI — intelligence tailored to your specific problem.'
     },
     proof: {
-      it: 'Harbor Manager (OR-Tools CP-SAT), NutriFit (Celery/Redis/Gemini SSE), Ricerca NLP Univ. Pisa e Tesi BERT4Def.',
-      en: 'Harbor Manager (OR-Tools CP-SAT), NutriFit (Celery/Redis/Gemini SSE), NLP Research Univ. Pisa & BERT4Def Thesis.'
+      it: 'Harbor Manager: 0 conflitti di assegnazione su centinaia di posti barca. NutriFit: piano dietetico personalizzato generato in pochi secondi.',
+      en: 'Harbor Manager: zero assignment conflicts across hundreds of berths. NutriFit: personalised meal plan generated in seconds.'
     },
     linkedProjectId: 'harbor-manager',
     keyPoints: {
       it: [
-        'Ottimizzazione vincolata matematica (Google OR-Tools, CP-SAT, 2D packing)',
-        'Architetture agentiche asincrone con streaming real-time (Celery, Redis, SSE, Gemini)',
-        'Difesa e robustezza dei modelli NLP/LLM da attacchi avversari (Tesi Magistrale BERT4Def)'
+        'Il sistema sceglie, assegna e ottimizza da solo: tu rivedi solo le eccezioni',
+        'Chatbot e assistenti che parlano usando i tuoi dati, non risposte inventate',
+        'Ogni cliente riceve un\'esperienza personalizzata, su scala, senza sforzo manuale'
       ],
       en: [
-        'Mathematical constrained optimization (Google OR-Tools, CP-SAT, 2D packing)',
-        'Asynchronous agentic architectures with real-time token streaming (Celery, Redis, SSE, Gemini)',
-        'Defense and adversarial robustness for NLP/LLM models (Master\'s Thesis BERT4Def)'
+        'The system decides, assigns and optimises by itself: you only review exceptions',
+        'Chatbots and assistants that answer using your data, not made-up responses',
+        'Every customer gets a personalised experience, at scale, without manual effort'
       ]
     },
     icon: 'Cpu'
+  },
+  {
+    id: 'automation-delivery',
+    title: {
+      it: 'I tuoi strumenti non si parlano tra loro e perdi ore a copiare dati a mano?',
+      en: 'Your tools don\'t talk to each other and you waste hours copying data manually?'
+    },
+    description: {
+      it: 'Connetto i tuoi sistemi e automatizzo i passaggi manuali: il dato entra una volta e fluisce ovunque serva. Niente più copia-incolla tra gestionali, fogli Excel e email.',
+      en: 'I connect your systems and automate the manual hand-offs: data enters once and flows wherever it\'s needed. No more copy-pasting between tools, spreadsheets and emails.'
+    },
+    proof: {
+      it: 'Infrastrutture automatizzate in produzione h24 su sistemi di navigazione aerea (IDSAirnav / Gruppo ENAV): zero interventi manuali sui rilasci.',
+      en: 'Automated infrastructure running 24/7 on air navigation systems (IDSAirnav / ENAV Group): zero manual release interventions.'
+    },
+    linkedProjectId: 'central-parking',
+    keyPoints: {
+      it: [
+        'Colleghi CRM, e-commerce, gestionale e email: un\'unica fonte di verità',
+        'Processi schedulati che girano di notte e nei weekend, senza che tu ci pensi',
+        'Alert immediati se qualcosa si interrompe: sai sempre cosa sta succedendo'
+      ],
+      en: [
+        'Connect CRM, e-commerce, ERP and email: one single source of truth',
+        'Scheduled processes running overnight and on weekends, without you thinking about it',
+        'Instant alerts if anything breaks: you always know what\'s happening'
+      ]
+    },
+    icon: 'Terminal'
   }
 ];
 

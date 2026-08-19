@@ -7,12 +7,14 @@ interface Props {
   title?: string;
   description?: string;
   lang?: 'it' | 'en';
+  robots?: string;
 }
 
 const { 
   title = "Giorgio Di Cristofalo — Software Engineer",
   description = "Sito personale di Giorgio Di Cristofalo: Software Engineer a Palermo specializzato in automazione processi, pipeline CI/CD, sistemi critici e AI applicata (Google OR-Tools, NLP, Recommender Systems).",
-  lang = 'it' 
+  lang = 'it',
+  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
 } = Astro.props;
 
 const alternateLang = lang === 'it' ? 'en' : 'it';
@@ -33,7 +35,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
     <meta name="description" content={description} />
     <meta name="keywords" content="Giorgio Di Cristofalo, Software Engineer, Software Engineer Palermo, Automazione Processi, CI/CD, IDSAirnav, ENAV, Faidda Tech Lab, Google OR-Tools, AI Applicata, Ingegneria Informatica UniPa, Python, Angular, TypeScript" />
     <meta name="author" content="Giorgio Di Cristofalo" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={currentUrl} />
     <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
     <link rel="alternate" hreflang={lang} href={currentUrl} />

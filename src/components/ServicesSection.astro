@@ -49,7 +49,7 @@ const getIcon = (iconName: string) => {
               <Icon name={getIcon(service.icon)} class="w-5 h-5 text-accent" />
             </div>
             <span class="text-[11px] font-mono text-text-dim bg-surface-2 px-2.5 py-1 rounded border border-border">
-              {service.id === 'automation-delivery' ? '01 // OPS' : service.id === 'fullstack-dev' ? '02 // DEV' : '03 // AI'}
+              {service.id === 'fullstack-dev' ? '01 // DEV' : service.id === 'applied-ai' ? '02 // AI' : '03 // OPS'}
             </span>
           </div>
 
