@@ -35,14 +35,18 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
       (function() {
         try {
           var currentPath = window.location.pathname;
-          var userPref = localStorage.getItem('lang-pref');
-          // Se l'utente non ha una preferenza salvata
-          if (!userPref) {
-            var browserLang = navigator.language || navigator.userLanguage || '';
-            var isItalian = browserLang.toLowerCase().startsWith('it');
-            // Se non è italiano e si trova in una pagina non-inglese, reindirizza
-            if (!isItalian && !currentPath.startsWith('/en')) {
-              window.location.replace('/en' + (currentPath === '/' ? '' : currentPath) + window.location.hash);
+          // Pagine che NON hanno una versione /en (non soggette a redirect)
+          var excludedPaths = ['/vcard', '/giorgio.vcf'];
+          var isExcluded = excludedPaths.some(function(p) { return currentPath.startsWith(p); });
+          
+          if (!isExcluded) {
+            var userPref = localStorage.getItem('lang-pref');
+            if (!userPref) {
+              var browserLang = navigator.language || navigator.userLanguage || '';
+              var isItalian = browserLang.toLowerCase().startsWith('it');
+              if (!isItalian && !currentPath.startsWith('/en')) {
+                window.location.replace('/en' + (currentPath === '/' ? '' : currentPath) + window.location.hash);
+              }
             }
           }
         } catch (e) {}
