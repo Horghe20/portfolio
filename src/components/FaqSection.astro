@@ -11,27 +11,10 @@ const t = useTranslations(lang);
 <section id="faq-aeo" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
   
   <!-- Header -->
-  <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-border pb-6">
-    <div>
-      <span class="text-xs font-bold uppercase tracking-widest text-text-dim flex items-center space-x-1.5 mb-2">
-        <Icon name="tabler:robot" class="w-3.5 h-3.5 text-accent" />
-        <span>{t('faq.tag')}</span>
-      </span>
-      <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
-        {t('faq.title')}
-      </h2>
-    </div>
-
-    <!-- Action Button for llms.txt -->
-    <div class="mt-4 md:mt-0 flex items-center space-x-2">
-      <button
-        id="open-llms-modal"
-        class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-sm bg-surface text-text border border-border hover:border-accent hover:bg-surface-2 text-xs font-mono transition-colors cursor-pointer shadow-xs"
-      >
-        <Icon name="tabler:file-text" class="w-3.5 h-3.5 text-accent" />
-        <span>{t('faq.viewLlms')}</span>
-      </button>
-    </div>
+  <div class="mb-10 border-b border-border pb-6">
+    <h2 class="text-3xl sm:text-5xl font-bold text-text tracking-tight">
+      {t('faq.title')}
+    </h2>
   </div>
 
   <!-- Accordion List -->

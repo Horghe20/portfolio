@@ -284,12 +284,26 @@ const t = useTranslations(lang);
             body: JSON.stringify(data),
           });
 
+          const responseData = await response.json();
+
           if (response.ok) {
             form.classList.add('hidden');
             successBox.classList.remove('hidden');
             form.reset();
+          } else if (response.status === 422 || responseData?.error === 'Invalid email address') {
+            // Email non valida: avvisa l'utente senza spedire nulla
+            const emailInput = form.querySelector('input[name="email"]') as HTMLInputElement;
+            if (emailInput) {
+              emailInput.style.borderColor = 'var(--color-accent, #e53e3e)';
+              emailInput.focus();
+            }
+            alert(document.documentElement.lang === 'it'
+              ? "L'indirizzo email inserito non è valido. Controlla e riprova."
+              : "The email address you entered is not valid. Please check and try again.");
           } else {
-            alert("C'è stato un errore nell'invio del messaggio. Riprova più tardi.");
+            alert(document.documentElement.lang === 'it'
+              ? "C'è stato un errore nell'invio. Riprova più tardi."
+              : "There was an error sending your message. Please try again later.");
           }
         } catch (error) {
           console.error(error);
