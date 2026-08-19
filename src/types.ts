@@ -62,6 +62,7 @@ export interface Project {
     en: string;
   };
   abstractDiagramType: 'packing' | 'agent_stream' | 'qr_pipeline' | 'tender_matching' | 'spi_icmp' | 'scoring_graph';
+  image?: string;
 }
 
 export interface ServiceArea {

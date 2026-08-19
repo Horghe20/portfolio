@@ -63,7 +63,8 @@ export const PROJECTS: Project[] = [
       { label: { it: 'Tempo calcolo piano', en: 'Plan calculation time' }, value: '< 2.4s' },
       { label: { it: 'Vincoli gestiti', en: 'Constraints handled' }, value: '100% hard' }
     ],
-    abstractDiagramType: 'packing'
+    abstractDiagramType: 'packing',
+    image: '/images/projects/harbor-manager.webp'
   },
   {
     id: 'central-parking',
@@ -102,7 +103,9 @@ export const PROJECTS: Project[] = [
       { label: { it: 'Voucher inviati/mese', en: 'Vouchers sent/mo' }, value: '3,000+' },
       { label: { it: 'Disponibilità', en: 'Uptime' }, value: '99.9%' }
     ],
-    abstractDiagramType: 'qr_pipeline'
+    demoUrl: 'https://parking-manager-fe.vercel.app/',
+    abstractDiagramType: 'qr_pipeline',
+    image: '/images/projects/central-parking.webp'
   },
   {
     id: 'esn-buddy-program',
@@ -145,9 +148,10 @@ export const PROJECTS: Project[] = [
       it: 'Demo pubblica sandbox attiva con ruoli Admin e Studente preconfigurati per test immediato.',
       en: 'Public sandbox demo active with preconfigured Admin and Student roles for instant testing.'
     },
-    demoUrl: 'https://github.com/Horghe20',
+    demoUrl: 'https://esn-buddy-program.vercel.app/',
     repoUrl: 'https://github.com/Horghe20',
-    abstractDiagramType: 'scoring_graph'
+    abstractDiagramType: 'scoring_graph',
+    image: '/images/projects/esn-buddy-program.webp'
   },
   {
     id: 'match-bandi-gara',
@@ -185,7 +189,8 @@ export const PROJECTS: Project[] = [
       { label: { it: 'Precisione screening', en: 'Screening precision' }, value: '91%' },
       { label: { it: 'Velocità qualifica', en: 'Tender screening speed' }, value: 'x10' }
     ],
-    abstractDiagramType: 'tender_matching'
+    abstractDiagramType: 'tender_matching',
+    image: '/images/projects/match-bandi-gara.webp'
   },
   {
     id: 'network-tester',
@@ -224,7 +229,9 @@ export const PROJECTS: Project[] = [
       { label: { it: 'Memoria SRAM usata', en: 'SRAM footprint' }, value: '< 1.8 KB' },
       { label: { it: 'Consumo', en: 'Power draw' }, value: '180 mA' }
     ],
-    abstractDiagramType: 'spi_icmp'
+    repoUrl: 'https://github.com/Horghe20/EthernetTester',
+    abstractDiagramType: 'spi_icmp',
+    image: '/images/projects/network-tester.webp'
   },
   {
     id: 'nutrifit',
@@ -267,7 +274,9 @@ export const PROJECTS: Project[] = [
       { label: { it: 'Streaming update', en: 'SSE Stream delay' }, value: 'Realtime' },
       { label: { it: 'Throughput worker', en: 'Async scalability' }, value: '100% async' }
     ],
-    abstractDiagramType: 'agent_stream'
+    demoUrl: 'https://www.nutrifitai.it/',
+    abstractDiagramType: 'agent_stream',
+    image: '/images/projects/nutrifit.webp'
   }
 ];
 

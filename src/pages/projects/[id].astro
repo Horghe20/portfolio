@@ -169,18 +169,47 @@ const renderArchitecturalDiagram = (diagramType: string) => {
         {typeof project.tagline === 'object' ? project.tagline[lang] : project.tagline}
       </p>
       
-      {project.repoUrl && (
-        <a
-          href={project.repoUrl}
-          target="_blank"
-          rel="noreferrer"
-          class="absolute top-0 right-0 sm:top-2 sm:right-2 inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm bg-surface text-text border border-border text-xs font-mono hover:border-accent hover:text-accent transition-colors shadow-xs"
-        >
-          <Icon name="tabler:brand-github" class="w-4 h-4" />
-          <span class="hidden sm:inline">GitHub</span>
-        </a>
-      )}
+      <div class="absolute top-0 right-0 sm:top-2 sm:right-2 flex items-center space-x-2">
+        {project.repoUrl && (
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm bg-surface text-text border border-border text-xs font-mono hover:border-accent hover:text-accent transition-colors shadow-xs"
+          >
+            <Icon name="tabler:brand-github" class="w-4 h-4" />
+            <span class="hidden sm:inline">GitHub</span>
+          </a>
+        )}
+        {project.demoUrl && (
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm bg-accent text-accent-contrast border border-accent text-xs font-mono hover:brightness-110 transition-all shadow-xs"
+          >
+            <Icon name="tabler:external-link" class="w-4 h-4" />
+            <span class="hidden sm:inline">Live Demo</span>
+          </a>
+        )}
+      </div>
     </div>
+
+    <!-- Preview Image -->
+    {project.image && (
+      <div class="mb-10">
+        <div class="w-full bg-surface-2 rounded-xl p-2 sm:p-4 border border-border shadow-sm flex items-center justify-center">
+          <div class="relative w-full rounded-lg border border-border shadow-md overflow-hidden flex flex-col bg-surface">
+            <div class="h-5 sm:h-6 bg-surface-2 border-b border-border w-full flex items-center px-3 space-x-1.5 sm:space-x-2 shrink-0">
+              <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#FF5F56]"></div>
+              <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#FFBD2E]"></div>
+              <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#27C93F]"></div>
+            </div>
+            <img src={project.image} alt={project.title} class="w-full h-auto object-cover object-top" loading="lazy" decoding="async" />
+          </div>
+        </div>
+      </div>
+    )}
 
     <!-- Tab Navigation (Client-side via JS) -->
     <div class="flex border-b border-border bg-surface text-xs font-mono overflow-x-auto scrollbar-none mb-8" id="project-tabs">
