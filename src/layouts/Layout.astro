@@ -30,6 +30,25 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     
+    <!-- Auto-Redirect based on browser language -->
+    <script is:inline>
+      (function() {
+        try {
+          var currentPath = window.location.pathname;
+          var userPref = localStorage.getItem('lang-pref');
+          // Se l'utente non ha una preferenza salvata
+          if (!userPref) {
+            var browserLang = navigator.language || navigator.userLanguage || '';
+            var isItalian = browserLang.toLowerCase().startsWith('it');
+            // Se non è italiano e si trova in una pagina non-inglese, reindirizza
+            if (!isItalian && !currentPath.startsWith('/en')) {
+              window.location.replace('/en' + (currentPath === '/' ? '' : currentPath) + window.location.hash);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Primary SEO Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />

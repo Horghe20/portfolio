@@ -13,11 +13,6 @@ import cardBg from '../assets/card-background.jpg';
 >
   <!-- Sfondo stile Apple Wallet (grigio chiaro) -->
   <main class="min-h-[100dvh] bg-[#f2f2f7] flex flex-col items-center justify-center p-4 sm:p-8 font-sans" style="background-color: #f2f2f7;">
-    
-    <!-- Pulsante "Fatto" -->
-    <div class="absolute top-6 right-6">
-      <a href="/" class="font-semibold text-lg hover:opacity-80 transition-opacity" style="color: #007aff;">Fatto</a>
-    </div>
 
     <!-- Container Carta di Credito -->
     <!-- Utilizziamo stili inline per le dimensioni e i bordi smussati per evitare problemi con la configurazione Tailwind -->
@@ -108,4 +103,15 @@ import cardBg from '../assets/card-background.jpg';
       
     </div>
   </main>
+
+  <script>
+    // Rileva la lingua del browser dell'utente
+    document.addEventListener('DOMContentLoaded', () => {
+      const userLang = navigator.language || (navigator as any).userLanguage;
+      // Se la lingua non inizia con "it", traduci i testi in inglese
+      if (!userLang.toLowerCase().startsWith('it')) {
+        // I testi possono essere tradotti aggiungendo gli ID se necessario
+      }
+    });
+  </script>
 </Layout>
