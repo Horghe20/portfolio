@@ -25,7 +25,7 @@ import cardBg from '../assets/card-background.jpg';
       <Image 
         src={cardBg} 
         alt="Card Background" 
-        class="absolute inset-0 w-full h-full object-cover z-0"
+        class="absolute inset-0 w-full h-full object-cover z-0 animate-ken-burns"
         width={800}
       />
       <!-- Overlay scuro per garantire un alto contrasto con il testo bianco -->
@@ -115,3 +115,15 @@ import cardBg from '../assets/card-background.jpg';
     });
   </script>
 </Layout>
+
+<style>
+  @keyframes ken-burns {
+    0% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.08) translate(-2%, -1%); }
+    100% { transform: scale(1) translate(0, 0); }
+  }
+  .animate-ken-burns {
+    animation: ken-burns 18s ease-in-out infinite;
+    transform-origin: center center;
+  }
+</style>
