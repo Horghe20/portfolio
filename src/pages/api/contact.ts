@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
-import { resolveMx } from 'dns/promises';
 
 export const prerender = false;
 
@@ -20,26 +19,14 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400 });
     }
 
-    // 1. Validazione formato email
+    // Validazione formato email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return new Response(JSON.stringify({ error: 'Invalid email address' }), { status: 422 });
     }
 
-    // 2. Validazione DNS: verifica che il dominio abbia record MX (server di posta reali)
-    const emailDomain = email.split('@')[1];
-    try {
-      const mxRecords = await resolveMx(emailDomain);
-      if (!mxRecords || mxRecords.length === 0) {
-        return new Response(JSON.stringify({ error: 'Invalid email address' }), { status: 422 });
-      }
-    } catch {
-      // resolveMx lancia errore se il dominio non esiste o non ha record MX
-      return new Response(JSON.stringify({ error: 'Invalid email address' }), { status: 422 });
-    }
-
     const adminEmail = 'giorgiodicristofalo77@gmail.com';
-    const senderEmail = 'Portfolio Contact <onboarding@resend.dev>'; // Da cambiare in no-reply@giorgiodicristofalo.com
+    const senderEmail = 'Portfolio Contact <no-reply@giorgiodicristofalo.com>'; // Richiede dominio verificato su resend.com/domains
 
     // 3. Prima invia la mail di cortesia al cliente
     //    Se fallisce (email rifiutata dal provider), blocchiamo tutto e avvisiamo l'utente
