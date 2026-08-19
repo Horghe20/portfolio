@@ -266,7 +266,8 @@ const t = useTranslations(lang);
         e.preventDefault();
         
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const data = Object.fromEntries(formData.entries()) as Record<string, any>;
+        data.lang = document.documentElement.lang || 'it';
 
         // Bot trap
         if (data.honeypot) {
