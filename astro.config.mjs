@@ -21,5 +21,10 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: false,
     }
+  },
+  
+  trailingSlash: 'never',
+  build: {
+    format: 'file'
   }
 });
