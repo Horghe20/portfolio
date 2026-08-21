@@ -1,0 +1,5 @@
+Contact: mailto:giorgiodicristofalo77@gmail.com
+Preferred-Languages: it, en
+Canonical: https://giorgiodicristofalo.it/.well-known/security.txt
+Policy: If you discover a security vulnerability or unexpected behaviour on this site, please report it via email. I'll respond within 48 hours.
+Expires: 2026-12-31T23:59:59.000Z

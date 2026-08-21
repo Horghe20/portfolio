@@ -1,0 +1,24 @@
+/* TEAM */
+Developer & Designer: Giorgio Di Cristofalo
+Role: Software Engineer
+Location: Palermo, Sicilia, Italy
+GitHub: https://github.com/Horghe20
+LinkedIn: https://www.linkedin.com/in/giorgiodicristofalo/
+Community: Faidda Tech Lab (Treasurer) — https://faiddatechlab.com/
+
+/* STACK */
+Framework: Astro
+Styling: Tailwind CSS v4
+Hosting: Vercel
+Language: TypeScript
+i18n: IT + EN
+
+/* THANKS */
+Astro team — for the best static site generator
+Vercel — for seamless edge deployment
+Faidda Tech Lab — for the community and the espresso
+
+/* SITE */
+Last update: 2026
+Standards: HTML5, CSS3, WCAG 2.1
+Components: Astro components + vanilla JS

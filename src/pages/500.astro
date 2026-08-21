@@ -6,37 +6,37 @@ const lang = (Astro.preferredLocale ?? 'it') as 'it' | 'en';
 
 const copy = {
   it: {
-    tag: 'Pagina non trovata',
-    title: 'Questo percorso non esiste.',
-    subtitle: 'Il link potrebbe essere rotto, la pagina rimossa, o hai digitato un URL errato. Nessun problema — ti riporto dove serve.',
-    ctaHome: 'Torna alla home',
-    ctaContact: 'Contattami',
-    breadcrumb: '/ pagina-non-trovata',
-    hint: 'Non è un bug. È un feature mancante.',
+    tag: 'Errore del server',
+    title: 'Qualcosa è andato storto.',
+    subtitle: 'Si è verificato un errore interno del server. Non è colpa tua — sto già investigando. Riprova tra qualche secondo o contattami direttamente.',
+    ctaHome: 'Riprova dalla home',
+    ctaContact: 'Segnalami il problema',
+    breadcrumb: '/ errore-del-server',
+    hint: 'Ogni sistema critico ha un piano B. Sto lavorando al piano B.',
     terminalLines: [
-      '$ cd /this-page',
-      'bash: /this-page: No such file or directory',
-      '$ ls /',
-      'home/  en/  projects/  vcard  ...',
-      '$ cd home/',
-      '→ Reindirizzamento in corso...',
+      '$ ./server --health-check',
+      'ERROR: Internal server error (500)',
+      'TRACE: Unexpected exception caught',
+      '→ Notifying engineer on-call...',
+      '$ systemctl restart portfolio.service',
+      '✓ Recovery in progress...',
     ],
   },
   en: {
-    tag: 'Page not found',
-    title: "This route doesn't exist.",
-    subtitle: "The link may be broken, the page removed, or you typed the wrong URL. No worries — I'll get you back on track.",
-    ctaHome: 'Back to home',
-    ctaContact: 'Contact me',
-    breadcrumb: '/ page-not-found',
-    hint: 'Not a bug. Just a missing feature.',
+    tag: 'Server error',
+    title: 'Something went wrong.',
+    subtitle: "An internal server error occurred. It's not your fault — I'm already looking into it. Try again in a few seconds or contact me directly.",
+    ctaHome: 'Try again from home',
+    ctaContact: 'Report the issue',
+    breadcrumb: '/ server-error',
+    hint: 'Every critical system has a plan B. Working on plan B.',
     terminalLines: [
-      '$ cd /this-page',
-      'bash: /this-page: No such file or directory',
-      '$ ls /',
-      'home/  en/  projects/  vcard  ...',
-      '$ cd home/',
-      '→ Redirecting...',
+      '$ ./server --health-check',
+      'ERROR: Internal server error (500)',
+      'TRACE: Unexpected exception caught',
+      '→ Notifying engineer on-call...',
+      '$ systemctl restart portfolio.service',
+      '✓ Recovery in progress...',
     ],
   },
 };
@@ -45,18 +45,18 @@ const t = copy[lang] ?? copy['it'];
 const homeUrl = lang === 'en' ? '/en/' : '/';
 const contactUrl = lang === 'en' ? '/en/#contact' : '/#contact';
 
-Astro.response.status = 404;
+Astro.response.status = 500;
 ---
 
 <Layout
-  title={`404 — ${t.tag} | Giorgio Di Cristofalo`}
+  title={`500 — ${t.tag} | Giorgio Di Cristofalo`}
   description={t.subtitle}
   lang={lang}
   robots="noindex, nofollow"
 >
   <main class="min-h-screen bg-bg flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden">
 
-    <!-- Ambient background glows -->
+    <!-- Ambient background glows (warm/red tone for error) -->
     <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="glow-orb glow-1"></div>
       <div class="glow-orb glow-2"></div>
@@ -64,7 +64,7 @@ Astro.response.status = 404;
     </div>
 
     <!-- Main content -->
-    <div class="card-404 relative z-10 w-full max-w-2xl">
+    <div class="card-500 relative z-10 w-full max-w-2xl">
 
       <!-- Top breadcrumb bar -->
       <div class="flex items-center space-x-2 mb-8">
@@ -75,18 +75,19 @@ Astro.response.status = 404;
           <span>giorgiodicristofalo.it</span>
         </a>
         <span class="font-mono text-xs text-border">/</span>
-        <span class="font-mono text-xs text-accent">{t.breadcrumb}</span>
+        <span class="font-mono text-xs" style="color:#f87171">{t.breadcrumb}</span>
       </div>
 
       <!-- Status badge -->
-      <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs font-mono text-text-dim mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span>
-        <span>HTTP 404 · {t.tag}</span>
+      <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border mb-6"
+        style="border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.05);">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#f87171;"></span>
+        <span class="text-xs font-mono" style="color:#f87171;">HTTP 500 · {t.tag}</span>
       </div>
 
-      <!-- Big 404 -->
+      <!-- Big 500 -->
       <div class="relative mb-2">
-        <span class="code-404 select-none" aria-hidden="true">404</span>
+        <span class="code-500 select-none" aria-hidden="true">500</span>
       </div>
 
       <!-- Title + subtitle -->
@@ -100,12 +101,12 @@ Astro.response.status = 404;
       <!-- Terminal block -->
       <div class="terminal-block mb-8">
         <div class="terminal-header">
-          <span class="dot bg-red-400"></span>
-          <span class="dot bg-yellow-400"></span>
-          <span class="dot bg-green-400"></span>
-          <span class="ml-2 text-xs font-mono text-white opacity-30">zsh · ~</span>
+          <span class="dot" style="background:#f87171;"></span>
+          <span class="dot" style="background:#facc15;"></span>
+          <span class="dot" style="background:#4ade80;"></span>
+          <span class="ml-2 text-xs font-mono text-white opacity-30">zsh · ~ [CRITICAL]</span>
         </div>
-        <div class="terminal-body" id="terminal-output">
+        <div class="terminal-body" id="terminal-output-500">
         </div>
       </div>
 
@@ -113,18 +114,19 @@ Astro.response.status = 404;
       <div class="flex flex-wrap gap-3">
         <a
           href={homeUrl}
-          id="cta-home-404"
-          class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-sm bg-accent text-accent-contrast font-bold text-sm hover:opacity-90 transition-all shadow-md shadow-accent/20 hover:shadow-lg hover:-translate-y-px"
+          id="cta-home-500"
+          class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-sm font-bold text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-px"
+          style="background:#f87171;color:#fff;"
         >
-          <Icon name="tabler:arrow-left" class="w-4 h-4" />
+          <Icon name="tabler:refresh" class="w-4 h-4" />
           <span>{t.ctaHome}</span>
         </a>
         <a
           href={contactUrl}
-          id="cta-contact-404"
+          id="cta-contact-500"
           class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-sm border border-border bg-surface text-text font-semibold text-sm hover:border-accent hover:text-accent transition-all"
         >
-          <Icon name="tabler:mail" class="w-4 h-4" />
+          <Icon name="tabler:bug" class="w-4 h-4" />
           <span>{t.ctaContact}</span>
         </a>
       </div>
@@ -136,25 +138,24 @@ Astro.response.status = 404;
 
 <script define:vars={{ terminalLines: t.terminalLines }}>
   (function() {
-  const output = document.getElementById('terminal-output');
+  const output = document.getElementById('terminal-output-500');
   if (!output) return;
 
-  const lineTypes = ['cmd', 'err', 'info', 'info', 'cmd', 'ok'];
+  const lineTypes = ['cmd', 'err', 'err', 'warn', 'cmd', 'ok'];
   const colors = {
-    cmd: '#5B7FA0',
-    err: '#f87171',
-    info: '#71727A',
-    ok: '#4ade80',
+    cmd:  '#5B7FA0',
+    err:  '#f87171',
+    warn: '#facc15',
+    ok:   '#4ade80',
   };
 
   let lineIndex = 0;
   let charIndex = 0;
   let currentEl = null;
-  let charEls = [];
 
   function nextLine() {
     if (lineIndex >= terminalLines.length) return;
-    const type = lineTypes[lineIndex] || 'info';
+    const type = lineTypes[lineIndex] || 'cmd';
     const color = colors[type];
 
     currentEl = document.createElement('div');
@@ -169,7 +170,6 @@ Astro.response.status = 404;
 
     output.appendChild(currentEl);
     charIndex = 0;
-    charEls = [];
     typeChar(terminalLines[lineIndex]);
   }
 
@@ -179,11 +179,10 @@ Astro.response.status = 404;
       span.textContent = text[charIndex];
       currentEl.appendChild(span);
       charIndex++;
-      const delay = Math.random() * 28 + 12;
-      setTimeout(() => typeChar(text), delay);
+      setTimeout(() => typeChar(text), Math.random() * 28 + 12);
     } else {
       lineIndex++;
-      const pause = lineIndex === 2 ? 450 : 200;
+      const pause = lineIndex === 3 ? 600 : 220;
       setTimeout(nextLine, pause);
     }
   }
@@ -197,13 +196,12 @@ Astro.response.status = 404;
     position: absolute;
     border-radius: 9999px;
     filter: blur(90px);
-    opacity: 0.10;
     pointer-events: none;
   }
   .glow-1 {
     width: 520px;
     height: 520px;
-    background: radial-gradient(circle, #5B7FA0 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(248,113,113,0.18) 0%, transparent 70%);
     top: -140px;
     left: -120px;
     animation: float1 9s ease-in-out infinite;
@@ -211,7 +209,7 @@ Astro.response.status = 404;
   .glow-2 {
     width: 420px;
     height: 420px;
-    background: radial-gradient(circle, #7BA7C7 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(91,127,160,0.10) 0%, transparent 70%);
     bottom: -100px;
     right: -80px;
     animation: float2 11s ease-in-out infinite;
@@ -220,8 +218,8 @@ Astro.response.status = 404;
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(91,127,160,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(91,127,160,0.035) 1px, transparent 1px);
+      linear-gradient(rgba(248,113,113,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248,113,113,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
@@ -234,7 +232,7 @@ Astro.response.status = 404;
     50% { transform: translate(-18px, -26px); }
   }
 
-  .card-404 {
+  .card-500 {
     animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
   @keyframes fadeUp {
@@ -242,19 +240,19 @@ Astro.response.status = 404;
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .code-404 {
+  .code-500 {
     display: block;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
     font-size: clamp(5.5rem, 18vw, 9.5rem);
     line-height: 1;
     letter-spacing: -0.05em;
-    background: linear-gradient(125deg, #C8C5BC 0%, #5B7FA0 55%, #DDDBD5 100%);
+    background: linear-gradient(125deg, #E2E0DA 0%, #f87171 50%, #DDDBD5 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 48px rgba(91,127,160,0.18));
+    filter: drop-shadow(0 0 48px rgba(248,113,113,0.20));
     margin-left: -3px;
     animation: shimmer 5s ease-in-out infinite;
   }
@@ -265,10 +263,10 @@ Astro.response.status = 404;
 
   .terminal-block {
     background: #18191C;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(248,113,113,0.12);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 8px 36px rgba(0,0,0,0.20), 0 0 0 1px rgba(91,127,160,0.06);
+    box-shadow: 0 8px 36px rgba(0,0,0,0.20), 0 0 0 1px rgba(248,113,113,0.05);
   }
   .terminal-header {
     display: flex;
