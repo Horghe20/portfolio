@@ -374,13 +374,15 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'faidda-tech-lab',
     period: 'Mag 2026 – Oggi',
+    startDate: '2026-05',
+    column: 'right',
     title: {
       it: 'Tesoriere & Organizzatore Community',
       en: 'Treasurer & Community Organizer'
     },
     organization: 'Faidda Tech Lab',
     location: 'Palermo, Sicilia',
-    category: 'community',
+    category: 'volontariato',
     description: {
       it: "Tesoriere di Faidda Tech Lab, la rete che aggrega freelance, startup e professionisti ICT in Sicilia. Gestione finanziaria dell'associazione e supporto organizzativo agli eventi della community, da Sicily&Coding in poi.",
       en: "Treasurer at Faidda Tech Lab, the network connecting freelancers, startups, and ICT professionals across Sicily. Handles the association's finances and helps organize community events, including Sicily&Coding."
@@ -393,6 +395,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'idsairnav-enav',
     period: 'Giu 2025 – Oggi',
+    startDate: '2025-06',
+    column: 'left',
     title: {
       it: 'Software Engineer',
       en: 'Software Engineer'
@@ -412,6 +416,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'cyberchallenge',
     period: '2025',
+    startDate: '2025-01',
+    column: 'right',
     title: {
       it: 'CyberChallenge.IT',
       en: 'CyberChallenge.IT'
@@ -427,6 +433,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'magistrale',
     period: '2022 – 2025',
+    startDate: '2022-09',
+    column: 'left',
     title: {
       it: 'Laurea Magistrale in Ingegneria Informatica (110 e Lode)',
       en: "Master's Degree in Computer Engineering (110/110 Summa Cum Laude)"
@@ -448,6 +456,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'ricerca-pisa',
     period: 'Lug – Dic 2024',
+    startDate: '2024-07',
+    column: 'right',
     title: {
       it: 'Ricerca NLP & Recommender Systems',
       en: 'Research in NLP & Recommender Systems'
@@ -464,6 +474,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'esn-web-manager',
     period: 'Set 2024 – Ago 2026',
+    startDate: '2024-09',
+    column: 'right',
     title: {
       it: 'Web Manager & Coordinatore Tech',
       en: 'Web Manager & Tech Coordinator'
@@ -480,6 +492,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'erasmus-pardubice',
     period: 'Feb – Giu 2024',
+    startDate: '2024-02',
+    column: 'right',
     title: {
       it: 'Erasmus+ Mobility Exchange',
       en: 'Erasmus+ Mobility Exchange'
@@ -496,6 +510,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'cert-plsql',
     period: '2024',
+    startDate: '2024-06',
+    column: 'right',
     title: {
       it: 'Database Programming with PL/SQL',
       en: 'Database Programming with PL/SQL'
@@ -512,6 +528,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'ricerca-biomedicale',
     period: 'Apr – Nov 2023',
+    startDate: '2023-04',
+    column: 'right',
     title: {
       it: 'Ricerca Software Biomedicale (Simulatore TMS)',
       en: 'Biomedical Software Research (TMS Simulator)'
@@ -528,6 +546,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'samsung-innovation',
     period: 'Estate 2022',
+    startDate: '2022-07',
+    column: 'right',
     title: {
       it: 'Samsung Innovation Campus — AI & IoT',
       en: 'Samsung Innovation Campus — AI & IoT'
@@ -544,6 +564,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'triennale',
     period: '2019 – 2022',
+    startDate: '2019-09',
+    column: 'left',
     title: {
       it: 'Laurea Triennale in Ingegneria Informatica (110/110)',
       en: "Bachelor's Degree in Computer Engineering (110/110)"
@@ -561,6 +583,8 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
   {
     id: 'stage-pos',
     period: 'Ott 2018 – Ago 2019',
+    startDate: '2018-10',
+    column: 'left',
     title: {
       it: 'Stage Software & Sistemi',
       en: 'Software & Systems Internship'

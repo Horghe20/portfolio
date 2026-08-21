@@ -11,167 +11,248 @@ const t = useTranslations(lang);
 
 const nodes = [
   {
-    id: 0,
-    x: 70,
-    y: 90,
-    label: lang === 'it' ? 'Ingest & Requisiti' : 'Ingest & Needs',
-    sub: lang === 'it' ? 'Dati, vincoli, workflow' : 'Data, constraints, ops',
-    tech: 'PostGIS / API',
-    category: 'input'
+    id: 0, x: 80, y: 70, t: 0,
+    label: '1. Requisiti', sub: 'Interviste / User Stories',
+    tech: 'Interviste / User Stories',
+    labelY: 40, subY: 52
   },
   {
-    id: 1,
-    x: 230,
-    y: 50,
-    label: lang === 'it' ? 'Motore AI & Solver' : 'AI & Solver Engine',
-    sub: lang === 'it' ? 'OR-Tools / NLP / kNN' : 'OR-Tools / NLP / kNN',
-    tech: 'CP-SAT / Gemini / Vector',
-    category: 'ai'
+    id: 1, x: 255, y: 70, t: 1,
+    label: '2. Analisi', sub: 'Modellazione / Vincoli',
+    tech: 'Modellazione / Vincoli',
+    labelY: 40, subY: 52
   },
   {
-    id: 2,
-    x: 390,
-    y: 130,
-    label: lang === 'it' ? 'Pipeline CI/CD' : 'CI/CD Pipeline',
-    sub: lang === 'it' ? 'Test automatici & Docker' : 'Automated tests & Docker',
-    tech: 'GitHub Actions / Linux',
-    category: 'delivery'
+    id: 2, x: 430, y: 70, t: 2,
+    label: '3. Implementazione', sub: 'Flask / Angular / Java',
+    tech: 'Flask / Angular / Java',
+    labelY: 40, subY: 52
   },
   {
-    id: 3,
-    x: 550,
-    y: 70,
-    label: lang === 'it' ? 'Sistemi Critici' : 'Critical Delivery',
-    sub: lang === 'it' ? 'Zero-downtime & Uptime' : 'Zero-downtime & Uptime',
-    tech: 'ATM / Web in Prod',
-    category: 'prod'
+    id: 3, x: 430, y: 170, t: 2.57,
+    label: 'Motore AI & Solver', sub: 'OR-Tools / NLP / kNN / LLMs API',
+    tech: 'OR-Tools / NLP / kNN / LLMs API',
+    labelY: 200, subY: 212
+  },
+  {
+    id: 4, x: 605, y: 70, t: 3,
+    label: '4. Delivery', sub: 'CI/CD / Docker / Test automatici',
+    tech: 'CI/CD / Docker / Test automatici',
+    labelY: 40, subY: 52
+  },
+  {
+    id: 5, x: 780, y: 70, t: 4,
+    label: '5. Manutenzione', sub: 'Monitoring / Alerting',
+    tech: 'Monitoring / Alerting',
+    labelY: 40, subY: 52
   }
 ];
 
-const defaultMessage = lang === 'it' ? 'Dai vincoli di business al rilascio deterministico in produzione.' : 'From complex business constraints to deterministic production release.';
+const defaultMessage = lang === 'it' ? 'Dai requisiti al rilascio continuo in produzione.' : 'From initial needs to continuous production release.';
+const mainPath = "M 80 70 L 780 70";
+const fullPath = "M 80 70 L 780 70 M 430 70 L 430 170";
 ---
 
-<div class="w-full max-w-2xl mx-auto my-4 p-4 rounded-xl bg-surface border border-border shadow-sm relative overflow-hidden backdrop-blur-sm group" id="flowchart-container" data-default-message={defaultMessage}>
-  <div class="flex items-center justify-between mb-3 px-2">
-    <div class="flex items-center space-x-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-      <span class="text-xs font-mono text-text-dim uppercase tracking-wider">
-        {t('hero.flowchart.tag')}
-      </span>
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @keyframes nodePulseOuter {
+    0%, 15%, 100% { stroke: var(--color-border); r: 14px; }
+    5% { stroke: var(--color-accent); r: 17px; }
+  }
+  @keyframes nodePulseInner {
+    0%, 15%, 100% { fill: var(--color-text-dim); r: 4px; }
+    5% { fill: var(--color-accent); r: 6px; }
+  }
+  @keyframes nodePulseLabel {
+    0%, 15%, 100% { fill: var(--color-text); }
+    5% { fill: var(--color-accent); font-weight: 600; }
+  }
+  
+  .animate-pulse-outer { animation: nodePulseOuter 4s linear infinite; }
+  .animate-pulse-inner { animation: nodePulseInner 4s linear infinite; }
+  .animate-pulse-label { animation: nodePulseLabel 4s linear infinite; }
+
+  /* Hover overrides */
+  .flowchart-node.node-active .fc-outer, .flowchart-node:hover .fc-outer {
+    stroke: var(--color-accent) !important;
+    r: 18px !important;
+    animation: none;
+  }
+  .flowchart-node.node-active .fc-inner, .flowchart-node:hover .fc-inner {
+    fill: var(--color-accent) !important;
+    r: 6px !important;
+    filter: url(#accentGlow) !important;
+    animation: none;
+  }
+  .flowchart-node.node-active .fc-label, .flowchart-node:hover .fc-label {
+    fill: var(--color-accent) !important;
+    font-weight: 600 !important;
+    animation: none;
+  }
+</style>
+
+<div id="flowchart-section" class="w-full relative">
+  <div id="flowchart-sticky" class="sticky top-[15vh] w-full z-10 transition-transform duration-300">
+    <div class="w-full max-w-3xl mx-auto my-4 p-4 rounded-xl bg-surface border border-border shadow-sm relative overflow-hidden backdrop-blur-sm group" id="flowchart-container" data-default-message={defaultMessage}>
+      <div class="flex items-center justify-between mb-3 px-2 relative z-10">
+        <div class="flex items-center space-x-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+          <span class="text-xs font-mono text-text-dim uppercase tracking-wider">
+            {t('hero.flowchart.tag')}
+          </span>
+        </div>
+        <span class="text-[11px] font-mono text-accent bg-accent-soft px-2 py-0.5 rounded border border-border" id="flowchart-tech">
+          {t('hero.flowchart.hint')}
+        </span>
+      </div>
+
+      <div class="relative w-full overflow-hidden no-scrollbar pb-2" id="flowchart-scroll-container">
+        <div class="min-w-[780px] sm:min-w-0 w-full h-[220px] sm:h-[240px] mx-auto relative">
+          <!-- Gradient masks for scroll indication on mobile -->
+          <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none sm:hidden"></div>
+          <div class="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none sm:hidden"></div>
+          
+          <svg 
+            viewBox="0 0 860 240" 
+            class="w-full h-full overflow-visible"
+          >
+            <defs>
+              <linearGradient id="accentLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.4" />
+                <stop offset="50%" stop-color="var(--color-accent)" stop-opacity="1" />
+                <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.5" />
+              </linearGradient>
+
+              <filter id="accentGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+
+              <pattern id="gridPattern" width="24" height="24" patternUnits="userSpaceOnUse">
+                <path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" stroke-width="1" class="text-text-dim" />
+              </pattern>
+            </defs>
+
+            <!-- Background Blueprint Grid -->
+            <rect width="100%" height="100%" fill="url(#gridPattern)" class="opacity-[0.04] pointer-events-none" />
+
+            <!-- Background Connecting Path (Orthogonal) -->
+            <path
+              d={fullPath}
+              fill="none"
+              style="stroke: var(--color-border);"
+              stroke-width="2"
+            />
+
+            <!-- Animated Main Line -->
+            <path
+              id="flowchart-animated-line"
+              d={fullPath}
+              fill="none"
+              stroke="url(#accentLineGradient)"
+              stroke-width="2.5"
+              stroke-dasharray="1000"
+              stroke-dashoffset="1000"
+              class="transition-all duration-1000 ease-out motion-reduce:stroke-dashoffset-0"
+            />
+
+            <!-- Traveling Signal Pulse -->
+            <circle r="4" style="fill: var(--color-accent);" filter="url(#accentGlow)" class="motion-reduce:hidden opacity-0" id="flowchart-pulse">
+              <animateMotion
+                path={mainPath}
+                dur="4s"
+                repeatCount="indefinite"
+              />
+            </circle>
+
+            <!-- Traveling Signal Pulse Branch (AI) -->
+            <circle r="4" style="fill: var(--color-accent);" filter="url(#accentGlow)" class="motion-reduce:hidden opacity-0" id="flowchart-pulse-branch">
+              <animate
+                attributeName="opacity"
+                values="0; 0; 1; 1; 0; 0"
+                keyTimes="0; 0.499; 0.5; 0.642; 0.643; 1"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+              <animateMotion
+                path="M 430 70 L 430 170"
+                dur="4s"
+                keyTimes="0; 0.5; 0.6428; 1"
+                keyPoints="0; 0; 1; 1"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </circle>
+
+            <!-- Nodes -->
+            {nodes.map((node) => (
+              <g 
+                class="flowchart-node cursor-pointer transition-transform duration-200"
+                data-node-id={node.id}
+                data-node-tech={node.tech}
+                data-node-label={node.label}
+                data-node-sub={node.sub}
+              >
+                <!-- Outer Ring -->
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r="14"
+                  style={`fill: var(--color-surface); stroke: var(--color-border); animation-delay: ${node.t}s;`}
+                  stroke-width="2"
+                  class="fc-outer transition-all duration-200 animate-pulse-outer"
+                />
+
+                <!-- Inner Core -->
+                <circle
+                  cx={node.x}
+                  cy={node.y}
+                  r="4"
+                  style={`fill: var(--color-text-dim); animation-delay: ${node.t}s;`}
+                  class="fc-inner transition-all duration-200 animate-pulse-inner"
+                />
+
+                <!-- Label -->
+                <text
+                  x={node.x}
+                  y={node.labelY}
+                  text-anchor="middle"
+                  class="fc-label text-[11px] font-sans font-medium transition-all duration-200 animate-pulse-label"
+                  style={`fill: var(--color-text); animation-delay: ${node.t}s;`}
+                >
+                  {node.label}
+                </text>
+
+                <!-- Sub Badge -->
+                <text
+                  x={node.x}
+                  y={node.subY}
+                  text-anchor="middle"
+                  class="text-[9px] font-mono"
+                  style="fill: var(--color-text-dim);"
+                >
+                  {node.sub}
+                </text>
+              </g>
+            ))}
+          </svg>
+        </div>
+      </div>
+
+      <!-- Active node detail prompt -->
+      <div class="mt-1 pt-2 border-t border-border flex items-center justify-between text-xs text-text-dim relative z-10">
+        <span class="truncate" id="flowchart-desc">
+          {defaultMessage}
+        </span>
+      </div>
     </div>
-    <span class="text-[11px] font-mono text-accent bg-accent-soft px-2 py-0.5 rounded border border-border" id="flowchart-tech">
-      {t('hero.flowchart.hint')}
-    </span>
-  </div>
-
-  <div class="relative w-full h-[180px] sm:h-[190px]">
-    <svg 
-      viewBox="0 0 620 180" 
-      class="w-full h-full overflow-visible"
-    >
-      <defs>
-        <linearGradient id="accentLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#5B7FA0" stopOpacity="0.4" />
-          <stop offset="50%" stopColor="#5B7FA0" stopOpacity="1" />
-          <stop offset="100%" stopColor="#5B7FA0" stopOpacity="0.5" />
-        </linearGradient>
-
-        <filter id="accentGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="2.5" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-      </defs>
-
-      <!-- Background Connecting Path -->
-      <path
-        d="M 70 90 C 150 90, 150 50, 230 50 C 310 50, 310 130, 390 130 C 470 130, 470 70, 550 70"
-        fill="none"
-        stroke="#E2E0DA"
-        stroke-width="3"
-        stroke-dasharray="4 4"
-      />
-
-      <!-- Animated Main Line -->
-      <path
-        id="flowchart-animated-line"
-        d="M 70 90 C 150 90, 150 50, 230 50 C 310 50, 310 130, 390 130 C 470 130, 470 70, 550 70"
-        fill="none"
-        stroke="url(#accentLineGradient)"
-        stroke-width="2.5"
-        stroke-dasharray="600"
-        stroke-dashoffset="600"
-        class="transition-all duration-1000 ease-out motion-reduce:stroke-dashoffset-0"
-      />
-
-      <!-- Traveling Signal Pulse -->
-      <circle r="4" fill="#5B7FA0" filter="url(#accentGlow)" class="motion-reduce:hidden opacity-0" id="flowchart-pulse">
-        <animateMotion
-          path="M 70 90 C 150 90, 150 50, 230 50 C 310 50, 310 130, 390 130 C 470 130, 470 70, 550 70"
-          dur="4s"
-          repeatCount="indefinite"
-        />
-      </circle>
-
-      <!-- Nodes -->
-      {nodes.map((node) => (
-        <g 
-          class="flowchart-node cursor-pointer transition-transform duration-200"
-          data-node-id={node.id}
-          data-node-tech={node.tech}
-          data-node-label={node.label}
-          data-node-sub={node.sub}
-        >
-          <!-- Outer Ring Pulse -->
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="14"
-            fill="#FFFFFF"
-            stroke="#E2E0DA"
-            stroke-width="2"
-            class="fc-outer transition-all duration-200"
-          />
-
-          <!-- Inner Core -->
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="4"
-            fill="#71727A"
-            class="fc-inner transition-all duration-200"
-          />
-
-          <!-- Labels -->
-          <text
-            x={node.x}
-            y={node.y > 100 ? node.y + 30 : node.y - 32}
-            text-anchor="middle"
-            class="fc-label text-[11px] font-sans font-medium transition-colors duration-200 fill-[#2A2B2E]"
-          >
-            {node.label}
-          </text>
-
-          <text
-            x={node.x}
-            y={node.y > 100 ? node.y + 44 : node.y - 20}
-            text-anchor="middle"
-            class="text-[9px] font-mono fill-[#71727A]"
-          >
-            {node.sub}
-          </text>
-        </g>
-      ))}
-    </svg>
-  </div>
-
-  <!-- Active node detail prompt -->
-  <div class="mt-1 pt-2 border-t border-border flex items-center justify-between text-xs text-text-dim">
-    <span class="truncate" id="flowchart-desc">
-      {defaultMessage}
-    </span>
-    <span class="font-mono text-[10px] text-accent shrink-0 ml-2 font-medium">
-      CI/CD & AI
-    </span>
   </div>
 </div>
 
@@ -184,6 +265,7 @@ const defaultMessage = lang === 'it' ? 'Dai vincoli di business al rilascio dete
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const line = document.getElementById('flowchart-animated-line');
     const pulse = document.getElementById('flowchart-pulse');
+    const pulseBranch = document.getElementById('flowchart-pulse-branch');
     const nodes = document.querySelectorAll('.flowchart-node');
     const techDisplay = document.getElementById('flowchart-tech');
     const descDisplay = document.getElementById('flowchart-desc');
@@ -194,54 +276,22 @@ const defaultMessage = lang === 'it' ? 'Dai vincoli di business al rilascio dete
       setTimeout(() => {
         line.style.strokeDashoffset = '0';
         pulse.classList.remove('opacity-0');
+        if (pulseBranch) pulseBranch.classList.remove('opacity-0');
       }, 150);
     }
 
     nodes.forEach(node => {
       const activate = () => {
-        // Reset all
-        nodes.forEach(n => {
-          n.querySelector('.fc-outer')?.setAttribute('r', '14');
-          n.querySelector('.fc-outer')?.setAttribute('stroke', '#E2E0DA');
-          n.querySelector('.fc-inner')?.setAttribute('r', '4');
-          n.querySelector('.fc-inner')?.setAttribute('fill', '#71727A');
-          n.querySelector('.fc-inner')?.removeAttribute('filter');
-          const label = n.querySelector('.fc-label');
-          if (label) {
-            label.classList.remove('fill-[#5B7FA0]', 'font-semibold');
-            label.classList.add('fill-[#2A2B2E]');
-          }
-        });
-
-        // Activate current
-        node.querySelector('.fc-outer')?.setAttribute('r', '18');
-        node.querySelector('.fc-outer')?.setAttribute('stroke', '#5B7FA0');
-        node.querySelector('.fc-inner')?.setAttribute('r', '6');
-        node.querySelector('.fc-inner')?.setAttribute('fill', '#5B7FA0');
-        node.querySelector('.fc-inner')?.setAttribute('filter', 'url(#accentGlow)');
-        const label = node.querySelector('.fc-label');
-        if (label) {
-          label.classList.remove('fill-[#2A2B2E]');
-          label.classList.add('fill-[#5B7FA0]', 'font-semibold');
-        }
-
+        // Remove active class from all
+        nodes.forEach(n => n.classList.remove('node-active'));
+        // Add to current
+        node.classList.add('node-active');
         if (techDisplay) techDisplay.innerText = node.getAttribute('data-node-tech') || '';
         if (descDisplay) descDisplay.innerText = `${node.getAttribute('data-node-label')}: ${node.getAttribute('data-node-sub')}`;
       };
 
       const deactivate = () => {
-        // Reset to default
-        node.querySelector('.fc-outer')?.setAttribute('r', '14');
-        node.querySelector('.fc-outer')?.setAttribute('stroke', '#E2E0DA');
-        node.querySelector('.fc-inner')?.setAttribute('r', '4');
-        node.querySelector('.fc-inner')?.setAttribute('fill', '#71727A');
-        node.querySelector('.fc-inner')?.removeAttribute('filter');
-        const label = node.querySelector('.fc-label');
-        if (label) {
-          label.classList.remove('fill-[#5B7FA0]', 'font-semibold');
-          label.classList.add('fill-[#2A2B2E]');
-        }
-
+        node.classList.remove('node-active');
         if (techDisplay) techDisplay.innerText = defaultTech;
         if (descDisplay) descDisplay.innerText = defaultMessage;
       };
@@ -252,6 +302,93 @@ const defaultMessage = lang === 'it' ? 'Dai vincoli di business al rilascio dete
     });
   };
 
-  document.addEventListener('DOMContentLoaded', setupFlowchart);
-  document.addEventListener('astro:page-load', setupFlowchart);
+  // Scroll Hijacking Logic
+  const setupScrollHijacking = () => {
+    const track = document.getElementById('flowchart-section');
+    const sticky = document.getElementById('flowchart-sticky');
+    const scrollContainer = document.getElementById('flowchart-scroll-container');
+    
+    if (!track || !sticky || !scrollContainer) return;
+    
+    const innerSvg = scrollContainer.querySelector('svg');
+    
+    const updateHeight = () => {
+      track.style.height = 'auto';
+      const containerWidth = scrollContainer.clientWidth;
+      const contentWidth = innerSvg ? innerSvg.clientWidth : scrollContainer.scrollWidth;
+      const maxScrollX = Math.max(0, contentWidth - containerWidth);
+      
+      if (maxScrollX > 0) {
+        const scrollFactor = 2.0; // medio lento
+        const extraHeight = maxScrollX * scrollFactor;
+        track.style.height = `${sticky.offsetHeight + extraHeight}px`;
+      }
+    };
+    
+    // Smooth scrolling variables
+    let targetX = 0;
+    let currentX = 0;
+    let isAnimating = false;
+    let maxScrollX = 0;
+    
+    const render = () => {
+      // Lerp for smooth 'medio lento' feel
+      currentX += (targetX - currentX) * 0.1;
+      
+      if (Math.abs(targetX - currentX) > 0.5) {
+        scrollContainer.scrollLeft = currentX;
+        requestAnimationFrame(render);
+      } else {
+        scrollContainer.scrollLeft = targetX;
+        currentX = targetX;
+        isAnimating = false;
+      }
+    };
+    
+    const onScroll = () => {
+      const containerWidth = scrollContainer.clientWidth;
+      const contentWidth = innerSvg ? innerSvg.clientWidth : scrollContainer.scrollWidth;
+      maxScrollX = Math.max(0, contentWidth - containerWidth);
+      
+      if (maxScrollX <= 0) return;
+      
+      const trackRect = track.getBoundingClientRect();
+      const stickyStyle = window.getComputedStyle(sticky);
+      const stickyTop = parseInt(stickyStyle.top) || 0;
+      
+      const stuckDistance = stickyTop - trackRect.top;
+      const maxScrollY = track.offsetHeight - sticky.offsetHeight;
+      
+      if (maxScrollY > 0) {
+        let fraction = stuckDistance / maxScrollY;
+        fraction = Math.max(0, Math.min(1, fraction));
+        targetX = fraction * maxScrollX;
+        
+        if (!isAnimating) {
+          isAnimating = true;
+          requestAnimationFrame(render);
+        }
+      }
+    };
+
+    window.addEventListener('resize', () => {
+      updateHeight();
+      onScroll();
+    });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Init
+    updateHeight();
+    onScroll();
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupFlowchart();
+    setupScrollHijacking();
+  });
+  
+  document.addEventListener('astro:page-load', () => {
+    setupFlowchart();
+    setupScrollHijacking();
+  });
 </script>

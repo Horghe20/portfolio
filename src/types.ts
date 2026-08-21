@@ -12,8 +12,7 @@ export type TimelineCategory =
   | 'ricerca' 
   | 'erasmus' 
   | 'volontariato' 
-  | 'certificazione' 
-  | 'community';
+  | 'certificazione';
 
 export interface Project {
   id: string;
@@ -86,6 +85,8 @@ export interface TimelineItem {
   highlights?: { it: string[]; en: string[] };
   degreeTrack?: 'triennale' | 'magistrale';
   yearRange?: [number, number];
+  startDate?: string;
+  column?: 'left' | 'right';
 }
 
 export interface FaqItem {

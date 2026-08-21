@@ -15,7 +15,6 @@ const categoriesConfig = [
   { id: 'erasmus', labelKey: 'timeline.categories.erasmus', icon: 'tabler:world' },
   { id: 'volontariato', labelKey: 'timeline.categories.volontariato', icon: 'tabler:heart-handshake' },
   { id: 'certificazione', labelKey: 'timeline.categories.certificazione', icon: 'tabler:award' },
-  { id: 'community', labelKey: 'timeline.categories.community', icon: 'tabler:users' },
 ];
 
 const getCategoryIcon = (category: string) => {
@@ -26,10 +25,50 @@ const getCategoryIcon = (category: string) => {
     case 'erasmus': return 'tabler:world';
     case 'volontariato': return 'tabler:heart-handshake';
     case 'certificazione': return 'tabler:award';
-    case 'community': return 'tabler:users';
     default: return 'tabler:sparkles';
   }
 };
+const parseDate = (dateStr: string) => {
+  const parts = dateStr.split('-');
+  if (parts.length !== 2) return 0;
+  const year = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  return year * 12 + month;
+};
+
+// Config for timeline scale
+const Y_SCALE = 24; // pixels per month
+const MIN_GAP = 180; // min gap — ridotto per evitare che il cluster 2024 spinga Samsung sotto la Triennale
+const PADDING_TOP = 80;
+
+// Sort descending: newest items first
+const sortedItemsDesc = [...TIMELINE_ITEMS].sort((a, b) => {
+  return parseDate(b.startDate || '2026-05') - parseDate(a.startDate || '2026-05');
+});
+
+const maxMonths = Math.max(...sortedItemsDesc.map(item => parseDate(item.startDate || '2026-05')));
+
+let leftLastY = -MIN_GAP;
+let rightLastY = -MIN_GAP;
+
+const itemsWithPos = sortedItemsDesc.map(item => {
+  const months = parseDate(item.startDate || "2026-05");
+  
+  // Inverse scale: maxMonths (newest) is at the top (diff = 0)
+  let desiredY = PADDING_TOP + (maxMonths - months) * Y_SCALE;
+  
+  if (item.column === 'left') {
+    if (desiredY < leftLastY + MIN_GAP) desiredY = leftLastY + MIN_GAP;
+    leftLastY = desiredY;
+  } else {
+    if (desiredY < rightLastY + MIN_GAP) desiredY = rightLastY + MIN_GAP;
+    rightLastY = desiredY;
+  }
+  
+  return { ...item, topPx: desiredY };
+});
+
+const totalHeight = Math.max(leftLastY, rightLastY) + 100;
 ---
 
 <section id="timeline" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -113,22 +152,56 @@ const getCategoryIcon = (category: string) => {
     ))}
   </div>
 
+  <style>
+    @media (min-width: 768px) {
+      .timeline-col-left { width: calc(50% - 2rem); left: 0; }
+      .timeline-col-right { width: calc(50% - 2rem); right: 0; }
+      .timeline-wrapper { top: var(--desktop-top); }
+      #timeline-container { height: var(--desktop-height); }
+    }
+  </style>
+
   <!-- Vertical Connected Timeline Items -->
-  <div class="relative pl-6 sm:pl-8 border-l border-border space-y-6" id="timeline-items">
-    {TIMELINE_ITEMS.map((item: TimelineItem) => (
+  <div class="relative w-full flex flex-col md:block space-y-6 md:space-y-0" 
+       style={`--desktop-height: ${totalHeight}px;`} 
+       id="timeline-container">
+    
+    <!-- Desktop Center Line -->
+    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2"></div>
+    
+    <!-- Desktop Column Labels -->
+    <div class="hidden md:block absolute top-0 left-0 w-[calc(50%-2rem)] text-center text-xs font-mono font-bold text-text-dim uppercase tracking-widest border-b border-border pb-2 z-10 bg-surface/80 backdrop-blur-sm">
+      {lang === 'it' ? 'Percorso Formale' : 'Formal Track'}
+    </div>
+    <div class="hidden md:block absolute top-0 right-0 w-[calc(50%-2rem)] text-center text-xs font-mono font-bold text-text-dim uppercase tracking-widest border-b border-border pb-2 z-10 bg-surface/80 backdrop-blur-sm">
+      {lang === 'it' ? 'Percorso Parallelo' : 'Parallel Track'}
+    </div>
+
+    <!-- Mobile left border for timeline -->
+    <div class="md:hidden absolute left-4 top-0 bottom-0 w-px bg-border"></div>
+
+    {itemsWithPos.map((item) => (
       <div
-        class="timeline-item relative group"
+        class={`timeline-item timeline-wrapper transition-all duration-300 relative md:absolute ml-10 md:ml-0 ${item.column === 'left' ? 'timeline-col-left' : 'timeline-col-right'}`}
         data-category={item.category}
+        style={`--desktop-top: ${item.topPx}px;`}
       >
-        <!-- Timeline Connector Dot -->
-        <div class="absolute -left-[31px] sm:-left-[39px] top-4 w-5 h-5 rounded-full bg-surface border-2 border-border group-hover:border-accent flex items-center justify-center transition-colors shadow-xs">
+        <!-- Desktop Connector Dot -->
+        <div class={`hidden md:flex absolute top-6 w-4 h-4 rounded-full bg-surface border-2 border-border group-hover:border-accent items-center justify-center transition-colors shadow-xs z-10 ${item.column === 'left' ? '-right-8 translate-x-1/2' : '-left-8 -translate-x-1/2'}`}>
           <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
         </div>
 
+        <!-- Mobile Connector Dot -->
+        <div class="md:hidden absolute -left-[41px] top-6 w-3 h-3 rounded-full bg-surface border-2 border-accent shadow-xs z-10"></div>
+
         <!-- Card Container -->
-        <div 
-          class="timeline-card rounded-lg bg-surface border transition-all duration-200 cursor-pointer p-5 sm:p-6 card-hover shadow-xs border-border hover:border-accent hover:bg-surface-2"
-        >
+        <div class="timeline-card rounded-lg bg-surface border transition-all duration-200 cursor-pointer p-5 sm:p-6 card-hover shadow-xs border-border hover:border-accent hover:bg-surface-2 group">
+          
+          <!-- Mobile Tag -->
+          <div class={`md:hidden inline-block text-[9px] font-mono uppercase px-1.5 py-0.5 rounded border mb-3 ${item.column === 'left' ? 'text-accent border-accent/30 bg-accent-soft' : 'text-text-dim border-border bg-surface-2'}`}>
+            {item.column === 'left' ? (lang === 'it' ? 'Formale' : 'Formal') : (lang === 'it' ? 'Parallelo' : 'Parallel')}
+          </div>
+
           <!-- Top Row: Period, Category Icon, Location -->
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
             <div class="flex items-center space-x-2">
@@ -197,9 +270,13 @@ const getCategoryIcon = (category: string) => {
         items.forEach(item => {
           const cat = item.getAttribute('data-category');
           if (filter === 'all' || cat === filter) {
-            (item as HTMLElement).style.display = 'block';
+            (item as HTMLElement).style.opacity = '1';
+            (item as HTMLElement).style.pointerEvents = 'auto';
+            (item as HTMLElement).style.filter = 'grayscale(0)';
           } else {
-            (item as HTMLElement).style.display = 'none';
+            (item as HTMLElement).style.opacity = '0.3';
+            (item as HTMLElement).style.pointerEvents = 'none';
+            (item as HTMLElement).style.filter = 'grayscale(1)';
           }
         });
       });
