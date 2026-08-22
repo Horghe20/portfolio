@@ -18,8 +18,8 @@ const {
 } = Astro.props;
 
 const alternateLang = lang === 'it' ? 'en' : 'it';
-const alternateUrl = lang === 'it' ? `${Astro.site || 'https://giorgiodicristofalo.it'}/en${Astro.url.pathname}` : `${Astro.site || 'https://giorgiodicristofalo.it'}${Astro.url.pathname.replace('/en', '')}`;
-const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodicristofalo.it').href;
+const alternateUrl = lang === 'it' ? `${Astro.site || 'https://giorgiodicristofalo.com'}/en${Astro.url.pathname}` : `${Astro.site || 'https://giorgiodicristofalo.com'}${Astro.url.pathname.replace('/en', '')}`;
+const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodicristofalo.com').href;
 ---
 
 <!doctype html>
@@ -106,12 +106,12 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
       "@graph": [
         {
           "@type": "Person",
-          "@id": "https://giorgiodicristofalo.it/#person",
+          "@id": "https://giorgiodicristofalo.com/#person",
           "name": "Giorgio Di Cristofalo",
           "givenName": "Giorgio",
           "familyName": "Di Cristofalo",
           "jobTitle": "Software Engineer",
-          "url": "https://giorgiodicristofalo.it/",
+          "url": "https://giorgiodicristofalo.com/",
           "email": "giorgiodicristofalo77@gmail.com",
           "worksFor": {
             "@type": "Organization",
@@ -147,11 +147,11 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://giorgiodic
         },
         {
           "@type": "WebSite",
-          "@id": "https://giorgiodicristofalo.it/#website",
-          "url": "https://giorgiodicristofalo.it/",
+          "@id": "https://giorgiodicristofalo.com/#website",
+          "url": "https://giorgiodicristofalo.com/",
           "name": "Giorgio Di Cristofalo — Portfolio",
           "publisher": {
-            "@id": "https://giorgiodicristofalo.it/#person"
+            "@id": "https://giorgiodicristofalo.com/#person"
           },
           "inLanguage": ["it-IT", "en-US"]
         }
