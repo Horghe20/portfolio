@@ -13,7 +13,12 @@ export default defineConfig({
   },
 
   adapter: vercel(),
-  integrations: [sitemap(), icon()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/vcard')
+    }),
+    icon()
+  ],
 
   i18n: {
     defaultLocale: 'it',
