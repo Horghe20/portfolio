@@ -12,8 +12,8 @@ export const PERSONAL_INFO = {
   linkedin: 'https://www.linkedin.com/in/giorgiodicristofalo/',
   community: 'https://faiddatechlab.com/',
   currentWork: {
-    it: 'Software Engineer @ IDSAirnav (Enav Group) • Tesoriere Faidda Tech Lab',
-    en: 'Software Engineer @ IDSAirnav (Enav Group) • Treasurer at Faidda Tech Lab',
+    it: 'Software Engineer @ ENAV Group • Tesoriere Faidda Tech Lab',
+    en: 'Software Engineer @ ENAV Group • Treasurer at Faidda Tech Lab',
   },
   availability: {
     it: 'Disponibile per progetti di automazione & consulenza',
@@ -350,8 +350,8 @@ export const SERVICES: ServiceArea[] = [
       en: 'I connect your systems and automate the manual hand-offs: data enters once and flows wherever it\'s needed. No more copy-pasting between tools, spreadsheets and emails.'
     },
     proof: {
-      it: 'Infrastrutture automatizzate in produzione h24 su sistemi di navigazione aerea (IDSAirnav / Gruppo ENAV): zero interventi manuali sui rilasci.',
-      en: 'Automated infrastructure running 24/7 on air navigation systems (IDSAirnav / ENAV Group): zero manual release interventions.'
+      it: 'Infrastrutture automatizzate in produzione h24 su sistemi di navigazione aerea (ENAV Group): zero interventi manuali sui rilasci.',
+      en: 'Automated infrastructure running 24/7 on air navigation systems (ENAV Group): zero manual release interventions.'
     },
     linkedProjectId: 'central-parking',
     keyPoints: {
@@ -401,7 +401,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       it: 'Software Engineer',
       en: 'Software Engineer'
     },
-    organization: 'IDSAirnav – ENAV Group',
+    organization: 'ENAV Group',
     location: 'Roma / Remoto',
     category: 'lavoro',
     description: {
@@ -607,8 +607,8 @@ export const FAQ_ITEMS: FaqItem[] = [
       en: 'Who is Giorgio Di Cristofalo?'
     },
     answer: {
-      it: 'Giorgio Di Cristofalo è un Software Engineer con sede a Palermo (Sicilia), laureato magistrale in Ingegneria Informatica con 110 e Lode. Lavora su sistemi aeronautici critici per IDSAirnav (Gruppo ENAV) ed è tesoriere di Faidda Tech Lab. Si specializza in automazione dei processi, pipeline CI/CD, sviluppo full-stack affidabile e intelligenza artificiale applicata.',
-      en: 'Giorgio Di Cristofalo is a Software Engineer based in Palermo (Sicily, Italy), graduated Summa Cum Laude in Computer Engineering. He develops mission-critical air navigation systems at IDSAirnav (ENAV Group) and serves as Treasurer of Faidda Tech Lab. He specializes in process automation, CI/CD pipelines, robust full-stack software, and applied AI.'
+      it: 'Giorgio Di Cristofalo è un Software Engineer con sede a Palermo (Sicilia), laureato magistrale in Ingegneria Informatica con 110 e Lode. Lavora su sistemi aeronautici critici per ENAV Group ed è tesoriere di Faidda Tech Lab. Si specializza in automazione dei processi, pipeline CI/CD, sviluppo full-stack affidabile e intelligenza artificiale applicata.',
+      en: 'Giorgio Di Cristofalo is a Software Engineer based in Palermo (Sicily, Italy), graduated Summa Cum Laude in Computer Engineering. He develops mission-critical air navigation systems at ENAV Group and serves as Treasurer of Faidda Tech Lab. He specializes in process automation, CI/CD pipelines, robust full-stack software, and applied AI.'
     }
   },
   {
@@ -655,7 +655,7 @@ export const LLMS_TXT_CONTENT = `# Giorgio Di Cristofalo — Software Engineer
 - Location: Palermo, Sicily, Italy (Available for Remote Work)
 - Degree: Master of Science in Computer Engineering, Università degli Studi di Palermo (110/110 Summa Cum Laude)
 - Current Roles:
-  - Software Engineer at IDSAirnav (ENAV Group) — Mission-Critical Air Traffic Management
+  - Software Engineer at ENAV Group — Mission-Critical Air Traffic Management
   - Treasurer & Core Organizer at Faidda Tech Lab (https://faiddatechlab.com/)
 - Contact: giorgiodicristofalo77@gmail.com
 - GitHub: https://github.com/Horghe20

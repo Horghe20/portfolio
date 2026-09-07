@@ -365,6 +365,9 @@ const renderArchitecturalDiagram = (diagramType: string) => {
         btn.classList.remove('border-transparent', 'text-text-dim');
         btn.classList.add('border-accent', 'text-accent', 'font-semibold');
 
+        // Scroll into view to ensure other tabs become visible on mobile
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
         // Hide all contents
         tabContents.forEach(content => {
           content.classList.add('hidden');

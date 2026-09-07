@@ -22,7 +22,7 @@ export const translations = {
       roleSubtitle: 'Software Engineer',
     },
     hero: {
-      badgeTitle: 'IDSAirnav / ENAV',
+      badgeTitle: 'ENAV Group',
       badgeSubtitle: 'Tesoriere Faidda Tech Lab',
       headlinePrefix: 'Automatizzo il lavoro.',
       headlineSuffix: 'Costruisco quello che serve.',
@@ -179,7 +179,7 @@ export const translations = {
     },
     footer: {
       roleBio: 'Software Engineer • Automazione, Delivery & AI Applicata',
-      location: 'Palermo, Sicilia • IDSAirnav (ENAV) • Faidda Tech Lab',
+      location: 'Palermo, Sicilia • ENAV Group • Faidda Tech Lab',
       community: 'Faidda Tech Lab',
       copyright: 'Tutti i diritti riservati.',
     }
@@ -207,7 +207,7 @@ export const translations = {
       roleSubtitle: 'Software Engineer',
     },
     hero: {
-      badgeTitle: 'IDSAirnav / ENAV',
+      badgeTitle: 'ENAV Group',
       badgeSubtitle: 'Treasurer Faidda Tech Lab',
       headlinePrefix: 'I automate the work.',
       headlineSuffix: "I build what's needed.",
@@ -364,7 +364,7 @@ export const translations = {
     },
     footer: {
       roleBio: 'Software Engineer • Automation, Delivery & Applied AI',
-      location: 'Palermo, Sicily • IDSAirnav (ENAV) • Faidda Tech Lab',
+      location: 'Palermo, Sicily • ENAV Group • Faidda Tech Lab',
       community: 'Faidda Tech Lab',
       copyright: 'All rights reserved.',
     }

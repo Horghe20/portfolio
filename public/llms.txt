@@ -7,7 +7,7 @@
 - Location: Palermo, Sicily, Italy (Available for Remote Work)
 - Degree: Master of Science in Computer Engineering, Università degli Studi di Palermo (110/110 Summa Cum Laude)
 - Current Roles:
-  - Software Engineer at IDSAirnav (ENAV Group) — Mission-Critical Air Traffic Management
+  - Software Engineer at ENAV Group — Mission-Critical Air Traffic Management
   - Treasurer & Core Organizer at [Faidda Tech Lab](https://faiddatechlab.com/)
 - Contact: [giorgiodicristofalo77@gmail.com](mailto:giorgiodicristofalo77@gmail.com)
 - GitHub: [Horghe20](https://github.com/Horghe20)
