@@ -30,34 +30,6 @@ const t = useTranslations(lang);
     <!-- Left Column: Direct info & social cards -->
     <div class="lg:col-span-5 space-y-6">
       
-      <!-- Email Direct Box -->
-      <div class="p-6 rounded-lg bg-surface border border-border space-y-4 shadow-xs">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-mono text-text-dim uppercase">
-            {t('contact.directEmail')}
-          </span>
-          <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
-            {t('contact.replyTime')}
-          </span>
-        </div>
-
-        <div class="p-3.5 bg-surface-2 rounded border border-border flex items-center justify-between font-mono text-xs sm:text-sm text-text">
-          <span class="truncate mr-2" id="personal-email-text">{PERSONAL_INFO.email}</span>
-          <button
-            id="copy-email-btn"
-            class="p-1.5 rounded hover:bg-surface text-accent hover:text-text transition-colors cursor-pointer shrink-0"
-            title={lang === 'it' ? 'Copia indirizzo email' : 'Copy email address'}
-          >
-            <Icon name="tabler:copy" class="w-4 h-4" id="copy-icon" />
-            <Icon name="tabler:check" class="w-4 h-4 text-accent hidden" id="copied-icon" />
-          </button>
-        </div>
-
-        <p class="text-xs text-text-dim leading-relaxed">
-          {t('contact.emailNotice')}
-        </p>
-      </div>
-
       <!-- Social & Community Links -->
       <div class="p-6 rounded-lg bg-surface border border-border space-y-3 shadow-xs">
         <span class="text-xs font-mono text-text-dim uppercase block mb-3">
@@ -232,26 +204,6 @@ const t = useTranslations(lang);
 
 <script>
   const setupContactForm = () => {
-    // Copy Email logic
-    const copyBtn = document.getElementById('copy-email-btn');
-    const emailText = document.getElementById('personal-email-text');
-    const copyIcon = document.getElementById('copy-icon');
-    const copiedIcon = document.getElementById('copied-icon');
-
-    if (copyBtn && emailText) {
-      copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(emailText.innerText);
-        if (copyIcon && copiedIcon) {
-          copyIcon.classList.add('hidden');
-          copiedIcon.classList.remove('hidden');
-          setTimeout(() => {
-            copyIcon.classList.remove('hidden');
-            copiedIcon.classList.add('hidden');
-          }, 2500);
-        }
-      });
-    }
-
     // Form logic
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const successBox = document.getElementById('form-success');
