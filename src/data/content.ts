@@ -6,7 +6,6 @@ export const PERSONAL_INFO = {
     it: 'Software Engineer | Automazione, Delivery & AI Applicata',
     en: 'Software Engineer | Automation, Delivery & Applied AI',
   },
-  location: 'Palermo, Sicilia / Remote',
   email: 'giorgiodicristofalo77@gmail.com',
   github: 'https://github.com/Horghe20',
   linkedin: 'https://www.linkedin.com/in/giorgiodicristofalo/',
@@ -23,48 +22,49 @@ export const PERSONAL_INFO = {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'harbor-manager',
-    slug: 'harbor-manager',
-    title: 'Harbor Manager',
+    id: 'nutrifit',
+    slug: 'nutrifit',
+    title: 'NutriFit',
     category: 'ai',
-    status: 'in_development',
+    status: 'case_study',
     statusLabel: {
-      it: 'In sviluppo · Demo',
-      en: 'In Development · Demo',
+      it: 'Caso Studio · Architettura Agentica',
+      en: 'Case Study · Agentic Architecture',
     },
     year: '2025',
     tagline: {
-      it: "L'AI assegna automaticamente ogni barca al posto giusto in porto, ottimizzando lo spazio disponibile.",
-      en: 'AI automatically allocates every boat to the optimal berth, maximizing marina spatial capacity.',
+      it: 'Una piattaforma agentica per nutrizionisti: l\'AI non si limita a estrarre dati, orchestra piani alimentari e allenamento in tempo reale.',
+      en: 'An agentic SaaS architecture for nutritionists: AI orchestrates live dietary plans with real-time streaming and instant kNN meal swaps.',
     },
     problem: {
-      it: 'Le piccole associazioni nautiche e i porticcioli turistici gestiscono gli ormeggi a mano su fogli cartacei o tabelle statiche, generando frequenti colli di bottiglia, conflitti di pescaggio e fino al 25% di spazio banchina sprecato.',
-      en: 'Small nautical clubs and tourist marinas assign boat berths manually using paper charts or static spreadsheets, leading to bottlenecks, draft conflicts, and up to 25% wasted dock space.',
+      it: 'Nutrizionisti e preparatori atletici gestiscono pazienti, piani dietetici, tabelle di allenamento, appuntamenti e abbonamenti con strumenti frammentati (WhatsApp, Excel, email). I software esistenti offrono solo database statici o lente chiamate AI monolitiche che bloccano la UI.',
+      en: 'Nutritionists and athletic trainers juggle patient dossiers, meal regimes, workout schedules, and recurring payments across fragmented tools. Existing apps offer static tables or slow blocking AI endpoints that freeze user workflow.',
     },
     howItWorks: {
-      it: 'Piattaforma gestionale completa: mappa banchina interattiva (Leaflet), anagrafica clienti/imbarcazioni, contratti stagionali, fatturazione e notifiche automatiche. Il gestore carica la flotta in arrivo e il sistema calcola la planimetria ideale in pochi secondi.',
-      en: 'Complete marina management platform: interactive dock map (Leaflet), customer/boat registries, seasonal contracts, invoicing, and automated notifications. The harbor master loads incoming fleet requests and the engine outputs the optimal layout in seconds.',
+      it: 'Piattaforma unificata: cartella clinica paziente, prescrizione diete e schede workout, calendario sincronizzato e billing automatico Stripe. Quando viene richiesta la generazione di un piano complesso, un task Celery avvia la pipeline agentica.',
+      en: 'Unified platform: patient health records, dietary and workout prescription, calendar sync, and Stripe recurring billing. Complex plan generation triggers an asynchronous Celery agentic pipeline.',
     },
     aiRole: {
-      it: 'Modellazione del posizionamento come problema di ottimizzazione vincolata (Constraint Satisfaction / 2D Bin Packing) risolto con Google OR-Tools (CP-SAT solver). Converte coordinate geografiche (PostGIS) in piano cartesiano normalizzato, applicando vincoli rigidi (pescaggio fondale, larghezza canale, distanze di rispetto prua/poppa, sovrapposizioni zero) e massimizzando il numero di barche ormeggiate e il gettito economico.',
-      en: 'Formulated berth allocation as a Constrained Optimization problem (Constraint Satisfaction / 2D Bin Packing) solved via Google OR-Tools (CP-SAT). Converts PostGIS geographic coordinates into a normalized 2D cartesian grid, enforcing hard constraints (depth draft, fairway clearance, bow/stern buffers, zero overlap) while maximizing dock capacity and revenue yield.',
+      it: 'Architettura reattiva ad eventi: la richiesta innesca un worker Celery che interroga Google Gemini con schemi JSON strutturati. I chunk validati vengono pubblicati su Redis Pub/Sub e trasmessi al client in tempo reale via Server-Sent Events (SSE) senza bloccare il thread web. In parallelo, un motore di raccomandazione kNN calcola istantaneamente (<30ms) alternative alimentari basate sulla distanza euclidea tra macronutrienti (proteine, lipidi, glucidi, calorie) direttamente nel database.',
+      en: 'Event-driven agentic flow: requests spawn Celery background workers that interface with Google Gemini using strictly typed JSON schemas. Validated output tokens publish to Redis Pub/Sub and stream to the browser via Server-Sent Events (SSE). Simultaneously, a kNN recommendation engine calculates meal swaps under 30ms based on Euclidean distance across macronutrient vectors directly in PostgreSQL.',
     },
     whyItMatters: {
-      it: 'Dimostra come la ricerca operativa e i solver matematici risolvano problemi fisici concreti meglio di un LLM generico, garantendo correttezza deterministica e zero allucinazioni su vincoli critici di sicurezza marina.',
-      en: 'Demonstrates how operations research and mathematical constraint solvers solve real-world spatial problems with deterministic correctness and zero hallucinations on safety-critical constraints.',
+      it: 'Dimostra come progettare un\'architettura AI scalabile ed enterprise: task queue disaccoppiata, streaming live non bloccante, fallback resiliente e combinazione ibrida tra inferenza LLM e calcolo vettoriale deterministico.',
+      en: 'Exemplifies a production-grade enterprise AI architecture: decoupled task workers, non-blocking SSE streaming, graceful fallback, and hybrid synthesis of LLM generation with deterministic vector math.',
     },
     architectureNotes: {
-      it: 'Python / Flask REST API, PostgreSQL con estensione PostGIS per geometrie e banchine, worker asincroni Celery con Redis broker per calcoli pesanti OR-Tools CP-SAT, frontend Angular 21 con Signals e Tailwind CSS.',
-      en: 'Python / Flask backend, PostgreSQL + PostGIS for spatial queries, asynchronous Celery workers backed by Redis for heavy OR-Tools CP-SAT computation, Angular 21 frontend with Signals and Tailwind CSS.',
+      it: 'Python 3.12, Django 5 + Django REST Framework, Uvicorn (ASGI), Celery, Redis Pub/Sub, PostgreSQL, Google Gemini API, Stripe Billing, Resend per transazionali.',
+      en: 'Python 3.12, Django 5 + DRF, ASGI Uvicorn, Celery, Redis Pub/Sub, PostgreSQL, Google Gemini API, Stripe, Resend.',
     },
-    stack: ['Python', 'Flask', 'PostgreSQL', 'PostGIS', 'Google OR-Tools', 'Celery', 'Redis', 'Angular 21', 'Signals', 'Leaflet', 'Docker'],
+    stack: ['Python 3.12', 'Django 5', 'Django REST Framework', 'Uvicorn ASGI', 'Celery', 'Redis Pub/Sub', 'Server-Sent Events', 'Google Gemini API', 'kNN Vector Engine', 'PostgreSQL', 'Stripe'],
     metrics: [
-      { label: { it: 'Spazio recuperato', en: 'Space recovered' }, value: '+22%' },
-      { label: { it: 'Tempo calcolo piano', en: 'Plan calculation time' }, value: '< 2.4s' },
-      { label: { it: 'Vincoli gestiti', en: 'Constraints handled' }, value: '100% hard' }
+      { label: { it: 'Latenza swap kNN', en: 'kNN swap latency' }, value: '< 30ms' },
+      { label: { it: 'Streaming update', en: 'SSE Stream delay' }, value: 'Realtime' },
+      { label: { it: 'Throughput worker', en: 'Async scalability' }, value: '100% async' }
     ],
-    abstractDiagramType: 'packing',
-    image: '/images/projects/harbor-manager.webp'
+    demoUrl: 'https://www.nutrifitai.it/',
+    abstractDiagramType: 'agent_stream',
+    image: '/images/projects/nutrifit.webp'
   },
   {
     id: 'central-parking',
@@ -234,49 +234,48 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/network-tester.webp'
   },
   {
-    id: 'nutrifit',
-    slug: 'nutrifit',
-    title: 'NutriFit',
+    id: 'harbor-manager',
+    slug: 'harbor-manager',
+    title: 'Harbor Manager',
     category: 'ai',
-    status: 'case_study',
+    status: 'in_development',
     statusLabel: {
-      it: 'Caso Studio · Architettura Agentica',
-      en: 'Case Study · Agentic Architecture',
+      it: 'In sviluppo · Demo',
+      en: 'In Development · Demo',
     },
     year: '2025',
     tagline: {
-      it: 'Una piattaforma agentica per nutrizionisti: l\'AI non si limita a estrarre dati, orchestra piani alimentari e allenamento in tempo reale.',
-      en: 'An agentic SaaS architecture for nutritionists: AI orchestrates live dietary plans with real-time streaming and instant kNN meal swaps.',
+      it: "L'AI assegna automaticamente ogni barca al posto giusto in porto, ottimizzando lo spazio disponibile.",
+      en: 'AI automatically allocates every boat to the optimal berth, maximizing marina spatial capacity.',
     },
     problem: {
-      it: 'Nutrizionisti e preparatori atletici gestiscono pazienti, piani dietetici, tabelle di allenamento, appuntamenti e abbonamenti con strumenti frammentati (WhatsApp, Excel, email). I software esistenti offrono solo database statici o lente chiamate AI monolitiche che bloccano la UI.',
-      en: 'Nutritionists and athletic trainers juggle patient dossiers, meal regimes, workout schedules, and recurring payments across fragmented tools. Existing apps offer static tables or slow blocking AI endpoints that freeze user workflow.',
+      it: 'Le piccole associazioni nautiche e i porticcioli turistici gestiscono gli ormeggi a mano su fogli cartacei o tabelle statiche, generando frequenti colli di bottiglia, conflitti di pescaggio e fino al 25% di spazio banchina sprecato.',
+      en: 'Small nautical clubs and tourist marinas assign boat berths manually using paper charts or static spreadsheets, leading to bottlenecks, draft conflicts, and up to 25% wasted dock space.',
     },
     howItWorks: {
-      it: 'Piattaforma unificata: cartella clinica paziente, prescrizione diete e schede workout, calendario sincronizzato e billing automatico Stripe. Quando viene richiesta la generazione di un piano complesso, un task Celery avvia la pipeline agentica.',
-      en: 'Unified platform: patient health records, dietary and workout prescription, calendar sync, and Stripe recurring billing. Complex plan generation triggers an asynchronous Celery agentic pipeline.',
+      it: 'Piattaforma gestionale completa: mappa banchina interattiva (Leaflet), anagrafica clienti/imbarcazioni, contratti stagionali, fatturazione e notifiche automatiche. Il gestore carica la flotta in arrivo e il sistema calcola la planimetria ideale in pochi secondi.',
+      en: 'Complete marina management platform: interactive dock map (Leaflet), customer/boat registries, seasonal contracts, invoicing, and automated notifications. The harbor master loads incoming fleet requests and the engine outputs the optimal layout in seconds.',
     },
     aiRole: {
-      it: 'Architettura reattiva ad eventi: la richiesta innesca un worker Celery che interroga Google Gemini con schemi JSON strutturati. I chunk validati vengono pubblicati su Redis Pub/Sub e trasmessi al client in tempo reale via Server-Sent Events (SSE) senza bloccare il thread web. In parallelo, un motore di raccomandazione kNN calcola istantaneamente (<30ms) alternative alimentari basate sulla distanza euclidea tra macronutrienti (proteine, lipidi, glucidi, calorie) direttamente nel database.',
-      en: 'Event-driven agentic flow: requests spawn Celery background workers that interface with Google Gemini using strictly typed JSON schemas. Validated output tokens publish to Redis Pub/Sub and stream to the browser via Server-Sent Events (SSE). Simultaneously, a kNN recommendation engine calculates meal swaps under 30ms based on Euclidean distance across macronutrient vectors directly in PostgreSQL.',
+      it: 'Modellazione del posizionamento come problema di ottimizzazione vincolata (Constraint Satisfaction / 2D Bin Packing) risolto con Google OR-Tools (CP-SAT solver). Converte coordinate geografiche (PostGIS) in piano cartesiano normalizzato, applicando vincoli rigidi (pescaggio fondale, larghezza canale, distanze di rispetto prua/poppa, sovrapposizioni zero) e massimizzando il numero di barche ormeggiate e il gettito economico.',
+      en: 'Formulated berth allocation as a Constrained Optimization problem (Constraint Satisfaction / 2D Bin Packing) solved via Google OR-Tools (CP-SAT). Converts PostGIS geographic coordinates into a normalized 2D cartesian grid, enforcing hard constraints (depth draft, fairway clearance, bow/stern buffers, zero overlap) while maximizing dock capacity and revenue yield.',
     },
     whyItMatters: {
-      it: 'Dimostra come progettare un\'architettura AI scalabile ed enterprise: task queue disaccoppiata, streaming live non bloccante, fallback resiliente e combinazione ibrida tra inferenza LLM e calcolo vettoriale deterministico.',
-      en: 'Exemplifies a production-grade enterprise AI architecture: decoupled task workers, non-blocking SSE streaming, graceful fallback, and hybrid synthesis of LLM generation with deterministic vector math.',
+      it: 'Dimostra come la ricerca operativa e i solver matematici risolvano problemi fisici concreti meglio di un LLM generico, garantendo correttezza deterministica e zero allucinazioni su vincoli critici di sicurezza marina.',
+      en: 'Demonstrates how operations research and mathematical constraint solvers solve real-world spatial problems with deterministic correctness and zero hallucinations on safety-critical constraints.',
     },
     architectureNotes: {
-      it: 'Python 3.12, Django 5 + Django REST Framework, Uvicorn (ASGI), Celery, Redis Pub/Sub, PostgreSQL, Google Gemini API, Stripe Billing, Resend per transazionali.',
-      en: 'Python 3.12, Django 5 + DRF, ASGI Uvicorn, Celery, Redis Pub/Sub, PostgreSQL, Google Gemini API, Stripe, Resend.',
+      it: 'Python / Flask REST API, PostgreSQL con estensione PostGIS per geometrie e banchine, worker asincroni Celery con Redis broker per calcoli pesanti OR-Tools CP-SAT, frontend Angular 21 con Signals e Tailwind CSS.',
+      en: 'Python / Flask backend, PostgreSQL + PostGIS for spatial queries, asynchronous Celery workers backed by Redis for heavy OR-Tools CP-SAT computation, Angular 21 frontend with Signals and Tailwind CSS.',
     },
-    stack: ['Python 3.12', 'Django 5', 'Django REST Framework', 'Uvicorn ASGI', 'Celery', 'Redis Pub/Sub', 'Server-Sent Events', 'Google Gemini API', 'kNN Vector Engine', 'PostgreSQL', 'Stripe'],
+    stack: ['Python', 'Flask', 'PostgreSQL', 'PostGIS', 'Google OR-Tools', 'Celery', 'Redis', 'Angular 21', 'Signals', 'Leaflet', 'Docker'],
     metrics: [
-      { label: { it: 'Latenza swap kNN', en: 'kNN swap latency' }, value: '< 30ms' },
-      { label: { it: 'Streaming update', en: 'SSE Stream delay' }, value: 'Realtime' },
-      { label: { it: 'Throughput worker', en: 'Async scalability' }, value: '100% async' }
+      { label: { it: 'Spazio recuperato', en: 'Space recovered' }, value: '+22%' },
+      { label: { it: 'Tempo calcolo piano', en: 'Plan calculation time' }, value: '< 2.4s' },
+      { label: { it: 'Vincoli gestiti', en: 'Constraints handled' }, value: '100% hard' }
     ],
-    demoUrl: 'https://www.nutrifitai.it/',
-    abstractDiagramType: 'agent_stream',
-    image: '/images/projects/nutrifit.webp'
+    abstractDiagramType: 'packing',
+    image: '/images/projects/harbor-manager.webp'
   }
 ];
 
@@ -402,7 +401,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: 'Software Engineer'
     },
     organization: 'ENAV Group',
-    location: 'Roma / Remoto',
+    location: 'Palermo',
     category: 'lavoro',
     description: {
       it: 'Ingegnerizzazione e manutenzione di sistemi software critici per la gestione delle informazioni aeronautiche (AIM/ATM). Sviluppo di pipeline di automazione del rilascio, continuous integration e testing rigoroso per sistemi con standard di sicurezza stringenti.',
@@ -440,7 +439,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: "Master's Degree in Computer Engineering (110/110 Summa Cum Laude)"
     },
     organization: 'Università degli Studi di Palermo',
-    location: 'Palermo, Italia',
+    location: 'Palermo',
     category: 'studio',
     degreeTrack: 'magistrale',
     yearRange: [2022, 2025],
@@ -463,7 +462,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: 'Research in NLP & Recommender Systems'
     },
     organization: 'Università di Pisa',
-    location: 'Pisa, Italia',
+    location: 'Pisa',
     category: 'ricerca',
     degreeTrack: 'magistrale',
     description: {
@@ -481,7 +480,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: 'Web Manager & Tech Coordinator'
     },
     organization: 'ESN (Erasmus Student Network)',
-    location: 'Palermo, Italia',
+    location: 'Palermo',
     category: 'volontariato',
     degreeTrack: 'magistrale',
     description: {
@@ -535,7 +534,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: 'Biomedical Software Research (TMS Simulator)'
     },
     organization: 'Università degli Studi di Palermo',
-    location: 'Palermo, Italia',
+    location: 'Palermo',
     category: 'ricerca',
     degreeTrack: 'magistrale',
     description: {
@@ -571,7 +570,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: "Bachelor's Degree in Computer Engineering (110/110)"
     },
     organization: 'Università degli Studi di Palermo',
-    location: 'Palermo, Italia',
+    location: 'Palermo',
     category: 'studio',
     degreeTrack: 'triennale',
     yearRange: [2019, 2022],
@@ -590,7 +589,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
       en: 'Software & Systems Internship'
     },
     organization: 'P.O.S. Data System',
-    location: 'Palermo, Italia',
+    location: 'Palermo',
     category: 'lavoro',
     description: {
       it: 'Prima esperienza professionale: assistenza sistemistica, configurazione hardware di rete, supporto a database aziendali e troubleshooting infrastrutturale.',

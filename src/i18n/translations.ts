@@ -29,7 +29,6 @@ export const translations = {
       subtitle: 'Software Engineer specializzato in automazione dei processi, delivery enterprise e intelligenza artificiale applicata. Dai sistemi critici alla ricerca NLP.',
       ctaCollaborate: 'Lavoriamo insieme',
       ctaLaboratory: 'Esplora il Laboratorio',
-      location: 'Palermo, Sicilia / Remote',
       credentials: '110L Ingegneria Informatica',
       audience: {
         all: 'Tutti i profili',
@@ -97,7 +96,6 @@ export const translations = {
       tag: 'Percorso & Background',
       title: 'Dalla Navigazione Aerea alla Ricerca AI',
       subtitle: 'Un percorso costruito sull’affidabilità dei sistemi critici, il rigore universitario e la community open source.',
-      academicTrackTitle: 'Percorso Accademico Formale',
       categories: {
         all: 'Tutto',
         lavoro: 'Lavoro & Sistemi',
@@ -282,7 +280,6 @@ export const translations = {
       tag: 'Journey & Background',
       title: 'From Air Traffic Navigation to Applied AI Research',
       subtitle: 'A background built on critical system reliability, rigorous academic research, and active open source communities.',
-      academicTrackTitle: 'Formal Academic Journey',
       categories: {
         all: 'All',
         lavoro: 'Work & Systems',

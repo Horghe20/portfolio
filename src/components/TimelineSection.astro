@@ -38,7 +38,8 @@ const parseDate = (dateStr: string) => {
 
 // Config for timeline scale
 const Y_SCALE = 24; // pixels per month
-const MIN_GAP = 180; // min gap — ridotto per evitare che il cluster 2024 spinga Samsung sotto la Triennale
+const MIN_GAP = 420; // min gap per evitare sovrapposizioni con card molto alte (es. ENAV)
+const MAX_GAP = 500; // max gap per comprimere le card molto distanti nel tempo
 const PADDING_TOP = 80;
 
 // Sort descending: newest items first
@@ -48,8 +49,8 @@ const sortedItemsDesc = [...TIMELINE_ITEMS].sort((a, b) => {
 
 const maxMonths = Math.max(...sortedItemsDesc.map(item => parseDate(item.startDate || '2026-05')));
 
-let leftLastY = -MIN_GAP;
-let rightLastY = -MIN_GAP;
+let leftLastY = PADDING_TOP - MIN_GAP;
+let rightLastY = PADDING_TOP - MIN_GAP;
 
 const itemsWithPos = sortedItemsDesc.map(item => {
   const months = parseDate(item.startDate || "2026-05");
@@ -58,9 +59,11 @@ const itemsWithPos = sortedItemsDesc.map(item => {
   let desiredY = PADDING_TOP + (maxMonths - months) * Y_SCALE;
   
   if (item.column === 'left') {
+    if (desiredY > leftLastY + MAX_GAP) desiredY = leftLastY + MAX_GAP;
     if (desiredY < leftLastY + MIN_GAP) desiredY = leftLastY + MIN_GAP;
     leftLastY = desiredY;
   } else {
+    if (desiredY > rightLastY + MAX_GAP) desiredY = rightLastY + MAX_GAP;
     if (desiredY < rightLastY + MIN_GAP) desiredY = rightLastY + MIN_GAP;
     rightLastY = desiredY;
   }
@@ -87,52 +90,6 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
     <p class="text-sm text-text-dim max-w-md mt-2 md:mt-0">
       {t('timeline.subtitle')}
     </p>
-  </div>
-
-  <!-- Sequential Degree Background Context Tracks -->
-  <div class="mb-10 p-4 rounded-lg bg-surface border border-border overflow-x-auto shadow-xs">
-    <div class="text-xs font-mono text-text-dim uppercase tracking-wider mb-3 flex items-center justify-between">
-      <span>// {t('timeline.academicTrackTitle')}</span>
-      <span class="text-accent font-semibold">{lang === 'it' ? 'UniPa (110 & 110L)' : 'UniPa (110 & 110L Honors)'}</span>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <!-- Triennale Bar -->
-      <div class="p-3 bg-surface-2 rounded border border-border flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded bg-surface border border-border flex items-center justify-center">
-            <Icon name="tabler:school" class="w-4 h-4 text-accent" />
-          </div>
-          <div>
-            <span class="text-xs font-semibold text-text block">
-              {lang === 'it' ? 'Laurea Triennale (110)' : "Bachelor's Degree (110)"}
-            </span>
-            <span class="text-[10px] font-mono text-text-dim">2019 – 2022 • UniPa</span>
-          </div>
-        </div>
-        <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
-          {lang === 'it' ? 'Fondamenti & Architetture' : 'Foundations & CS'}
-        </span>
-      </div>
-
-      <!-- Magistrale Bar -->
-      <div class="p-3 bg-surface-2 rounded border border-accent/40 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded bg-accent-soft border border-border flex items-center justify-center">
-            <Icon name="tabler:school" class="w-4 h-4 text-accent" />
-          </div>
-          <div>
-            <span class="text-xs font-semibold text-text block">
-              {lang === 'it' ? 'Laurea Magistrale (110 e Lode)' : "Master's Degree (110L Honors)"}
-            </span>
-            <span class="text-[10px] font-mono text-text-dim">2022 – 2025 • Tesi BERT4Def</span>
-          </div>
-        </div>
-        <span class="text-[10px] font-mono px-2 py-1 bg-surface-2 text-text-dim border border-border rounded">
-          {lang === 'it' ? 'AI, Sicurezza & Sistemi' : 'AI, Security & Systems'}
-        </span>
-      </div>
-    </div>
   </div>
 
   <!-- Category Filter Pills -->
@@ -184,6 +141,7 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
       <div
         class={`timeline-item timeline-wrapper transition-all duration-300 relative md:absolute ml-10 md:ml-0 ${item.column === 'left' ? 'timeline-col-left' : 'timeline-col-right'}`}
         data-category={item.category}
+        data-date={item.startDate || '2026-05'}
         style={`--desktop-top: ${item.topPx}px;`}
       >
         <!-- Desktop Connector Dot -->
@@ -254,6 +212,19 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
   const setupTimeline = () => {
     const filterBtns = document.querySelectorAll('.timeline-filter-btn');
     const items = document.querySelectorAll('.timeline-item');
+    const container = document.getElementById('timeline-container');
+
+    const Y_SCALE = 24;
+    const MIN_GAP = 420;
+    const MAX_GAP = 500;
+    const PADDING_TOP = 80;
+
+    const parseDate = (dateStr) => {
+      if (!dateStr) return 0;
+      const parts = dateStr.split('-');
+      if (parts.length !== 2) return 0;
+      return parseInt(parts[0], 10) * 12 + parseInt(parts[1], 10);
+    };
 
     // Filtering logic
     filterBtns.forEach(btn => {
@@ -267,18 +238,53 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
         btn.classList.add('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
         btn.classList.remove('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
 
+        let visibleItems = [];
+        let maxMonths = 0;
+
         items.forEach(item => {
           const cat = item.getAttribute('data-category');
           if (filter === 'all' || cat === filter) {
+            (item as HTMLElement).style.display = 'block';
             (item as HTMLElement).style.opacity = '1';
             (item as HTMLElement).style.pointerEvents = 'auto';
             (item as HTMLElement).style.filter = 'grayscale(0)';
+            
+            const dateStr = item.getAttribute('data-date');
+            const months = parseDate(dateStr);
+            if (months > maxMonths) maxMonths = months;
+            
+            visibleItems.push({
+              el: item as HTMLElement,
+              months: months,
+              col: item.classList.contains('timeline-col-left') ? 'left' : 'right'
+            });
           } else {
-            (item as HTMLElement).style.opacity = '0.3';
-            (item as HTMLElement).style.pointerEvents = 'none';
-            (item as HTMLElement).style.filter = 'grayscale(1)';
+            (item as HTMLElement).style.display = 'none';
           }
         });
+
+        // Recalculate positions for visible items
+        let leftLastY = PADDING_TOP - MIN_GAP;
+        let rightLastY = PADDING_TOP - MIN_GAP;
+
+        visibleItems.forEach(vi => {
+           let desiredY = PADDING_TOP + (maxMonths - vi.months) * Y_SCALE;
+           if (vi.col === 'left') {
+             if (desiredY > leftLastY + MAX_GAP) desiredY = leftLastY + MAX_GAP;
+             if (desiredY < leftLastY + MIN_GAP) desiredY = leftLastY + MIN_GAP;
+             leftLastY = desiredY;
+           } else {
+             if (desiredY > rightLastY + MAX_GAP) desiredY = rightLastY + MAX_GAP;
+             if (desiredY < rightLastY + MIN_GAP) desiredY = rightLastY + MIN_GAP;
+             rightLastY = desiredY;
+           }
+           vi.el.style.setProperty('--desktop-top', `${desiredY}px`);
+        });
+
+        const totalHeight = Math.max(leftLastY, rightLastY) + 100;
+        if (container) {
+          container.style.setProperty('--desktop-height', `${totalHeight > PADDING_TOP ? totalHeight : PADDING_TOP + 100}px`);
+        }
       });
     });
 
