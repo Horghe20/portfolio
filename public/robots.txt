@@ -2,6 +2,7 @@
 User-agent: *
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -10,6 +11,7 @@ Allow: /
 User-agent: Googlebot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -17,6 +19,7 @@ Allow: /
 User-agent: Bingbot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -25,6 +28,7 @@ Allow: /
 User-agent: GPTBot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -32,6 +36,7 @@ Allow: /
 User-agent: OAI-SearchBot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -39,6 +44,7 @@ Allow: /
 User-agent: ChatGPT-User
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -46,6 +52,7 @@ Allow: /
 User-agent: PerplexityBot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -53,6 +60,7 @@ Allow: /
 User-agent: ClaudeBot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -60,6 +68,7 @@ Allow: /
 User-agent: anthropic-ai
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -67,6 +76,7 @@ Allow: /
 User-agent: Claude-Web
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -74,6 +84,7 @@ Allow: /
 User-agent: Google-Extended
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -81,6 +92,7 @@ Allow: /
 User-agent: Applebot-Extended
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /
@@ -88,6 +100,7 @@ Allow: /
 User-agent: CCBot
 Disallow: /vcard
 Disallow: /vcard/
+Disallow: /vcard.webmanifest
 Disallow: /giorgio.vcf
 Disallow: /api/
 Allow: /

@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/(vcard|vcard/.*|giorgio\\.vcf|api/.*)",
+      "source": "/(vcard|vcard/.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",
@@ -38,7 +38,20 @@
         },
         {
           "key": "Cache-Control",
-          "value": "private, no-cache, no-store, must-revalidate"
+          "value": "private, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(giorgio\\.vcf|vcard\\.webmanifest|api/.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet, noimageindex"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-cache, must-revalidate"
         }
       ]
     },

@@ -13,6 +13,9 @@ Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnip
 <Layout 
   title={`${PERSONAL_INFO.name} - Digital Card`} 
   robots="noindex, nofollow, noarchive, nosnippet, noimageindex"
+  manifest="/vcard.webmanifest"
+  appleTitle="Giorgio Card"
+  themeColor="#f2f2f7"
 >
   <!-- Sfondo stile Apple Wallet (grigio chiaro) -->
   <main class="min-h-[100dvh] bg-[#f2f2f7] flex flex-col items-center justify-center p-4 sm:p-8 font-sans" style="background-color: #f2f2f7;">
@@ -61,7 +64,7 @@ Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnip
     </div>
 
     <!-- Azioni Rapide sotto la carta -->
-    <div class="mt-10 flex flex-col items-center gap-6">
+    <div class="mt-8 flex flex-col items-center gap-5">
       
       <!-- Sito Web (Da solo in alto al centro) -->
       <a href="/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
@@ -78,7 +81,7 @@ Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnip
       </a>
 
       <!-- LinkedIn, GitHub, Salva (Poco più sotto) -->
-      <div class="flex gap-6 mt-2">
+      <div class="flex gap-6 mt-1">
         <!-- LinkedIn -->
         <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 group">
           <div class="w-14 h-14 rounded-full shadow-sm flex items-center justify-center transition-colors duration-300" style="background-color: #ffffff; color: #2c2c2e;">
@@ -103,18 +106,95 @@ Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnip
           <span class="text-xs font-medium" style="color: #8e8e93;">Salva</span>
         </a>
       </div>
+
+      <!-- Guida Aggiungi a Schermata Home per Safari / Mobile -->
+      <button 
+        id="install-guide-btn" 
+        type="button" 
+        class="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-stone-600 bg-white/80 hover:bg-white border border-stone-200/70 shadow-xs transition-all cursor-pointer active:scale-95"
+      >
+        <Icon name="tabler:square-rounded-plus" class="w-4 h-4 text-stone-500" />
+        <span id="install-guide-label">Aggiungi a schermata Home</span>
+      </button>
       
+    </div>
+
+    <!-- Modal Istruzioni Aggiungi a Schermata Home (Safari / iOS) -->
+    <div id="install-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-end sm:items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+      <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-stone-200 flex flex-col gap-4 transform translate-y-4 transition-transform duration-200" id="install-modal-box">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800">
+              <Icon name="tabler:device-mobile" class="w-5 h-5" />
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-stone-900 leading-tight">Salva Card su iPhone / Safari</h3>
+              <p class="text-[11px] text-stone-500">Accesso rapido a tutto schermo</p>
+            </div>
+          </div>
+          <button id="close-modal-btn" type="button" class="p-1 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer">
+            <Icon name="tabler:x" class="w-5 h-5" />
+          </button>
+        </div>
+
+        <ol class="flex flex-col gap-3 text-xs text-stone-700 bg-stone-50 p-4 rounded-2xl border border-stone-100">
+          <li class="flex items-start gap-2.5">
+            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold text-[10px] flex items-center justify-center">1</span>
+            <span>Tocca il tasto <strong>Condividi</strong> in Safari <span class="text-stone-400 font-mono">(l'icona quadrata con la freccia in alto ⎋)</span>.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold text-[10px] flex items-center justify-center">2</span>
+            <span>Scorri il menu e seleziona <strong>"Aggiungi alla schermata Home"</strong>.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="flex-shrink-0 w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold text-[10px] flex items-center justify-center">3</span>
+            <span>Premi <strong>"Aggiungi"</strong> in alto a destra.</span>
+          </li>
+        </ol>
+
+        <p class="text-[11px] text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200/60 leading-relaxed">
+          💡 <strong>Nota:</strong> Se sei in <em>"Navigazione privata"</em>, Safari disabilita l'aggiunta alla Home. Apri la pagina in una normale scheda Safari.
+        </p>
+
+        <button id="got-it-btn" type="button" class="w-full py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold tracking-wide transition-colors cursor-pointer">
+          Ho capito
+        </button>
+      </div>
     </div>
   </main>
 
   <script>
-    // Rileva la lingua del browser dell'utente
     document.addEventListener('DOMContentLoaded', () => {
-      const userLang = navigator.language || (navigator as any).userLanguage;
-      // Se la lingua non inizia con "it", traduci i testi in inglese
-      if (!userLang.toLowerCase().startsWith('it')) {
-        // I testi possono essere tradotti aggiungendo gli ID se necessario
+      // Nascondi il tasto se l'app è già aperta a tutto schermo da Home Screen (standalone)
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+      const guideBtn = document.getElementById('install-guide-btn');
+      const modal = document.getElementById('install-modal');
+      const modalBox = document.getElementById('install-modal-box');
+      const closeBtn = document.getElementById('close-modal-btn');
+      const gotItBtn = document.getElementById('got-it-btn');
+
+      if (isStandalone && guideBtn) {
+        guideBtn.style.display = 'none';
       }
+
+      function openModal() {
+        if (!modal || !modalBox) return;
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modalBox.classList.remove('translate-y-4');
+      }
+
+      function closeModal() {
+        if (!modal || !modalBox) return;
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modalBox.classList.add('translate-y-4');
+      }
+
+      guideBtn?.addEventListener('click', openModal);
+      closeBtn?.addEventListener('click', closeModal);
+      gotItBtn?.addEventListener('click', closeModal);
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
     });
   </script>
 </Layout>
