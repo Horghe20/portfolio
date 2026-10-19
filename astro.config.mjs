@@ -13,7 +13,12 @@ export default defineConfig({
   },
 
   adapter: vercel(),
-  integrations: [sitemap(), icon()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/vcard') && !page.includes('/giorgio.vcf'),
+    }),
+    icon(),
+  ],
 
   i18n: {
     defaultLocale: 'it',

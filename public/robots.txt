@@ -1,4 +1,96 @@
+# Default Crawlers & Search Engines (Google, Bing, DuckDuckGo, etc.)
 User-agent: *
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
 Allow: /
 
+# Search Engine Primary Bots
+User-agent: Googlebot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: Bingbot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+# AI Search Engines & Retrieval Crawlers (GEO / AEO)
+User-agent: GPTBot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: OAI-SearchBot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: ChatGPT-User
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: PerplexityBot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: ClaudeBot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: anthropic-ai
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: Claude-Web
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: Google-Extended
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: Applebot-Extended
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+User-agent: CCBot
+Disallow: /vcard
+Disallow: /vcard/
+Disallow: /giorgio.vcf
+Disallow: /api/
+Allow: /
+
+# Discovery Index & XML Sitemap (Excludes vcard & giorgio.vcf)
 Sitemap: https://giorgiodicristofalo.com/sitemap-index.xml

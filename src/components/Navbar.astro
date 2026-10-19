@@ -63,25 +63,29 @@ const navLinks = [
     <!-- Right Actions: Lang Toggle & CTA -->
     <div class="hidden sm:flex items-center space-x-4">
       <!-- Language Toggle -->
-      <div class="flex items-center px-2 py-1 border border-border rounded bg-surface-2 text-xs font-mono">
+      <nav class="flex items-center px-2 py-1 border border-border rounded bg-surface-2 text-xs font-mono" aria-label="Language selector">
         <a
           href={getRelativeLocaleUrl('it', Astro.url.pathname.replace(/^\/(en|it)/, '') || '/')}
           class={`lang-toggle cursor-pointer transition-colors ${lang === 'it' ? 'text-accent font-bold' : 'text-text-dim hover:text-text opacity-70'}`}
           data-lang="it"
           title="Italiano"
+          aria-label="Versione italiana"
+          aria-current={lang === 'it' ? 'true' : undefined}
         >
           IT
         </a>
-        <span class="opacity-40 mx-1.5 text-text-dim">|</span>
+        <span class="opacity-40 mx-1.5 text-text-dim" aria-hidden="true">|</span>
         <a
           href={getRelativeLocaleUrl('en', Astro.url.pathname.replace(/^\/(en|it)/, '') || '/')}
           class={`lang-toggle cursor-pointer transition-colors ${lang === 'en' ? 'text-accent font-bold' : 'text-text-dim hover:text-text opacity-70'}`}
           data-lang="en"
           title="English"
+          aria-label="English version"
+          aria-current={lang === 'en' ? 'true' : undefined}
         >
           EN
         </a>
-      </div>
+      </nav>
 
       <!-- Contact Button -->
       <a
@@ -102,6 +106,7 @@ const navLinks = [
           href={otherLangUrl}
           class="lang-toggle text-accent font-bold flex items-center space-x-1"
           data-lang={otherLang}
+          aria-label={lang === 'it' ? 'Passa alla versione in inglese' : 'Switch to Italian version'}
         >
           <Icon name="tabler:world" class="w-3 h-3 text-accent" />
           <span>{lang.toUpperCase()}</span>
@@ -112,6 +117,8 @@ const navLinks = [
         id="mobile-menu-btn"
         class="p-2 rounded bg-surface-2 text-text-dim hover:text-text border border-border cursor-pointer"
         aria-label="Toggle mobile menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu-drawer"
       >
         <Icon name="tabler:menu-2" class="w-5 h-5 text-text-dim" id="menu-icon-open" />
         <Icon name="tabler:x" class="w-5 h-5 text-text hidden" id="menu-icon-close" />
@@ -160,9 +167,11 @@ const navLinks = [
   
   if (btn && drawer && iconOpen && iconClose) {
     btn.addEventListener('click', () => {
+      const isHidden = drawer.classList.contains('hidden');
       drawer.classList.toggle('hidden');
       iconOpen.classList.toggle('hidden');
       iconClose.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(isHidden));
     });
 
     // Close on link click
@@ -171,6 +180,7 @@ const navLinks = [
         drawer.classList.add('hidden');
         iconOpen.classList.remove('hidden');
         iconClose.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
       });
     });
   }

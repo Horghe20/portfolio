@@ -33,6 +33,7 @@ const lang = getLangFromUrl(Astro.url);
         href={PERSONAL_INFO.github}
         target="_blank"
         rel="noreferrer"
+        aria-label="Profilo GitHub di Giorgio Di Cristofalo"
         class="hover:text-accent transition-colors flex items-center space-x-1"
       >
         <Icon name="tabler:brand-github" class="w-3.5 h-3.5" />
@@ -42,6 +43,7 @@ const lang = getLangFromUrl(Astro.url);
         href={PERSONAL_INFO.linkedin}
         target="_blank"
         rel="noreferrer"
+        aria-label="Profilo LinkedIn di Giorgio Di Cristofalo"
         class="hover:text-accent transition-colors flex items-center space-x-1"
       >
         <Icon name="tabler:brand-linkedin" class="w-3.5 h-3.5" />
@@ -51,6 +53,7 @@ const lang = getLangFromUrl(Astro.url);
         href={PERSONAL_INFO.community}
         target="_blank"
         rel="noreferrer"
+        aria-label="Sito web Faidda Tech Lab"
         class="hover:text-accent transition-colors flex items-center space-x-1"
       >
         <span>Faidda Tech Lab</span>
@@ -67,7 +70,7 @@ const lang = getLangFromUrl(Astro.url);
       <button
         id="back-to-top-btn"
         class="p-2 rounded-sm bg-surface-2 border border-border text-text-dim hover:text-accent hover:border-accent transition-colors cursor-pointer shadow-xs"
-        aria-label="Back to top"
+        aria-label={lang === 'it' ? "Torna all'inizio della pagina" : "Back to top"}
       >
         <Icon name="tabler:arrow-up" class="w-4 h-4" />
       </button>

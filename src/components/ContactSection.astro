@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+<section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-16">
   
   <!-- Section Header -->
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-border pb-6">
@@ -41,6 +41,7 @@ const t = useTranslations(lang);
             href={PERSONAL_INFO.github}
             target="_blank"
             rel="noreferrer"
+            aria-label="Profilo GitHub di Giorgio Di Cristofalo"
             class="flex items-center space-x-2.5 p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text hover:text-accent transition-all"
           >
             <Icon name="tabler:brand-github" class="w-4 h-4" />
@@ -51,6 +52,7 @@ const t = useTranslations(lang);
             href={PERSONAL_INFO.linkedin}
             target="_blank"
             rel="noreferrer"
+            aria-label="Profilo LinkedIn di Giorgio Di Cristofalo"
             class="flex items-center space-x-2.5 p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text hover:text-accent transition-all"
           >
             <Icon name="tabler:brand-linkedin" class="w-4 h-4" />
@@ -63,6 +65,7 @@ const t = useTranslations(lang);
             href={PERSONAL_INFO.community}
             target="_blank"
             rel="noreferrer"
+            aria-label="Faidda Tech Lab Community (Tesoriere)"
             class="flex items-center justify-between p-3 rounded bg-surface-2 border border-border hover:border-accent text-xs font-mono text-text-dim hover:text-text transition-all group"
           >
             <div class="flex items-center space-x-2">
@@ -118,14 +121,47 @@ const t = useTranslations(lang);
             />
           </div>
 
+          <!-- Dual-Track Intent Selector (Company vs Recruiter) -->
+          <div class="space-y-1.5">
+            <span class="text-xs font-mono text-text-dim block" id="intent-label">
+              {t('contact.form.intent')}
+            </span>
+            <div class="grid grid-cols-2 gap-2 p-1 bg-surface-2 border border-border rounded-sm" id="intent-toggle-group" role="radiogroup" aria-labelledby="intent-label">
+              <button
+                type="button"
+                id="intent-btn-project"
+                role="radio"
+                aria-checked="true"
+                data-intent="project"
+                class="intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer bg-surface text-text border border-border shadow-xs"
+              >
+                <Icon name="tabler:building-skyscraper" class="w-3.5 h-3.5 text-accent" />
+                <span>{t('contact.form.intents.project')}</span>
+              </button>
+              <button
+                type="button"
+                id="intent-btn-hiring"
+                role="radio"
+                aria-checked="false"
+                data-intent="hiring"
+                class="intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer text-text-dim hover:text-text border border-transparent"
+              >
+                <Icon name="tabler:briefcase" class="w-3.5 h-3.5 text-accent" />
+                <span>{t('contact.form.intents.hiring')}</span>
+              </button>
+            </div>
+            <input type="hidden" name="intent" id="intent-input" value="project" />
+          </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Name -->
             <div class="space-y-1.5">
-              <label class="text-xs font-mono text-text-dim">
+              <label for="contact-name" class="text-xs font-mono text-text-dim block">
                 {t('contact.form.name')} *
               </label>
               <input
                 type="text"
+                id="contact-name"
                 name="name"
                 required
                 placeholder={lang === 'it' ? 'Mario Rossi' : 'Alex Morgan'}
@@ -135,11 +171,12 @@ const t = useTranslations(lang);
 
             <!-- Email -->
             <div class="space-y-1.5">
-              <label class="text-xs font-mono text-text-dim">
+              <label for="contact-email" class="text-xs font-mono text-text-dim block">
                 {t('contact.form.email')} *
               </label>
               <input
                 type="email"
+                id="contact-email"
                 name="email"
                 required
                 placeholder="mario@example.com"
@@ -150,7 +187,7 @@ const t = useTranslations(lang);
 
           <!-- Topic Selector -->
           <div class="space-y-1.5">
-            <label for="topic" class="text-xs font-mono text-text-dim">
+            <label for="topic" class="text-xs font-mono text-text-dim block">
               {t('contact.form.topic')}
             </label>
             <select
@@ -158,28 +195,35 @@ const t = useTranslations(lang);
               name="topic"
               class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text focus:border-accent focus:outline-none transition-colors font-mono cursor-pointer"
             >
-              <option value="automation">{t('contact.form.topics.automation')}</option>
-              <option value="fullstack">{t('contact.form.topics.fullstack')}</option>
-              <option value="ai">{t('contact.form.topics.ai')}</option>
-              <option value="consulting">{t('contact.form.topics.consulting')}</option>
-              <option value="other">{t('contact.form.topics.other')}</option>
+              <optgroup id="optgroup-project" label={lang === 'it' ? 'Progetti & Consulenza' : 'Projects & Consulting'}>
+                <option value="fullstack">{t('contact.form.topics.fullstack')}</option>
+                <option value="automation">{t('contact.form.topics.automation')}</option>
+                <option value="ai">{t('contact.form.topics.ai')}</option>
+                <option value="consulting">{t('contact.form.topics.consulting')}</option>
+                <option value="other_project">{t('contact.form.topics.other')}</option>
+              </optgroup>
+              <optgroup id="optgroup-hiring" label={lang === 'it' ? 'Hiring & Opportunità Lavorative' : 'Hiring & Career Opportunities'} class="hidden" disabled>
+                <option value="software_engineer">{t('contact.form.topicsHiring.softwareEngineer')}</option>
+                <option value="interview">{t('contact.form.topicsHiring.interview')}</option>
+                <option value="consulting_contract">{t('contact.form.topicsHiring.consulting')}</option>
+                <option value="other_hiring">{t('contact.form.topicsHiring.other')}</option>
+              </optgroup>
             </select>
           </div>
 
           <!-- Message -->
           <div class="space-y-1.5">
-            <label class="text-xs font-mono text-text-dim">
+            <label for="contact-message" class="text-xs font-mono text-text-dim block">
               {t('contact.form.message')} *
             </label>
             <textarea
+              id="contact-message"
               name="message"
               required
               rows="4"
-              placeholder={
-                lang === 'it'
-                  ? 'Descrivi brevemente il problema, i vincoli o gli obiettivi da raggiungere...'
-                  : 'Briefly outline the objective, technical constraints, or timeline...'
-              }
+              data-placeholder-project={t('contact.form.placeholderProject')}
+              data-placeholder-hiring={t('contact.form.placeholderHiring')}
+              placeholder={t('contact.form.placeholderProject')}
               class="w-full px-3.5 py-2.5 rounded-sm bg-surface-2 border border-border text-xs sm:text-sm text-text placeholder-text-dim/50 focus:border-accent focus:outline-none transition-colors font-sans resize-none"
             ></textarea>
           </div>
@@ -204,6 +248,49 @@ const t = useTranslations(lang);
 
 <script>
   const setupContactForm = () => {
+    // Intent toggle logic (Project vs Hiring)
+    const btnProject = document.getElementById('intent-btn-project');
+    const btnHiring = document.getElementById('intent-btn-hiring');
+    const intentInput = document.getElementById('intent-input') as HTMLInputElement;
+    const optgroupProject = document.getElementById('optgroup-project') as HTMLOptGroupElement;
+    const optgroupHiring = document.getElementById('optgroup-hiring') as HTMLOptGroupElement;
+    const topicSelect = document.getElementById('topic') as HTMLSelectElement;
+    const messageArea = document.getElementById('contact-message') as HTMLTextAreaElement;
+
+    if (btnProject && btnHiring && intentInput && optgroupProject && optgroupHiring && topicSelect && messageArea) {
+      const setIntent = (intent: 'project' | 'hiring') => {
+        intentInput.value = intent;
+        if (intent === 'project') {
+          btnProject.className = 'intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer bg-surface text-text border border-border shadow-xs';
+          btnHiring.className = 'intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer text-text-dim hover:text-text border border-transparent';
+          btnProject.setAttribute('aria-checked', 'true');
+          btnHiring.setAttribute('aria-checked', 'false');
+          optgroupProject.classList.remove('hidden');
+          optgroupProject.disabled = false;
+          optgroupHiring.classList.add('hidden');
+          optgroupHiring.disabled = true;
+          topicSelect.value = optgroupProject.querySelector('option')?.value || 'fullstack';
+          const placeholder = messageArea.getAttribute('data-placeholder-project');
+          if (placeholder) messageArea.placeholder = placeholder;
+        } else {
+          btnHiring.className = 'intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer bg-surface text-text border border-border shadow-xs';
+          btnProject.className = 'intent-btn py-2 px-3 rounded-xs text-xs font-mono font-medium transition-all flex items-center justify-center space-x-1.5 cursor-pointer text-text-dim hover:text-text border border-transparent';
+          btnHiring.setAttribute('aria-checked', 'true');
+          btnProject.setAttribute('aria-checked', 'false');
+          optgroupHiring.classList.remove('hidden');
+          optgroupHiring.disabled = false;
+          optgroupProject.classList.add('hidden');
+          optgroupProject.disabled = true;
+          topicSelect.value = optgroupHiring.querySelector('option')?.value || 'software_engineer';
+          const placeholder = messageArea.getAttribute('data-placeholder-hiring');
+          if (placeholder) messageArea.placeholder = placeholder;
+        }
+      };
+
+      btnProject.addEventListener('click', () => setIntent('project'));
+      btnHiring.addEventListener('click', () => setIntent('hiring'));
+    }
+
     // Form logic
     const form = document.getElementById('contact-form') as HTMLFormElement;
     const successBox = document.getElementById('form-success');

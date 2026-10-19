@@ -232,21 +232,21 @@ const projectStructuredData = {
               <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#FFBD2E]"></div>
               <div class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#27C93F]"></div>
             </div>
-            <img src={project.image} alt={project.title} class="w-full h-auto object-cover object-top" loading="lazy" decoding="async" />
+            <img src={project.image} alt={project.title} width="1200" height="630" class="w-full h-auto object-cover object-top" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
     )}
 
     <!-- Tab Navigation (Client-side via JS) -->
-    <div class="flex border-b border-border bg-surface text-xs font-mono overflow-x-auto scrollbar-none mb-8" id="project-tabs">
-      <button data-target="overview" class="tab-btn py-3 px-4 border-b-2 border-accent text-accent font-semibold cursor-pointer transition-colors whitespace-nowrap shrink-0">
+    <div class="flex border-b border-border bg-surface text-xs font-mono overflow-x-auto scrollbar-none mb-8" id="project-tabs" role="tablist" aria-label="Project sections">
+      <button role="tab" aria-selected="true" data-target="overview" class="tab-btn py-3 px-4 border-b-2 border-accent text-accent font-semibold cursor-pointer transition-colors whitespace-nowrap shrink-0">
         {t('modal.tabs.overview')}
       </button>
-      <button data-target="architecture" class="tab-btn py-3 px-4 border-b-2 border-transparent text-text-dim hover:text-text cursor-pointer transition-colors whitespace-nowrap shrink-0">
+      <button role="tab" aria-selected="false" data-target="architecture" class="tab-btn py-3 px-4 border-b-2 border-transparent text-text-dim hover:text-text cursor-pointer transition-colors whitespace-nowrap shrink-0">
         {t('modal.tabs.architecture')}
       </button>
-      <button data-target="stack" class="tab-btn py-3 px-4 border-b-2 border-transparent text-text-dim hover:text-text cursor-pointer transition-colors whitespace-nowrap shrink-0">
+      <button role="tab" aria-selected="false" data-target="stack" class="tab-btn py-3 px-4 border-b-2 border-transparent text-text-dim hover:text-text cursor-pointer transition-colors whitespace-nowrap shrink-0">
         {t('modal.tabs.stack')}
       </button>
     </div>
@@ -257,30 +257,30 @@ const projectStructuredData = {
       <!-- Overview Tab -->
       <div id="tab-overview" class="tab-content block space-y-6">
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
             <span>{t('modal.problemTag')}</span>
-          </h4>
+          </h2>
           <div class="bg-surface-2 p-4 sm:p-5 rounded-lg border border-border text-sm text-text leading-relaxed font-sans">
             {typeof project.problem === 'object' ? project.problem[lang] : project.problem}
           </div>
         </div>
 
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
             <span>{t('modal.solutionTag')}</span>
-          </h4>
+          </h2>
           <div class="bg-surface-2 p-4 sm:p-5 rounded-lg border border-border text-sm text-text-dim leading-relaxed font-sans">
             {typeof project.howItWorks === 'object' ? project.howItWorks[lang] : project.howItWorks}
           </div>
         </div>
 
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
             <span>{t('modal.whyMattersTag')}</span>
-          </h4>
+          </h2>
           <div class="bg-surface-2 p-4 sm:p-5 rounded-lg border border-border text-sm text-text leading-relaxed font-sans">
             {typeof project.whyItMatters === 'object' ? project.whyItMatters[lang] : project.whyItMatters}
           </div>
@@ -290,18 +290,18 @@ const projectStructuredData = {
       <!-- Architecture Tab -->
       <div id="tab-architecture" class="tab-content hidden space-y-6">
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2">
             {t('modal.diagramTag')}
-          </h4>
+          </h2>
           <Fragment set:html={renderArchitecturalDiagram(project.abstractDiagramType)} />
         </div>
 
         {project.aiRole && (
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2 flex items-center space-x-1.5">
               <Icon name="tabler:sparkles" class="w-3.5 h-3.5 text-accent" />
               <span>{t('modal.aiRoleTag')}</span>
-            </h4>
+            </h2>
             <div class="bg-accent-soft p-4 sm:p-5 rounded-lg border border-border text-sm text-text leading-relaxed font-sans">
               {typeof project.aiRole === 'object' ? project.aiRole[lang] : project.aiRole}
             </div>
@@ -330,9 +330,9 @@ const projectStructuredData = {
 
         {project.architectureNotes && (
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-2">
               {t('modal.archNotesTag')}
-            </h4>
+            </h2>
             <div class="bg-surface-2 p-4 sm:p-5 rounded-lg border border-border text-xs font-mono text-text-dim leading-relaxed">
               {typeof project.architectureNotes === 'object' ? project.architectureNotes[lang] : project.architectureNotes}
             </div>
@@ -344,9 +344,9 @@ const projectStructuredData = {
       <div id="tab-stack" class="tab-content hidden space-y-6">
         {project.metrics && (
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-3">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-3">
               {t('modal.metricsTag')}
-            </h4>
+            </h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {project.metrics.map((metric) => (
                 <div class="bg-surface-2 border border-border p-4 sm:p-5 rounded-lg text-center flex sm:flex-col items-center justify-between sm:justify-center">
@@ -363,9 +363,9 @@ const projectStructuredData = {
         )}
 
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-text-dim mb-3">
             {t('modal.stackTag')}
-          </h4>
+          </h2>
           <div class="flex flex-wrap gap-2">
             {project.stack.map((tech) => (
               <span class="text-xs font-mono px-2.5 py-1.5 bg-surface-2 text-text-dim border border-border rounded shadow-xs">
@@ -402,15 +402,17 @@ const projectStructuredData = {
       btn.addEventListener('click', () => {
         const target = btn.getAttribute('data-target');
 
-        // Reset buttons
+        // Reset buttons and ARIA state
         tabBtns.forEach(b => {
           b.classList.remove('border-accent', 'text-accent', 'font-semibold');
           b.classList.add('border-transparent', 'text-text-dim');
+          b.setAttribute('aria-selected', 'false');
         });
 
         // Activate button
         btn.classList.remove('border-transparent', 'text-text-dim');
         btn.classList.add('border-accent', 'text-accent', 'font-semibold');
+        btn.setAttribute('aria-selected', 'true');
 
         // Hide all contents
         tabContents.forEach(content => {

@@ -74,7 +74,7 @@ const itemsWithPos = sortedItemsDesc.map(item => {
 const totalHeight = Math.max(leftLastY, rightLastY) + 100;
 ---
 
-<section id="timeline" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+<section id="timeline" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-16">
   
   <!-- Header -->
   <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 border-b border-border pb-6">
@@ -93,9 +93,11 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
   </div>
 
   <!-- Category Filter Pills -->
-  <div class="flex flex-wrap items-center gap-2 mb-10" id="timeline-filters">
+  <div class="flex flex-wrap items-center gap-2 mb-10" id="timeline-filters" role="tablist" aria-label={lang === 'it' ? 'Filtra percorso per categoria' : 'Filter experience by category'}>
     {categoriesConfig.map((cat) => (
       <button
+        role="tab"
+        aria-selected={cat.id === 'all' ? 'true' : 'false'}
         data-filter={cat.id}
         class={`timeline-filter-btn inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm text-xs font-mono transition-all cursor-pointer border ${
           cat.id === 'all'
@@ -234,9 +236,11 @@ const totalHeight = Math.max(leftLastY, rightLastY) + 100;
         filterBtns.forEach(b => {
           b.classList.remove('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
           b.classList.add('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+          b.setAttribute('aria-selected', 'false');
         });
         btn.classList.add('bg-accent', 'text-accent-contrast', 'border-accent', 'font-semibold', 'shadow-xs');
         btn.classList.remove('bg-surface', 'text-text-dim', 'border-border', 'hover:text-text', 'hover:bg-surface-2');
+        btn.setAttribute('aria-selected', 'true');
 
         let visibleItems = [];
         let maxMonths = 0;

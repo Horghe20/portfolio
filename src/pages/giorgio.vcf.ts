@@ -19,6 +19,8 @@ END:VCARD`;
     headers: {
       'Content-Type': 'text/vcard; charset=utf-8',
       'Content-Disposition': 'attachment; filename="giorgio_dicristofalo.vcf"',
+      'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet',
+      'Cache-Control': 'private, no-cache, no-store, must-revalidate',
     },
   });
 };

@@ -85,14 +85,16 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 4. Solo se la mail al cliente è andata a buon fine, notifica l'admin
+    const intentLabel = (data.intent === 'hiring') ? '[HIRING/RECRUITER]' : '[PROGETTO/CONSULENZA]';
     const adminResponse = await resend.emails.send({
       from: senderEmail,
       to: [adminEmail],
       reply_to: email,
-      subject: `New Contact Request: [${topic}] from ${name}`,
-      text: `New Contact Request from Portfolio\n\nName: ${name}\nEmail: ${email}\nTopic: ${topic}\n\nMessage:\n${message}`,
+      subject: `${intentLabel} [${topic}] from ${name}`,
+      text: `New Contact Request from Portfolio\n\nIntent: ${intentLabel}\nName: ${name}\nEmail: ${email}\nTopic: ${topic}\n\nMessage:\n${message}`,
       html: `
         <h2>New Contact Request from Portfolio</h2>
+        <p><strong>Tipo Richiesta:</strong> ${intentLabel}</p>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Topic:</strong> ${topic}</p>

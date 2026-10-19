@@ -5,11 +5,14 @@ import { Image } from 'astro:assets';
 import { PERSONAL_INFO } from '../data/content';
 import logoImage from '../assets/logo.png';
 import cardBg from '../assets/card-background.jpg';
+
+// HTTP header protection against scrapers & indexing
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noimageindex');
 ---
 
 <Layout 
   title={`${PERSONAL_INFO.name} - Digital Card`} 
-  robots="noindex, nofollow"
+  robots="noindex, nofollow, noarchive, nosnippet, noimageindex"
 >
   <!-- Sfondo stile Apple Wallet (grigio chiaro) -->
   <main class="min-h-[100dvh] bg-[#f2f2f7] flex flex-col items-center justify-center p-4 sm:p-8 font-sans" style="background-color: #f2f2f7;">
