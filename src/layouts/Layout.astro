@@ -8,13 +8,17 @@ interface Props {
   description?: string;
   lang?: 'it' | 'en';
   robots?: string;
+  image?: string;
+  structuredData?: Record<string, any>;
 }
 
 const { 
   title = "Giorgio Di Cristofalo — Software Engineer",
-  description = "Sito personale di Giorgio Di Cristofalo: Software Engineer a Palermo specializzato in automazione processi, pipeline CI/CD, sistemi critici e AI applicata (Google OR-Tools, NLP, Recommender Systems).",
+  description = "Sito personale di Giorgio Di Cristofalo: Software Engineer specializzato in architetture distribuite, automazione processi e AI applicata (Google OR-Tools, NLP, Recommender Systems).",
   lang = 'it',
-  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+  robots = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1",
+  image = '/og-image.jpg',
+  structuredData
 } = Astro.props;
 
 // Normalize pathname to prevent trailing slash issues (except for root '/')
@@ -22,7 +26,7 @@ const normalizedPathname = Astro.url.pathname.endsWith('/') && Astro.url.pathnam
   ? Astro.url.pathname.slice(0, -1) 
   : Astro.url.pathname;
 
-const baseUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://giorgiodicristofalo.it';
+const baseUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://giorgiodicristofalo.com';
 
 const alternateLang = lang === 'it' ? 'en' : 'it';
 const alternateUrl = lang === 'it' 
@@ -30,6 +34,7 @@ const alternateUrl = lang === 'it'
   : `${baseUrl}${normalizedPathname.replace(/^\/en/, '') || '/'}`;
 
 const currentUrl = `${baseUrl}${normalizedPathname}`;
+const ogImageUrl = image.startsWith('http') ? image : new URL(image, baseUrl).href;
 ---
 
 <!doctype html>
@@ -92,10 +97,10 @@ const currentUrl = `${baseUrl}${normalizedPathname}`;
     <meta property="og:site_name" content="Giorgio Di Cristofalo — Portfolio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site || 'https://giorgiodicristofalo.com').href} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="800" />
-    <meta property="og:image:height" content="800" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_US'} />
     <meta property="og:locale:alternate" content={lang === 'it' ? 'en_US' : 'it_IT'} />
 
@@ -104,7 +109,7 @@ const currentUrl = `${baseUrl}${normalizedPathname}`;
     <meta name="twitter:url" content={currentUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site || 'https://giorgiodicristofalo.com').href} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Theme & Color Settings -->
     <meta name="theme-color" content="#F7F6F3" />
@@ -113,19 +118,36 @@ const currentUrl = `${baseUrl}${normalizedPathname}`;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- JSON-LD Structured Data for Search Engines, Perplexity, Gemini, ChatGPT (AEO / GEO / Schema.org) -->
-    <script type="application/ld+json" set:html={`
-    {
+    <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Person",
-          "@id": "https://giorgiodicristofalo.it/#person",
+          "@id": `${baseUrl}/#person`,
           "name": "Giorgio Di Cristofalo",
           "givenName": "Giorgio",
           "familyName": "Di Cristofalo",
           "jobTitle": "Software Engineer",
-          "url": "https://giorgiodicristofalo.it/",
+          "url": `${baseUrl}/`,
           "email": "giorgiodicristofalo77@gmail.com",
+          "knowsAbout": [
+            "Software Engineering",
+            "Distributed Systems",
+            "Process Automation",
+            "Applied Artificial Intelligence",
+            "Google OR-Tools",
+            "Constraint Satisfaction Problems",
+            "Celery",
+            "Redis",
+            "Python",
+            "Django",
+            "Flask",
+            "PostgreSQL",
+            "Adversarial Machine Learning",
+            "CI/CD Pipelines",
+            "Astro",
+            "TypeScript"
+          ],
           "worksFor": {
             "@type": "Organization",
             "name": "ENAV Group",
@@ -160,17 +182,51 @@ const currentUrl = `${baseUrl}${normalizedPathname}`;
         },
         {
           "@type": "WebSite",
-          "@id": "https://giorgiodicristofalo.it/#website",
-          "url": "https://giorgiodicristofalo.it/",
+          "@id": `${baseUrl}/#website`,
+          "url": `${baseUrl}/`,
           "name": "Giorgio Di Cristofalo — Portfolio",
           "publisher": {
-            "@id": "https://giorgiodicristofalo.it/#person"
+            "@id": `${baseUrl}/#person`
           },
           "inLanguage": ["it-IT", "en-US"]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": `${baseUrl}/#service`,
+          "name": "Giorgio Di Cristofalo — Software Engineering & Consulting",
+          "url": `${baseUrl}/`,
+          "provider": {
+            "@id": `${baseUrl}/#person`
+          },
+          "areaServed": "Worldwide",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Engineering & Development Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Sviluppo Piattaforme Web Custom & MVP",
+                  "description": "Progettazione e implementazione end-to-end di piattaforme web e gestionali ad alte prestazioni: database, architettura asincrona, pagamenti e UI."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Automazione Flussi Operativi & AI Applicata",
+                  "description": "Ingegnerizzazione di flussi di lavoro aziendali complessi, integrazione API/CRM e ottimizzazione con algoritmi matematici deterministici e modelli AI."
+                }
+              }
+            ]
+          }
         }
       ]
-    }
-    `} />
+    })} />
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
     
     <!-- Vercel Web Analytics is injected below -->
   </head>

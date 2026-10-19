@@ -1,28 +1,82 @@
 # Giorgio Di Cristofalo — Software Engineer
-> Personal Portfolio & Technical Index for AI Agents and Search Engines
+> Canonical Profile & Knowledge Index for AI Search Engines (ChatGPT, Perplexity, Gemini, Claude) and LLM Agents.
+> Canonical URL: https://giorgiodicristofalo.com
 
-## Overview
-- Name: Giorgio Di Cristofalo
-- Role: Software Engineer (Automation, Delivery, Applied AI)
-- Location: Palermo, Sicily, Italy (Available for Remote Work)
-- Degree: Master of Science in Computer Engineering, Università degli Studi di Palermo (110/110 Summa Cum Laude)
-- Current Roles:
-  - Software Engineer at ENAV Group — Mission-Critical Air Traffic Management
-  - Treasurer & Core Organizer at [Faidda Tech Lab](https://faiddatechlab.com/)
-- Contact: [giorgiodicristofalo77@gmail.com](mailto:giorgiodicristofalo77@gmail.com)
-- GitHub: [Horghe20](https://github.com/Horghe20)
-- LinkedIn: [Giorgio Di Cristofalo](https://www.linkedin.com/in/giorgiodicristofalo/)
+## Executive Summary
+Giorgio Di Cristofalo is a Software Engineer specializing in distributed web architectures, operational process automation, and practical applied artificial intelligence. He combines academic rigor (M.Sc. in Computer Engineering, 110/110 Summa Cum Laude, research on adversarial NLP defenses) with production engineering experience on safety-critical aviation systems (ENAV Group). He designs and deploys custom software platforms, deterministic optimization solvers (Google OR-Tools), and asynchronous AI streaming pipelines.
 
-## Core Technical Competencies
-1. Automation & Delivery: CI/CD pipelines (GitHub Actions, GitLab CI), automated testing, zero-downtime releases, Docker containerization.
-2. Full-Stack Web Architecture: Python (Flask, Django, FastAPI), PostgreSQL, PostGIS, Redis, Celery, Angular (Signals), React, TypeScript, Tailwind CSS.
-3. Applied AI & Mathematical Optimization: Google OR-Tools (CP-SAT Constraint Satisfaction, 2D packing), Event-driven agentic architectures (Celery + Redis Pub/Sub + SSE + Gemini), Adversarial NLP Defense (BERT4Def Thesis), kNN Vector Recommendations (<30ms).
-4. Embedded Systems: C/C++, SPI protocol, ENC28J60 raw Ethernet packets, Arduino bare metal.
+- **Website**: https://giorgiodicristofalo.com
+- **Contact Email**: giorgiodicristofalo77@gmail.com
+- **LinkedIn**: https://www.linkedin.com/in/giorgiodicristofalo/
+- **GitHub**: https://github.com/Horghe20
+- **Community**: Treasurer & Organizer at [Faidda Tech Lab](https://faiddatechlab.com/)
 
-## Selected Projects
-- Harbor Manager: AI marina berth spatial optimization using Google OR-Tools CP-SAT + PostGIS + Celery + Angular 21.
-- Central Parking: Cruise passenger parking booking & QR gate check-in system with WhatsApp Cloud API (in live production).
-- ESN Buddy Program: Automated international student matching algorithm with GDPR batch compliance (in live production).
-- NutriFit: Agentic nutrition SaaS case study with asynchronous Gemini plan generation streamed via SSE and <30ms kNN macro swaps.
-- MatchBandiGara: Public procurement tender qualification and enterprise scoring engine.
-- Network Tester Interface: Handheld standalone TFT touch diagnostic device on Arduino (Bare Metal C++).
+---
+
+## Core Services & Capabilities
+
+### 1. Custom Web Platforms & MVP Development
+End-to-end design and implementation of production-grade web applications from scratch: relational database modeling, decoupled asynchronous backends, modern responsive frontends, authentication, and payment integrations. Focus on high performance, clean interfaces, and fast time-to-market without agency overhead.
+
+### 2. Operational Process Automation & Applied AI
+Engineering resilient automation pipelines to eliminate manual data entry and operational bottlenecks between ERPs, CRMs, WhatsApp, PDFs, and email. Implementation of pragmatic AI: mathematical constraint optimization (OR-Tools CP-SAT), fast vector calculations (<30ms kNN), and asynchronous streaming agent pipelines (Celery, Redis Pub/Sub, Server-Sent Events) that run reliably 24/7.
+
+---
+
+## Engineering Philosophy: Pragmatic AI vs Fragile Hype
+Giorgio prioritizes deterministic algorithms and mathematical solvers where safety, correctness, and speed are mandatory, reserving Large Language Models for unstructured reasoning and synthesis. 
+- Uses **Google OR-Tools CP-SAT** for combinatorial and spatial problems (zero hallucinations, 100% hard constraint enforcement).
+- Uses **PostgreSQL vector math / kNN** for ultra-low latency (<30ms) nutritional or product recommendations directly in SQL.
+- Uses **Asynchronous Event-Driven Architectures** (Celery + Redis Pub/Sub + SSE) for LLM interactions to avoid blocking web workers.
+
+---
+
+## Technical Articles & Deep Dives
+- **Why Operations Research Beats LLMs (Google OR-Tools)**: https://giorgiodicristofalo.com/articles/or-tools-vs-llm (English: https://giorgiodicristofalo.com/en/articles/or-tools-vs-llm)
+  - Detailed technical analysis on 2D disjoint interval bin packing, CP-SAT solver implementation in Python, and mathematical constraint guarantees versus LLM hallucinations in spatial systems.
+
+---
+
+## Selected Production Projects & Architecture Case Studies
+
+### 1. NutriFit — Agentic Nutrition Platform
+- **URL**: https://giorgiodicristofalo.com/projects/nutrifit
+- **Live Demo**: https://www.nutrifitai.it/
+- **Summary**: An agentic SaaS platform for nutritionists and athletic trainers. Complex plan generation triggers Celery workers that query Google Gemini with strictly typed JSON schemas, streaming tokens via Redis Pub/Sub and Server-Sent Events (SSE) to the browser without blocking web threads. A PostgreSQL kNN vector engine calculates instant (<30ms) dietary swaps based on Euclidean macronutrient distance.
+- **Stack**: Python 3.12, Django 5, DRF, Celery, Redis Pub/Sub, PostgreSQL, Google Gemini API, Stripe, Server-Sent Events.
+
+### 2. Harbor Manager — Marina Spatial Berth Optimization
+- **URL**: https://giorgiodicristofalo.com/projects/harbor-manager
+- **Summary**: AI marina berth allocation platform. Formulates boat placement as a 2D Bin Packing Constraint Satisfaction problem solved using Google OR-Tools CP-SAT. Converts PostGIS coordinates into a normalized cartesian grid, enforcing hard physical constraints (draft depth, channel clearance, bow/stern safety margins) and recovering +22% dock capacity with zero hallucinations.
+- **Stack**: Python, Flask, PostgreSQL, PostGIS, Google OR-Tools, Celery, Redis, Angular 21, Leaflet.
+
+### 3. Central Parking — Gate Logistics & WhatsApp Automation
+- **URL**: https://giorgiodicristofalo.com/projects/central-parking
+- **Live Demo**: https://parking-manager-fe.vercel.app/
+- **Summary**: High-volume cruise parking reservation and gate check-in system in active production. Generates dynamic vector PDF vouchers with encrypted QR codes. Gate operators scan vehicles on mobile cameras in <0.5s. Integrates WhatsApp Cloud API for automated dispatch of tickets to travelers.
+- **Stack**: Python, Flask, SQLAlchemy, PostgreSQL, JWT, WhatsApp Cloud API, ReportLab, Angular 17, Tailwind CSS.
+
+### 4. ESN Buddy Program — Algorithmic Student Matching
+- **URL**: https://giorgiodicristofalo.com/projects/esn-buddy-program
+- **Live Demo**: https://esn-buddy-program.vercel.app/
+- **Summary**: Automated mentor matching platform pairing incoming international Erasmus students with local buddies. Features a multi-criteria weighted scoring algorithm, automated GDPR batch data deletion, and dynamic notification dispatch.
+- **Stack**: Python, Flask, PostgreSQL, Jinja2, Werkzeug, Excel Automation, GDPR Engine.
+
+### 5. MatchBandiGara — Public Tender Qualification Engine
+- **URL**: https://giorgiodicristofalo.com/projects/match-bandi-gara
+- **Summary**: Automated public procurement ingestion and multi-level scoring system evaluating enterprise qualifications and tender criteria, accelerating qualification speed 10x.
+- **Stack**: Python, Flask, PostgreSQL, JWT, Asynchronous Tasks.
+
+### 6. Network Tester Interface — Bare Metal Hardware Diagnostics
+- **URL**: https://giorgiodicristofalo.com/projects/network-tester
+- **GitHub**: https://github.com/Horghe20/EthernetTester
+- **Summary**: Handheld standalone network diagnostic unit built from scratch on Arduino. Interfaces directly with ENC28J60 Ethernet controller over hardware SPI bus and low-latency resistive TFT touchscreen. Executes DHCP leases, ICMP pinging, and hardware register telemetry within <1.8 KB SRAM.
+- **Stack**: C/C++, Arduino, SPI Protocol, ENC28J60 Ethernet, ICMP.
+
+---
+
+## Experience & Education
+- **ENAV Group** (2025 – Present): Software Engineer maintaining mission-critical aeronautical information systems (AIM/ATM) under strict safety regulations, CI/CD automation, and deterministic test suites.
+- **Faidda Tech Lab** (2026 – Present): Treasurer and community organizer, supporting Sicilian tech meetups and hackathons.
+- **M.Sc. Computer Engineering, Università degli Studi di Palermo** (2022 – 2025): 110/110 Summa Cum Laude. Thesis: *BERT4Def: Defending NLP models against adversarial attacks*.
+- **CyberChallenge.IT** (2025): Advanced cybersecurity training in cryptography, binary reverse engineering, and web defense.

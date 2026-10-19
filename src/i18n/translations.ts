@@ -27,8 +27,8 @@ export const translations = {
       headlinePrefix: 'Automatizzo il lavoro.',
       headlineSuffix: 'Costruisco quello che serve.',
       subtitle: 'Software Engineer specializzato in automazione dei processi, delivery enterprise e intelligenza artificiale applicata. Dai sistemi critici alla ricerca NLP.',
-      ctaCollaborate: 'Lavoriamo insieme',
-      ctaLaboratory: 'Esplora il Laboratorio',
+      ctaCollaborate: 'Contattami',
+      ctaLaboratory: 'Percorso & Competenze',
       credentials: '110L Ingegneria Informatica',
       audience: {
         all: 'Tutti i profili',
@@ -210,8 +210,8 @@ export const translations = {
       headlinePrefix: 'I automate the work.',
       headlineSuffix: "I build what's needed.",
       subtitle: 'Software Engineer specialized in workflow automation, enterprise delivery, and applied artificial intelligence. From critical systems to NLP research.',
-      ctaCollaborate: "Let's work together",
-      ctaLaboratory: 'Explore Projects Lab (6 Cases)',
+      ctaCollaborate: 'Contact Me',
+      ctaLaboratory: 'Experience & Skills',
       location: 'Palermo, Sicily / Remote',
       credentials: '110L Computer Engineering (M.Sc.)',
       audience: {

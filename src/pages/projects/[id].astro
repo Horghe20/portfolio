@@ -140,9 +140,36 @@ const renderArchitecturalDiagram = (diagramType: string) => {
       `;
   }
 };
+
+const projectTagline = typeof project.tagline === 'object' ? project.tagline[lang] : project.tagline;
+const projectProblem = typeof project.problem === 'object' ? project.problem[lang] : project.problem;
+const projectDescription = `${projectTagline} ${projectProblem}`.slice(0, 200).trim();
+
+const projectStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": project.title,
+  "description": projectDescription,
+  "applicationCategory": project.category === 'ai' ? 'Artificial Intelligence Application' : 'DeveloperApplication',
+  "operatingSystem": "Web, Cloud, Linux",
+  "author": {
+    "@type": "Person",
+    "@id": "https://giorgiodicristofalo.com/#person",
+    "name": "Giorgio Di Cristofalo"
+  },
+  "keywords": project.stack.join(', '),
+  ...(project.demoUrl ? { "url": project.demoUrl } : {}),
+  ...(project.repoUrl ? { "codeRepository": project.repoUrl } : {})
+};
 ---
 
-<Layout lang={lang} title={`${project.title} | Giorgio Di Cristofalo`}>
+<Layout 
+  lang={lang} 
+  title={`${project.title} — Specifiche & Architettura | Giorgio Di Cristofalo`}
+  description={projectDescription}
+  image={project.image || '/og-image.jpg'}
+  structuredData={projectStructuredData}
+>
   <Navbar />
   
   <main class="pt-24 pb-16 sm:pt-32 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
@@ -278,6 +305,28 @@ const renderArchitecturalDiagram = (diagramType: string) => {
             <div class="bg-accent-soft p-4 sm:p-5 rounded-lg border border-border text-sm text-text leading-relaxed font-sans">
               {typeof project.aiRole === 'object' ? project.aiRole[lang] : project.aiRole}
             </div>
+
+            {project.id === 'harbor-manager' && (
+              <div class="mt-4 p-4 rounded-lg bg-surface border border-accent/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                <div class="space-y-0.5">
+                  <span class="text-[10px] font-mono text-accent font-bold uppercase tracking-wider block">
+                    {lang === 'it' ? 'Approfondimento Tecnico' : 'Technical Deep Dive'}
+                  </span>
+                  <p class="text-xs text-text font-medium">
+                    {lang === 'it' 
+                      ? 'Perché la ricerca operativa (Google OR-Tools) batte i modelli linguistici generativi nell\'allocazione spaziale.' 
+                      : 'Why operations research (Google OR-Tools) beats generative LLMs in spatial berth allocation.'}
+                  </p>
+                </div>
+                <a 
+                  href={getRelativeLocaleUrl(lang, '/articles/or-tools-vs-llm')}
+                  class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-sm bg-accent text-accent-contrast font-bold text-xs shrink-0 hover:opacity-90 transition-all shadow-xs"
+                >
+                  <span>{lang === 'it' ? 'Leggi Articolo' : 'Read Article'}</span>
+                  <Icon name="tabler:arrow-right" class="w-3.5 h-3.5" />
+                </a>
+              </div>
+            )}
           </div>
         )}
 

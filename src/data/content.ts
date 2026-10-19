@@ -355,12 +355,12 @@ export const SERVICES: ServiceArea[] = [
     linkedProjectId: 'central-parking',
     keyPoints: {
       it: [
-        'Colleghi CRM, e-commerce, gestionale e email: un\'unica fonte di verità',
+        'Colleghi database, gestionali, WhatsApp API ed email: un\'unica fonte di verità',
         'Processi schedulati che girano di notte e nei weekend, senza che tu ci pensi',
         'Alert immediati se qualcosa si interrompe: sai sempre cosa sta succedendo'
       ],
       en: [
-        'Connect CRM, e-commerce, ERP and email: one single source of truth',
+        'Connect databases, internal portals, WhatsApp API and email: one single source of truth',
         'Scheduled processes running overnight and on weekends, without you thinking about it',
         'Instant alerts if anything breaks: you always know what\'s happening'
       ]

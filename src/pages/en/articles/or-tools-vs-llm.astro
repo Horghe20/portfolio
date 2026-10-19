@@ -1,0 +1,295 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import { getRelativeLocaleUrl } from '../../../i18n/utils';
+
+const lang = 'en';
+const title = "Why Operations Research Beats LLMs: Google OR-Tools | Giorgio Di Cristofalo";
+const description = "Engineering deep dive on spatial optimization and hard constraints: why Google OR-Tools CP-SAT outperforms Large Language Models with zero hallucinations and deterministic guarantees.";
+
+const articleStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Why Operations Research Beats Large Language Models: Spatial Optimization and Hard Constraints with Google OR-Tools",
+  "description": description,
+  "author": {
+    "@type": "Person",
+    "@id": "https://giorgiodicristofalo.com/#person",
+    "name": "Giorgio Di Cristofalo"
+  },
+  "datePublished": "2026-10-19",
+  "dateModified": "2026-10-19",
+  "image": "https://giorgiodicristofalo.com/images/projects/harbor-manager.webp",
+  "inLanguage": "en",
+  "keywords": "Google OR-Tools, CP-SAT Solver, Constraint Programming, Operations Research, Large Language Models, Software Architecture, 2D Bin Packing, Python"
+};
+
+const pythonCode = `from ortools.sat.python import cp_model
+
+def solve_berth_allocation(boats, dock_length, dock_depth):
+    model = cp_model.CpModel()
+    x_intervals, y_intervals = [], []
+    assigned_vars = {}
+
+    for boat in boats:
+        # Decision variables for dock placement (x, y)
+        x_start = model.NewIntVar(0, dock_length - boat["length"], f"x_start_{boat['id']}")
+        x_end = model.NewIntVar(0, dock_length, f"x_end_{boat['id']}")
+        x_int = model.NewIntervalVar(x_start, boat["length"] + boat["buffer_x"], x_end, f"x_int_{boat['id']}")
+
+        y_start = model.NewIntVar(0, dock_depth - boat["width"], f"y_start_{boat['id']}")
+        y_end = model.NewIntVar(0, dock_depth, f"y_end_{boat['id']}")
+        y_int = model.NewIntervalVar(y_start, boat["width"] + boat["buffer_y"], y_end, f"y_int_{boat['id']}")
+
+        is_assigned = model.NewBoolVar(f"assigned_{boat['id']}")
+        assigned_vars[boat['id']] = is_assigned
+
+        x_intervals.append(x_int)
+        y_intervals.append(y_int)
+
+    # Core mathematical constraint: zero 2D geometric overlap
+    model.AddNoOverlap2D(x_intervals, y_intervals)
+
+    # Objective: maximize economic yield of assigned fleet
+    model.Maximize(sum(assigned_vars[b['id']] * b['revenue'] for b in boats))
+
+    solver = cp_model.CpSolver()
+    solver.parameters.max_time_in_seconds = 5.0
+    status = solver.Solve(model)
+
+    if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
+        return {
+            b['id']: (solver.Value(model.GetIntVar(f"x_start_{b['id']}")),
+                      solver.Value(model.GetIntVar(f"y_start_{b['id']}")))
+            for b in boats if solver.Value(assigned_vars[b['id']]) == 1
+        }
+    return None`;
+---
+
+<Layout 
+  lang={lang} 
+  title={title}
+  description={description}
+  image="/images/projects/harbor-manager.webp"
+  structuredData={articleStructuredData}
+>
+  <Navbar />
+
+  <main class="pt-24 pb-20 sm:pt-32 sm:pb-28 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto font-sans">
+    
+    <!-- Breadcrumbs / Back button -->
+    <a href={getRelativeLocaleUrl(lang, '/#laboratory')} class="inline-flex items-center space-x-2 text-xs font-mono text-text-dim hover:text-accent transition-colors mb-8 group">
+      <Icon name="tabler:arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+      <span>Back to Laboratory</span>
+    </a>
+
+    <!-- Article Header -->
+    <header class="mb-12 pb-8 border-b border-border">
+      <div class="flex items-center space-x-2.5 mb-4 flex-wrap gap-y-1">
+        <span class="text-[10px] font-mono px-2.5 py-1 bg-accent-soft text-accent border border-border rounded font-semibold uppercase tracking-wider">
+          Systems Engineering & Operations Research
+        </span>
+        <span class="text-xs font-mono text-text-dim">
+          October 2026 • 6 min read
+        </span>
+      </div>
+
+      <h1 class="font-bold text-3xl sm:text-5xl text-text leading-tight mb-5 tracking-tight">
+        Why Operations Research Beats Large Language Models: Spatial Optimization and Hard Constraints with Google OR-Tools
+      </h1>
+
+      <p class="text-base sm:text-lg text-text-dim leading-relaxed font-sans max-w-3xl">
+        When addressing spatial allocation and NP-hard problems, probabilistic generative models fail on non-negotiable physical constraints. Here is why deterministic solvers like Google OR-Tools CP-SAT remain the gold standard in software engineering.
+      </p>
+
+      <div class="mt-6 flex items-center space-x-3 text-xs font-mono text-text-dim pt-4 border-t border-border/50">
+        <span class="text-text font-medium">Author: Giorgio Di Cristofalo</span>
+        <span>•</span>
+        <span>Software Engineer @ ENAV Group</span>
+      </div>
+    </header>
+
+    <!-- Article Content -->
+    <article class="space-y-10 text-text leading-relaxed text-base sm:text-lg">
+
+      <!-- Intro callout -->
+      <div class="bg-surface-2 border-l-4 border-accent p-5 sm:p-6 rounded-r-lg text-sm sm:text-base text-text leading-relaxed">
+        <strong class="font-bold text-accent block mb-1">Key Principle:</strong>
+        Large Language Models excel at synthesis, document ingestion, and conversational UX. However, when a problem demands mathematical enforcement of hard physical constraints (bathymetric draft, millimeter tolerances, zero spatial overlap), statistical probability must yield to deterministic correctness.
+      </div>
+
+      <!-- Section 1 -->
+      <section class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-text">
+          1. The Illusion of Spatial Intuition in LLMs
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Transformer models generate sequences by predicting conditional token probabilities learned during training. They possess neither an internal Euclidean coordinate grid nor a geometric constraint propagation engine.
+        </p>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Relying on prompt engineering to allocate dozens of vessels of varying length, beam, and draft (the problem solved in the <a href={getRelativeLocaleUrl(lang, '/projects/harbor-manager')} class="text-accent underline font-mono">Harbor Manager</a> project) exposes production systems to three critical vulnerabilities:
+        </p>
+        <ul class="space-y-2.5 text-sm sm:text-base text-text-dim list-disc pl-5">
+          <li>
+            <strong class="text-text">Zero guarantees on hard constraints</strong>: An LLM might produce plausible JSON coordinates, but it cannot formally ensure that two hulls do not overlap by 15 cm or that low-tide draft depth is respected. In a maritime environment, a single violation causes physical hull damage or liability.
+          </li>
+          <li>
+            <strong class="text-text">Combinatorial hallucination</strong>: As vessel count and dock density scale, combinatorial complexity explodes. LLMs routinely ignore negative constraints or fabricate non-existent dock coordinates.
+          </li>
+          <li>
+            <strong class="text-text">Computational latency and non-determinism</strong>: Heavy LLM inference takes multiple seconds, incurs recurring API token costs, and yields fluctuating output on each run. A mathematical solver converges to a global optimum (or proves infeasibility) in milliseconds on local hardware.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-text">
+          2. Formal Formulation: Constraint Programming & SAT
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Constraint Programming reverses the paradigm: instead of guessing solutions by trial and error, it defines the space of admissible states through decision variables and algebraic constraints. The search engine traverses the solution space, pruning infeasible branches via logical propagation.
+        </p>
+        
+        <div class="bg-surface border border-border p-5 rounded-lg font-mono text-xs sm:text-sm text-text-dim space-y-2">
+          <div class="text-accent font-semibold">// 2D Disjoint Interval Bin Packing Formulation</div>
+          <div>• Spatial variables: x_i (dock position), y_i (fairway distance)</div>
+          <div>• Temporal windows: [t_start, t_end]</div>
+          <div>• Physical geometry: Length (L_i), Beam (B_i) + safety clearance buffers</div>
+          <div>• Bathymetric constraint: Draft_i ≤ WaterDepth(x_i, y_i) ∀ i</div>
+          <div>• Non-overlap constraint: Overlap(Boat_i, Boat_j) = 0 ∀ i ≠ j</div>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-text">
+          3. Implementation with Google OR-Tools (CP-SAT)
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Google OR-Tools provides <strong>CP-SAT</strong>, a premier constraint solver combining SAT conflict clauses with integer propagation. In Python, 2D disjoint allocation is handled using the native <code class="font-mono text-accent">AddNoOverlap2D</code> constraint:
+        </p>
+
+        <!-- Code Block -->
+        <div class="bg-surface-2 border border-border rounded-lg overflow-hidden text-xs font-mono shadow-xs">
+          <div class="bg-surface border-b border-border px-4 py-2 flex items-center justify-between text-text-dim text-[11px]">
+            <span>berth_allocation_solver.py</span>
+            <span class="text-accent font-semibold">Python 3.12 + OR-Tools CP-SAT</span>
+          </div>
+          <pre class="p-4 sm:p-5 overflow-x-auto text-text leading-relaxed font-mono text-xs"><code>{pythonCode}</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-text">
+          4. Real-World Benchmarks: The Harbor Manager Case
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          In the marina management system engineered by Giorgio, decoupling Google OR-Tools computation inside Celery asynchronous workers yielded definitive results:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="bg-surface border border-border p-4 rounded-lg text-center">
+            <span class="font-bold text-3xl text-accent block mb-1">+22%</span>
+            <span class="text-xs font-mono text-text-dim">Berth space recovered over manual charting</span>
+          </div>
+          <div class="bg-surface border border-border p-4 rounded-lg text-center">
+            <span class="font-bold text-3xl text-accent block mb-1">&lt; 2.4s</span>
+            <span class="text-xs font-mono text-text-dim">Full marina layout calculation time</span>
+          </div>
+          <div class="bg-surface border border-border p-4 rounded-lg text-center">
+            <span class="font-bold text-3xl text-accent block mb-1">0%</span>
+            <span class="text-xs font-mono text-text-dim">Hallucinations & maritime safety buffer breaches</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Comparison Table -->
+      <section class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-text">
+          5. Proper AI Alignment Across the Production Stack
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Engineering maturity does not mean forcing LLMs everywhere; it means <strong>assigning the right computational tool to the specific operational challenge</strong>:
+        </p>
+
+        <div class="overflow-x-auto border border-border rounded-lg bg-surface">
+          <table class="w-full text-left text-xs sm:text-sm font-sans">
+            <thead class="bg-surface-2 border-b border-border font-mono text-[11px] uppercase tracking-wider text-text-dim">
+              <tr>
+                <th class="p-3.5">System Responsibility</th>
+                <th class="p-3.5">Proper Architecture Component</th>
+                <th class="p-3.5">Engineering Rationale</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border text-text">
+              <tr>
+                <td class="p-3.5 font-medium">Natural language parsing</td>
+                <td class="p-3.5 font-mono text-accent">LLM (Gemini / Claude / GPT)</td>
+                <td class="p-3.5 text-text-dim">Extracting structured parameters from unstructured customer emails and chats.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-medium">Physical & spatial optimization</td>
+                <td class="p-3.5 font-mono text-accent">Google OR-Tools (CP-SAT)</td>
+                <td class="p-3.5 text-text-dim">Zero hallucinations, deterministic adherence to distance, capacity, and time.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-medium">Ultra-fast in-database matching</td>
+                <td class="p-3.5 font-mono text-accent">Vector kNN in PostgreSQL</td>
+                <td class="p-3.5 text-text-dim">&lt;30ms Euclidean similarity queries directly in SQL without API network overhead.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-medium">Client streaming dispatch</td>
+                <td class="p-3.5 font-mono text-accent">Celery + Redis Pub/Sub + SSE</td>
+                <td class="p-3.5 text-text-dim">Complete decoupling of heavy computation from synchronous web request threads.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Conclusion & CTA Box -->
+      <section class="pt-8 border-t border-border space-y-6">
+        <h2 class="text-2xl font-bold tracking-tight text-text">
+          Conclusion
+        </h2>
+        <p class="text-text-dim text-sm sm:text-base leading-relaxed">
+          Generative models are invaluable for resolving conversational ambiguity. However, when computational failure results in physical damage, inventory loss, or security liability, discrete mathematics and operations research solvers remain unmatched.
+        </p>
+
+        <!-- Project Leave-behind Card -->
+        <div class="bg-surface-2 border border-border p-6 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">
+          <div>
+            <span class="text-[11px] font-mono text-accent font-semibold uppercase tracking-wider block mb-1">
+              Related Case Study
+            </span>
+            <h3 class="font-bold text-lg text-text">Harbor Manager — Marina Optimization with OR-Tools</h3>
+            <p class="text-xs text-text-dim mt-1 max-w-xl">
+              Inspect the end-to-end architecture, PostGIS ➔ Celery ➔ Angular dataflow pipelines, and production metrics.
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 shrink-0">
+            <a 
+              href={getRelativeLocaleUrl(lang, '/projects/harbor-manager')}
+              class="px-4 py-2 bg-accent text-accent-contrast font-bold text-xs rounded-sm hover:opacity-90 transition-all shadow-xs"
+            >
+              View Case Study
+            </a>
+            <a 
+              href={getRelativeLocaleUrl(lang, '/#contact')}
+              class="px-4 py-2 bg-surface text-text border border-border hover:border-accent font-semibold text-xs rounded-sm transition-all shadow-xs"
+            >
+              Contact Me
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
