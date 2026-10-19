@@ -48,6 +48,11 @@ const ogImageUrl = image.startsWith('http') ? image : new URL(image, baseUrl).hr
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- iOS Safari PWA Standalone Settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Giorgio DC" />
     
     <!-- Auto-Redirect based on browser language -->
     <script is:inline>
