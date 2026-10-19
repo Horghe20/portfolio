@@ -43,10 +43,11 @@ const ogImageUrl = image.startsWith('http') ? image : new URL(image, baseUrl).hr
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Favicon (Ottimizzato per Google e Bing) -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <!-- Favicon & PWA Web App Manifest -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Auto-Redirect based on browser language -->
     <script is:inline>
@@ -113,9 +114,6 @@ const ogImageUrl = image.startsWith('http') ? image : new URL(image, baseUrl).hr
 
     <!-- Theme & Color Settings -->
     <meta name="theme-color" content="#F7F6F3" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- JSON-LD Structured Data for Search Engines, Perplexity, Gemini, ChatGPT (AEO / GEO / Schema.org) -->
     <script type="application/ld+json" set:html={JSON.stringify({
