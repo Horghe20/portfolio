@@ -43,7 +43,7 @@
       ]
     },
     {
-      "source": "/(giorgio\\.vcf|vcard\\.webmanifest|api/.*)",
+      "source": "/(giorgio\\.vcf|api/.*)",
       "headers": [
         {
           "key": "X-Robots-Tag",

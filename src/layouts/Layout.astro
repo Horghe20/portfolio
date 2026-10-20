@@ -10,9 +10,10 @@ interface Props {
   robots?: string;
   image?: string;
   structuredData?: Record<string, any>;
-  manifest?: string;
+  manifest?: string | null;
   appleTitle?: string;
   themeColor?: string;
+  standalone?: boolean;
 }
 
 const { 
@@ -24,7 +25,8 @@ const {
   structuredData,
   manifest = '/site.webmanifest',
   appleTitle = 'Giorgio DC',
-  themeColor = '#F7F6F3'
+  themeColor = '#F7F6F3',
+  standalone = true
 } = Astro.props;
 
 // Normalize pathname to prevent trailing slash issues (except for root '/')
@@ -56,9 +58,13 @@ const ogImageUrl = image.startsWith('http') ? image : new URL(image, baseUrl).hr
     {manifest && <link rel="manifest" href={manifest} />}
 
     <!-- iOS Safari PWA Standalone Settings -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content={appleTitle} />
+    {standalone && (
+      <>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content={appleTitle} />
+      </>
+    )}
     
     <!-- Auto-Redirect based on browser language -->
     <script is:inline>
