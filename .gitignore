@@ -2,7 +2,7 @@
 dist/
 # generated types
 .astro/
-
+.browser_profile
 # dependencies
 node_modules/
 

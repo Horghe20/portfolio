@@ -20,10 +20,10 @@
   --color-surface: #FFFFFF;
   --color-surface-2: #EFEEEA;
   --color-border: #E2E0DA;
-  --color-text: #2A2B2E;
-  --color-text-dim: #71727A;
-  --color-accent: #5B7FA0;
-  --color-accent-soft: rgba(91, 127, 160, 0.10);
+  --color-text: #111418;
+  --color-text-dim: #5B616E;
+  --color-accent: #1B3B6F;
+  --color-accent-soft: rgba(27, 59, 111, 0.12);
   --color-accent-contrast: #FFFFFF;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
